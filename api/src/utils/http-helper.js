@@ -9,6 +9,7 @@ class HttpHelper {
 
     ok(data) {
         return this.response.status(200).json(data);
+        debugger
     }
 
     badRequest(message) {
