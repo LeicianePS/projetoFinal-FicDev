@@ -17,7 +17,7 @@ module.exports = {
             unidadeMedida: {
                 type: Sequelize.TEXT,
                 allowNull: false,
-                defaultValue: 'g'
+                defaultValue: 'kg'
             }
         });
     },
