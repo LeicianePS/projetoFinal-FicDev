@@ -23,5 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 
-/web/node_modules
-/api/node_modules
+web/node_modules
+api/node_modules
