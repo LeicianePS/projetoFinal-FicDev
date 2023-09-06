@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-/api/node_modules
 /.pnp
 .pnp.js
 
@@ -24,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 
+/web/node_modules
+/api/node_modules
