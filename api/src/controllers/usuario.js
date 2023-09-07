@@ -38,11 +38,11 @@ class UsuarioController {
     async login(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
-            const { email, password } = request.body;
-            if (!email || !password) return httpHelper.badRequest('E-mail e senha são obrigatórios!');
-            const usuarioExists = await UsuarioModel.findOne({ where: { email } });
+            const { cpf, senha } = request.body;
+            if (!cpf || !senha) return httpHelper.badRequest('CPF e senha são obrigatórios!');
+            const usuarioExists = await UsuarioModel.findOne({ where: { cpf } });
             if (!usuarioExists) return httpHelper.notFound('Usuário não encontrado!');
-            const isPasswordValid = await bcrypt.compare(password, usuarioExists.password);
+            const isPasswordValid = await bcrypt.compare(senha, usuarioExists.senha);
             if (!isPasswordValid) return httpHelper.badRequest('Senha incorreta!');
             const accessToken = jwt.sign(
                 { id: usuarioExists.id },
@@ -102,10 +102,6 @@ class UsuarioController {
             const { id } = request.params;
             const { nome, cpf, email, senha, telefone, matricula } = request.body;
             if (!id) return httpHelper.badRequest('Parâmetros inválidos!');
-            // if (crn) {
-            //     const unityIsValid = Validates.validUnity(crn);
-            //     if (!unityIsValid) return httpHelper.badRequest('Unidade de medida inválido!');
-            // }
             const usuarioExists = await UsuarioModel.findByPk(id);
             const passwordHashed = await bcrypt.hash(
                 senha,

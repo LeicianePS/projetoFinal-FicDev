@@ -4,6 +4,7 @@ const { FoodController } = require('./controllers/food');
 const { UserController } = require('./controllers/user');
 const { NutricionistaController } = require('./controllers/nutricionista');
 
+const { UsuarioController } = require('./controllers/usuario')
 const { BatalhaoController } = require('./controllers/batalhao');
 const { RegiaoController } = require('./controllers/regiao');
 
@@ -11,12 +12,22 @@ const { authMiddleware } = require('./middleware/auth-middleware');
 
 const routes = Router();
 
+const usuarioController = new UsuarioController();
 const foodController = new FoodController();
 const userController = new UserController();
 const nutricionistaController = new NutricionistaController();
 
 const batalhaoController = new BatalhaoController();
 const regiaoController = new RegiaoController();
+
+
+
+routes.post('/usuario', authMiddleware, usuarioController.register);
+routes.post('/usuario-login', usuarioController.login);
+routes.get('/usuarios', authMiddleware, usuarioController.getAll);
+routes.delete('/usuario/:id', authMiddleware, usuarioController.delete);
+routes.put('/usuario/:id', authMiddleware, usuarioController.update);
+
 
 routes.post('/food', authMiddleware, foodController.create);
 routes.get('/foods', authMiddleware, foodController.getAll);
