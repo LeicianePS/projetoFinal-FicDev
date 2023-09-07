@@ -23,11 +23,19 @@
 
   }
 
+  a{
+    color: #1C2F36 !important;
+    text-decoration: none;
+  }
+
   .active {
     border: 1px solid #1C2F36;
     border-radius: 5px;
     color: #fff;
+    background-color: #fff !important;
   }
+
+
 
 
   .cor-layout{
@@ -36,10 +44,12 @@
   }
 
   .cor-page{
-    background-color: #F5F5F5 !important;
-    border-radius: 7px;
+    background-color: #d8d7d7f3 !important;
+    border-radius: 0px;
+    min-height: 100vh;
   }
 
+ 
 
 
 

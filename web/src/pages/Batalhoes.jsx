@@ -3,60 +3,60 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 
-import { Nutricionista } from "../components/Nutricionista";
+import { Batalhao } from "../components/Batalhao";
 import { Header } from "../components/Header";
 import { Input } from '../components/Input';
 
-import { createNutricionista, deleteNutricionista, getNutricionistas, updateNutricionista } from "../services/nutricionista-service";
+import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao } from "../services/batalhao-service";
 
-export function Nutricionistas() {
-    const [nutricionistas, setNutricionistas] = useState([]);
+export function Batalhoes() {
+    const [batalhoes, setBatalhoes] = useState([]);
     const [isCreated, setIsCreated] = useState(false);
     const { handleSubmit, register, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
     useEffect(() => {
-        findNutricionistas();
+        findBatalhoes();
         // eslint-disable-next-line
     }, []);
 
-    async function findNutricionistas() {
+    async function findBatalhoes() {
         try {
-            const result = await getNutricionistas();
-            setNutricionistas(result.data);
+            const result = await getBatalhoes();
+            setBatalhoes(result.data);
         } catch (error) {
             console.error(error);
             navigate('/');
         }
     }
 
-    async function removeNutricionista(id) {
+    async function removeBatalhao(id) {
         try {
-            await deleteNutricionista(id);
-            await findNutricionistas();
+            await deleteBatalhao(id);
+            await findBatalhoes();
         } catch (error) {
             console.error(error);
         }
     }
 
-    async function addNutricionista(data) {
+    async function addBatalhao(data) {
         try {
-            await createNutricionista(data);
+            await createBatalhao(data);
             setIsCreated(false);
-            await findNutricionistas();
+            await findBatalhoes();
         } catch (error) {
             console.error(error);
         }
     }
 
-    async function editNutricionista(data) {
+    async function editBatalhao(data) {
         try {
-            await updateNutricionista({
+            await updateBatalhao({
                 id: data.id,
-                nameNutricionista: data.nameNutricionista,
-                crnNutricionista: data.crnNutricionista
+                nameBatalhao: data.nameBatalhao,
+                crnBatalhao: data.crnBatalhao
             });
-            await findNutricionistas();
+            await findBatalhoes();
         } catch (error) {
             console.error(error);
         }
@@ -69,11 +69,11 @@ export function Nutricionistas() {
 
 
     return (
-        <Container fluid className="cor-page min-height">
-            <Header title="Nutricionistas" />
+        <Container fluid>
+            <Header title="Batalhoes" />
             <Row className="w-50 m-auto mb-5 mt-5 ">
                 <Col md='10'>
-                    <Button onClick={() => setIsCreated(true)}>Criar novo nutricionista</Button>
+                    <Button onClick={() => setIsCreated(true)}>Criar novo batalhão</Button>
                 </Col>
                 <Col>
                     <Button variant="outline-secondary" onClick={() => {
@@ -83,51 +83,51 @@ export function Nutricionistas() {
                 </Col>
             </Row>
             <Col className="w-50 m-auto">
-                {nutricionistas && nutricionistas.length > 0
-                    ? nutricionistas.map((nutricionista, index) => (
-                        <Nutricionista
+                {batalhoes && batalhoes.length > 0
+                    ? batalhoes.map((batalhao, index) => (
+                        <Batalhao
                             key={index}
-                            nutricionista={nutricionista}
-                            removeNutricionista={async () => await removeNutricionista(nutricionista.id)}
-                            editNutricionista={editNutricionista}
+                            batalhao={batalhao}
+                            removeBatalhao={async () => await removeBatalhao(batalhao.id)}
+                            editBatalhao={editBatalhao}
                         />
                     ))
-                    : <p className="text-center">Não existe nenhum nutricionista cadastrado!</p>}
+                    : <p className="text-center">Não existe nenhum batalhão cadastrado!</p>}
             </Col>
             {/* Formulário dentro do Modal, ideal seria componentizar também, pois é parecido com o Modal de editar */}
             <Modal show={isCreated} onHide={() => setIsCreated(false)}>
                 <Modal.Header>
-                    <Modal.Title>Cadastrar novo nutricionista</Modal.Title>
+                    <Modal.Title>Cadastrar novo batalhão</Modal.Title>
                 </Modal.Header>
-                <Form noValidate onSubmit={handleSubmit(addNutricionista)} validated={!!errors}>
+                <Form noValidate onSubmit={handleSubmit(addBatalhao)} validated={!!errors}>
                     <Modal.Body>
                         <Input
                             className="mb-3"
                             type='text'
-                            label='Nome do nutricionista'
-                            placeholder='Insira o nome do nutricionista'
+                            label='Nome do batalhão'
+                            placeholder='Insira o nome do batalhão'
                             required={true}
-                            name='nameNutricionista'
-                            error={errors.nameNutricionista}
-                            validations={register('nameNutricionista', {
+                            name='nameBatalhao'
+                            error={errors.nameBatalhao}
+                            validations={register('nameBatalhao', {
                                 required: {
                                     value: true,
-                                    message: 'Nome do nutricionista é obrigatório.'
+                                    message: 'Nome do batalhão é obrigatório.'
                                 }
                             })}
                         />
                         <Input
                             className="mb-3"
                             type='text'
-                            label='CRN do nutricionista'
-                            placeholder='Insira o crn do nutricionista'
+                            label='CRN do batalhão'
+                            placeholder='Insira o crn do batalhão'
                             required={true}
-                            name='crnNutricionista'
-                            error={errors.crnNutricionista}
-                            validations={register('crnNutricionista', {
+                            name='crnBatalhao'
+                            error={errors.crnBatalhao}
+                            validations={register('crnBatalhao', {
                                 required: {
                                     value: true,
-                                    message: 'CRN do nutricionista é obrigatório.'
+                                    message: 'CRN do batalhão é obrigatório.'
                                 }
                             })}
                         />

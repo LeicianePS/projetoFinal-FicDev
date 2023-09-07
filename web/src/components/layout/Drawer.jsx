@@ -1,6 +1,6 @@
 // Drawer.jsx
 import React from 'react';
-import { Nav } from 'react-bootstrap';
+import { Nav, Col } from 'react-bootstrap';
 
 import { Link, useLocation } from 'react-router-dom';
 
@@ -13,24 +13,26 @@ const DrawerMenu = () => {
   };
 
   return (
-    <Nav className="col-md-3 col-lg-2 d-md-block cor-layout text-dark sidebar ">
+    <Nav className="col-md-3 col-lg-2 d-md-block cor-layout text-dark">
       {/* Adicione links de navegação ou itens de menu aqui */}
-
-      <ul>
-        <b>GESTÃO</b>   
-        <li className={isActive('/darkmode') ? 'active' : ''}>
-          <Link to="/darkmode">Dark Mode</Link>
-        </li>
-        <li className={isActive('/nutricionistas') ? 'active' : ''}>
-          <Link to="/nutricionistas">Nutricionista</Link>
-        </li>
-      </ul>
-      <ul>
-        <b>ACESSO</b>
-        <li className={isActive('/foods') ? 'active' : ''}>
-          <Link to="/foods">Usuários</Link>
-        </li>
-      </ul>
+        <Col md={6} className="d-none d-md-block col-md-12 col-lg-12">
+          {/* Conteúdo visível apenas em telas médias e maiores */}
+          <ul>
+            <b>GESTÃO</b>   
+            <li className={isActive('/darkmode') ? 'active' : ''}>
+              <Link to="/darkmode">Dark Mode</Link>
+            </li>
+            <li className={isActive('/nutricionistas') ? 'active' : ''}>
+              <Link to="/nutricionistas">Nutricionista</Link>
+            </li>
+          </ul>
+          <ul>
+            <b>ACESSO</b>
+            <li className={isActive('/foods') ? 'active' : ''}>
+              <Link to="/foods">Usuários</Link>
+            </li>
+          </ul>
+        </Col>
     </Nav>
   );
 }

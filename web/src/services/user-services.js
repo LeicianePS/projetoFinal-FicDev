@@ -1,14 +1,33 @@
+// import { api } from './api'
+
+// export async function registerUser(data) {
+//     const result = await api.post('/register', data);
+//     sessionStorage.setItem('token', JSON.stringify(result.data.accessToken));
+// }
+
+// export async function loginUser(data) {
+//     const result = await api.post('/login', data);
+//     sessionStorage.setItem('token', JSON.stringify(result.data.accessToken));
+//     //sessionStorage.setItem('user', JSON.stringify(result.data));
+//     debugger
+//     window.localStorage.setItem('user', data.email)
+// }
+
+
+
+
+
+
 import { api } from './api'
 
 export async function registerUser(data) {
-    const result = await api.post('/register', data);
+    const result = await api.post('/usuario', data);
     sessionStorage.setItem('token', JSON.stringify(result.data.accessToken));
 }
 
 export async function loginUser(data) {
-    const result = await api.post('/login', data);
+    const result = await api.post('/usuario-login', data);
     sessionStorage.setItem('token', JSON.stringify(result.data.accessToken));
-    //sessionStorage.setItem('user', JSON.stringify(result.data));
     debugger
-    window.localStorage.setItem('user', data.email)
+    window.localStorage.setItem('user', data.cpf)
 }

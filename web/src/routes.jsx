@@ -9,6 +9,7 @@ import { Foods } from "./pages/Foods";
 import { Nutricionistas } from './pages/Nutricionistas'
 import DarkModeExemple from './pages/DarkModeExemple'
 import MainLayout from './components/MainLayout'; // Importe seu layout principal aqui
+import { Batalhoes } from './pages/Batalhoes'
 
 
 import { isAuthenticated } from './utils/is-authenticated';
@@ -43,6 +44,16 @@ export function Navigations() {
             <Routes>
                 <Route index path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+
+                <Route
+                    path="/batalhoes"
+                    element={(
+                        <PrivateRoute>
+                            <Batalhoes />
+                        </PrivateRoute>
+                    )}
+                />
+
                 <Route
                     path="/foods"
                     element={(

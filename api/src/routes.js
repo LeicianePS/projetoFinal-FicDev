@@ -22,7 +22,7 @@ const regiaoController = new RegiaoController();
 
 
 
-routes.post('/usuario', authMiddleware, usuarioController.register);
+routes.post('/usuario', usuarioController.register);
 routes.post('/usuario-login', usuarioController.login);
 routes.get('/usuarios', authMiddleware, usuarioController.getAll);
 routes.delete('/usuario/:id', authMiddleware, usuarioController.delete);
