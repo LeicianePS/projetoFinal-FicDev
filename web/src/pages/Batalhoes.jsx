@@ -69,7 +69,7 @@ export function Batalhoes() {
 
 
     return (
-        <Container fluid>
+        <Container fluid className="cor-page min-height">
             <Header title="Batalhoes" />
             <Row className="w-50 m-auto mb-5 mt-5 ">
                 <Col md='10'>

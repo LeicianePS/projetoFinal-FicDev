@@ -49,7 +49,9 @@ export function Navigations() {
                     path="/batalhoes"
                     element={(
                         <PrivateRoute>
-                            <Batalhoes />
+                            <MainLayout>
+                                <Batalhoes />
+                            </MainLayout>
                         </PrivateRoute>
                     )}
                 />

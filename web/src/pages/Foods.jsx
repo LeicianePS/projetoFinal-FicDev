@@ -63,7 +63,7 @@ export function Foods() {
     }
 
     return (
-        <Container fluid className="bg-light">
+        <Container fluid className="cor-page min-height">
             <Header title="Alimentos" />
             <Row>
                 <Col md='10'>

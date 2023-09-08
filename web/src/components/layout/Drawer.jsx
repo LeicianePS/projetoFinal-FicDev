@@ -19,6 +19,9 @@ const DrawerMenu = () => {
           {/* Conteúdo visível apenas em telas médias e maiores */}
           <ul>
             <b>GESTÃO</b>   
+            <li className={isActive('/batalhoes') ? 'active' : ''}>
+              <Link to="/batalhoes">Batalhões</Link>
+            </li>
             <li className={isActive('/darkmode') ? 'active' : ''}>
               <Link to="/darkmode">Dark Mode</Link>
             </li>
