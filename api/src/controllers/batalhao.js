@@ -2,6 +2,8 @@ const { HttpHelper } = require('../utils/http-helper');
 const { BatalhaoModel } = require('../models/batalhao-model');
 const { Validates } = require('../utils/validates');
 
+const sequelize = require("sequelize")
+
 class BatalhaoController {
     async create(request, response) {
         const httpHelper = new HttpHelper(response);
@@ -110,6 +112,23 @@ class BatalhaoController {
             return httpHelper.ok({
                 message: 'Batalhao atualizado com sucesso!'
             });
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
+
+    async batalhoesCR(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const batalhao_CR = await BatalhaoModel.findAll({
+                attributes: [
+                'comando_regional', // Substitua pelo nome correto do campo que identifica o Comando Regional
+                [sequelize.fn('COUNT', sequelize.col('*')), 'quantidadeBatalhoes'],
+                ],
+                group: ['comando_regional'], // Substitua pelo nome correto do campo que identifica o Comando Regional
+            });
+            return httpHelper.ok(batalhao_CR);
         } catch (error) {
             return httpHelper.internalError(error);
         }

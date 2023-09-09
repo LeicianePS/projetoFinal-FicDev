@@ -35,6 +35,11 @@
     background-color: #fff !important;
   }
 
+  .caixa-pesquisa{
+    border: 1px solid #1C2F36;
+    padding: 0px 10px;
+    border-radius: 5px;
+  }
 
 
 
@@ -50,8 +55,6 @@
   }
 
  
-
-
 
 
 

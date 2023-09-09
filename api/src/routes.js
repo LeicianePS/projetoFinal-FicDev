@@ -54,6 +54,7 @@ routes.post('/batalhao', batalhaoController.create);
 routes.get('/batalhoes', batalhaoController.getAll);
 routes.delete('/batalhao/:id', batalhaoController.delete);
 routes.put('/batalhao/:id', batalhaoController.update);
+routes.get('/batalhao-cr', batalhaoController.batalhoesCR);
 
 routes.post('/regiao', regiaoController.create);
 routes.get('/regioes', regiaoController.getAll);

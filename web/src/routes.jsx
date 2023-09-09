@@ -9,7 +9,8 @@ import { Foods } from "./pages/Foods";
 import { Nutricionistas } from './pages/Nutricionistas'
 import DarkModeExemple from './pages/DarkModeExemple'
 import MainLayout from './components/MainLayout'; // Importe seu layout principal aqui
-import { Batalhoes } from './pages/Batalhoes'
+import { Batalhoes } from './pages/batalhao/Batalhoes'
+import { AdicionarBatalhao } from './pages/batalhao/AdicionarBatalhao'
 
 
 import { isAuthenticated } from './utils/is-authenticated';
@@ -51,6 +52,16 @@ export function Navigations() {
                         <PrivateRoute>
                             <MainLayout>
                                 <Batalhoes />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+                <Route
+                    path="/batalhao-adicionar"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <AdicionarBatalhao />
                             </MainLayout>
                         </PrivateRoute>
                     )}

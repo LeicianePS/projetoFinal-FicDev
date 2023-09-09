@@ -1,7 +1,7 @@
 export function Header(props) {
     return (
         <header>
-            <h1 className="text-center p-3">{props.title}</h1>
+            <h4 className="text-start">{props.title}</h4>
         </header>
     )
 }

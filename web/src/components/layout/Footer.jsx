@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="footer cor-layout">
       {/* Conteúdo do rodapé */}
-      <p>Todos os direitos reservados</p>
+      <p>Secretaria Estadual de Segurança Pública (SESP-MT) </p>
        
     </footer>
   );
