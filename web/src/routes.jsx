@@ -11,6 +11,7 @@ import DarkModeExemple from './pages/DarkModeExemple'
 import MainLayout from './components/MainLayout'; // Importe seu layout principal aqui
 import { Batalhoes } from './pages/batalhao/Batalhoes'
 import { AdicionarBatalhao } from './pages/batalhao/AdicionarBatalhao'
+import { EditarBatalhao } from './pages/batalhao/EditarBatalhao'
 
 
 import { isAuthenticated } from './utils/is-authenticated';
@@ -66,6 +67,19 @@ export function Navigations() {
                         </PrivateRoute>
                     )}
                 />
+                <Route
+                    path="/batalhao-editar/:id"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <EditarBatalhao />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+
+
+
 
                 <Route
                     path="/foods"

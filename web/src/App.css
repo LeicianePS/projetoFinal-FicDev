@@ -18,27 +18,35 @@
   }
   
   ul li a{
-    color: #1C2F36 !important;
+    color: #3e4e54 !important;
     text-decoration: none;
 
   }
 
+  button a {
+    color: #F5F5F5 !important;
+  }
   a{
-    color: #1C2F36 !important;
+    color: #3e4e54 !important;
     text-decoration: none;
   }
 
   .active {
-    border: 1px solid #1C2F36;
+    border: 1px solid #3e4e54;
     border-radius: 5px;
     color: #fff;
     background-color: #fff !important;
   }
 
   .caixa-pesquisa{
-    border: 1px solid #1C2F36;
-    padding: 0px 10px;
+    border: 1px solid #bfc4c7;
+    padding: 10px 15px;
     border-radius: 5px;
+    background-color: white;
+  }
+  .caixa-pesquisa input {
+    border: solid 1px #3e4e54;
+    
   }
 
 
@@ -49,12 +57,19 @@
   }
 
   .cor-page{
-    background-color: #d8d7d7f3 !important;
+    background-color: #e4e1e1f3 !important;
     border-radius: 0px;
     min-height: 100vh;
   }
 
- 
+.login-left{
+  background-color: #193282;
+}
+
+ .image-login {
+  padding: 0;
+  height: 100vh;
+ }
 
 
 

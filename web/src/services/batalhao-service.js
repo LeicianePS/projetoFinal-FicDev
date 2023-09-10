@@ -23,8 +23,17 @@ export async function deleteBatalhao(id) {
 export async function updateBatalhao(data) {
     const accessToken = sessionStorage.getItem('token');
     const result = await api.put(`/batalhao/${data.id}`, {
-        nome: data.nameBatalhao,
-        crn: data.crnBatalhao
+        nome_batalhao: data.nomeBatalhao,
+        data_fundacao: data.dataFundacao,
+        comandante: data.comandante,
+        tipo: data.tipo,
+        efetivo: data.efetivo,
+        missao_valores: data.missaoValores,
+        contato: data.contato,
+        comando_regional: data.comandoRegional,
+        status: data.statusC,
+        id_regiao: data.idRegiao
+
     }, {
         headers: {
             'Authorization': `Bearer ${JSON.parse(accessToken)}`
@@ -36,8 +45,16 @@ export async function updateBatalhao(data) {
 export async function createBatalhao(data) {
     const accessToken = sessionStorage.getItem('token');
     const result = await api.post('/batalhao', {
-        nome: data.nameBatalhao,
-        crn: data.crnBatalhao
+        nome_batalhao: data.nomeBatalhao,
+        data_fundacao: data.dataFundacao,
+        comandante: data.comandante,
+        tipo: data.tipo,
+        efetivo: data.efetivo,
+        missao_valores: data.missaoValores,
+        contato: data.contato,
+        comando_regional: data.comandoRegional,
+        status: data.statusC,
+        id_regiao: data.idRegiao
     }, {
         headers: {
             'Authorization': `Bearer ${JSON.parse(accessToken)}`

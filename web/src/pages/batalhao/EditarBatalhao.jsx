@@ -1,29 +1,54 @@
-import { useState } from "react";
-import { Container, Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Container, Button, Col, Form, Modal, Row, Card } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 import { Input } from "../../components/Input";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao } from "../../services/batalhao-service";
 import { Header } from "../../components/Header";
 
-export function AdicionarBatalhao(props) {
+export function EditarBatalhao(props) {
     const { handleSubmit, register, formState: { errors } } = useForm();
     
- 
+    const [batalhaoEdit, setBatalhaoEdit] = useState([]);
+    const { idBatalhao } = useParams();
+
+    useEffect(() => {
+        var jsonBatalhaoEdit = window.localStorage.getItem('batalhaoEditar')
+        var batalhaoEditar = JSON.parse(jsonBatalhaoEdit);
+        setBatalhaoEdit(batalhaoEditar);
+        // eslint-disable-next-line
+    }, []);
     const navigate = useNavigate();
 
-    async function addBatalhao(data) {
+    
+    async function editBatalhao(data) {
         try {
-            await createBatalhao(data);
-            navigate('/batalhoes');
+            await updateBatalhao({
+                id: batalhaoEdit.id,
+                nomeBatalhao: data.nomeBatalhao,
+                dataFundacao: data.dataFundacao,
+                comandante: data.comandante,
+                tipo: data.tipo,
+                efetivo: data.efetivo,
+                missaoValores: data.missaoValores,
+                contato: data.contato,
+                comandoRegional: data.comandoRegional,
+                status: data.statusC,
+                idRegiao: data.idRegiao
+            });
+            await navigate('/batalhoes');
         } catch (error) {
             console.error(error);
         }
     }
 
-    const cancel = () => {
+
+
+
+    const cancel = ()=> {
+        window.localStorage.removeItem('batalhaoEditar')
         navigate('/batalhoes')
     }
 
@@ -32,19 +57,15 @@ export function AdicionarBatalhao(props) {
         <Container fluid className="cor-page min-height ">
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
-                    <Header title="Cadastro de Batalhões"  />
+                    <Header title="Atualização de Batalhões"  />
                 </Col>
-                {/* <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => setIsCreated(true)}>
-                        <Link to="/batalhao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
-                    </Button>
-                  
-                </Col> */}
+
             </Row>
 
 
+            <Card.Title><strong>Nome: </strong>{batalhaoEdit.nome_batalhao}</Card.Title>
             
-            <Form className="mx-4 pb-3" noValidate onSubmit={handleSubmit(addBatalhao)} validated={!!errors}>
+            <Form className="mx-4 pb-3" validate onSubmit={handleSubmit(editBatalhao)} validated={!!errors}>
                 <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light">
 
                     <Row>
@@ -60,6 +81,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='text'
+                                    defaultValue={batalhaoEdit.nome_batalhao}
                                     label=''
                                     placeholder='Insira o nome do Batalhão'
                                     required={true}
@@ -80,7 +102,8 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='text'
-                        
+                                    defaultValue={batalhaoEdit.comandante}
+                                    label=''
                                     placeholder='Comandante'
                                     required={true}
                                     name='comandante'
@@ -104,6 +127,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='date'
+                                    defaultValue={batalhaoEdit.data_fundacao}
                                     label=''
                                     placeholder='Data de fundacao do Batalhão'
                                     required={true}
@@ -124,6 +148,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='text'
+                                    defaultValue={batalhaoEdit.tipo}
                                     label=''
                                     placeholder='Tipo do Batalhão'
                                     required={true}
@@ -144,6 +169,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='number'
+                                    defaultValue={batalhaoEdit.efetivo}
                                     label=''
                                     placeholder='Efetivo do Batalhão'
                                     required={true}
@@ -164,6 +190,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='text'
+                                    defaultValue={batalhaoEdit.comando_regional}
                                     label=''
                                     placeholder='Insira o nome CR do Batalhão'
                                     required={true}
@@ -186,6 +213,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='text'
+                                    defaultValue={batalhaoEdit.missao_valores}
                                     label=''
                                     placeholder='Insira missão e valor'
                                     required={false}
@@ -208,6 +236,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='text'
+                                    defaultValue={batalhaoEdit.contato}
                                     label=''
                                     placeholder='Insira o nome do Batalhão'
                                     required={true}
@@ -231,6 +260,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='text'
+                                    defaultValue={batalhaoEdit.status}
                                     label=''
                                     placeholder='Insira status do Batalhão'
                                     required={true}
@@ -251,6 +281,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='number'
+                                    defaultValue={batalhaoEdit.id_regiao}
                                     label=''
                                     placeholder='Insira o Comando Regional do Batalhão'
                                     required={true}
@@ -266,21 +297,6 @@ export function AdicionarBatalhao(props) {
                             </Form.Group>
                         </Col>
                     </Row>
-                    {/* <Input
-                        className="mb-3"
-                        type='text'
-                        label='CRN do batalhão'
-                        placeholder='Insira o crn do batalhão'
-                        required={true}
-                        name='crnNutricionista'
-                        error={errors.crnNutricionista}
-                        validations={register('crnNutricionista', {
-                            required: {
-                                value: true,
-                                message: 'CRN do batalhão é obrigatório.'
-                            }
-                        })}
-                    /> */}
                 </Modal.Body>
                 <Modal.Footer>
                    <Button variant="outline-secondary" onClick={() => cancel()} className="mx-4">
