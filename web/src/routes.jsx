@@ -19,6 +19,9 @@ import { EditarRegiao } from './pages/regiao/EditarRegiao'
 
 
 import { isAuthenticated } from './utils/is-authenticated';
+import { Usuarios } from './pages/usuarios/Usuarios';
+import { AdicionarUsuario } from './pages/usuarios/AdicionarUsuario';
+import { EditarUsuario } from './pages/usuarios/EditarUsuario';
 
 /**
  * Cria rotas autenticadas
@@ -111,6 +114,42 @@ export function Navigations() {
                         <PrivateRoute>
                             <MainLayout>
                                 <EditarRegiao />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+
+
+
+
+
+
+                <Route
+                    path="/usuarios"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <Usuarios />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+                <Route
+                    path="/usuario-adicionar"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <AdicionarUsuario />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+                <Route
+                    path="/usuario-editar/:id"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <EditarUsuario />
                             </MainLayout>
                         </PrivateRoute>
                     )}

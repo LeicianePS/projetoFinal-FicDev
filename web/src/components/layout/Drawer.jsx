@@ -34,8 +34,8 @@ const DrawerMenu = () => {
           </ul>
           <ul>
             <b>ACESSO</b>
-            <li className={isActive('/foods') ? 'active' : ''}>
-              <Link to="/foods">Usuários</Link>
+            <li className={isActive('/usuarios') ? 'active' : ''}>
+              <Link to="/usuarios">Usuários</Link>
             </li>
           </ul>
         </Col>

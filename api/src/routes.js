@@ -27,6 +27,7 @@ routes.post('/usuario-login', usuarioController.login);
 routes.get('/usuarios', authMiddleware, usuarioController.getAll);
 routes.delete('/usuario/:id', authMiddleware, usuarioController.delete);
 routes.put('/usuario/:id', authMiddleware, usuarioController.update);
+routes.post('/usuario-filtro', usuarioController.usuariosFiltro);
 
 
 routes.post('/food', authMiddleware, foodController.create);

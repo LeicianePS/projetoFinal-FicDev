@@ -3,6 +3,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { UsuarioModel } = require('../models/usuario-model');
 
+const { Sequelize } = require('sequelize');
+const configDatabase = require('../database/config');
+
+const sequelize = new Sequelize(configDatabase);
+
 class UsuarioController {
     async register(request, response) {
         const httpHelper = new HttpHelper(response);
@@ -121,6 +126,30 @@ class UsuarioController {
             return httpHelper.ok({
                 message: 'Usuário atualizado com sucesso!'
             });
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
+
+
+
+
+
+    async usuariosFiltro(request, response) {
+        const httpHelper = new HttpHelper(response);
+
+        const paramPesquisa = request.body.paramPesquisa;
+
+        try {
+            const results = await sequelize.query(
+                `SELECT * FROM usuario WHERE nome LIKE :paramPesquisa OR email LIKE :paramPesquisa OR cpf LIKE :paramPesquisa`,
+            {
+                replacements: { paramPesquisa: `%${paramPesquisa}%` }, // % é usado para corresponder a qualquer parte da string
+                type: sequelize.QueryTypes.SELECT,
+            }
+              );
+            return httpHelper.ok(results);
         } catch (error) {
             return httpHelper.internalError(error);
         }
