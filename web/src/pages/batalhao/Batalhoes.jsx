@@ -2,13 +2,13 @@ import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-import { FaPlus, FaSearch, FaTrash, FaEdit } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes } from 'react-icons/fa';
 
 import { Batalhao } from "../../components/Batalhao";
 import { Header } from "../../components/Header";
 import { Input } from '../../components/Input';
 
-import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao } from "../../services/batalhao-service";
+import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao, filtroBatalhao } from "../../services/batalhao-service";
 
 export function Batalhoes() {
     const [batalhoes, setBatalhoes] = useState([]);
@@ -49,6 +49,18 @@ export function Batalhoes() {
             console.error(error);
         }
     }
+
+    async function filtrarBatalhao(query) {
+        try {
+            const result = await filtroBatalhao(query);
+            setBatalhoes(result.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    
+
     const [isUpdated, setIsUpdated] = useState(false);
 
     async function editBatalhao(data) {
@@ -89,19 +101,14 @@ export function Batalhoes() {
 
     const [query, setQuery] = useState('');
   
-    // Esta função será chamada quando o formulário for enviado
-    const handleSearch = (e) => {
+    // Função que ativa a filtragem de pesquisa
+    const handleSearch = async (e) => {
       e.preventDefault();
-      
-      // Aqui você pode implementar a lógica de busca com base na consulta "query"
-      // e, em seguida, definir os resultados da pesquisa em "searchResults".
-      // Por enquanto, vou apenas simular uma lista de resultados para fins de exemplo.
-      const simulatedResults = [
-        { name: 'Item 1', type: 'A' },
-        { name: 'Item 2', type: 'B' },
-        { name: 'Item 3', type: 'A' },
-      ];
-      setBatalhoes(simulatedResults);
+        if(query == '') {
+            await findBatalhoes()
+        } else {
+            await filtrarBatalhao(query)
+        }
     };
 
 
@@ -134,7 +141,7 @@ export function Batalhoes() {
                     </Col> */}
                     <Col>
                         <Form.Group controlId="searchQuery">
-                            <Form.Label  className="b-0">Buscar por Nome ou Tipo:</Form.Label>
+                            <Form.Label  className="b-0">Buscar por Nome ou Tipo ou Comandante:</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Digite a consulta"
@@ -146,30 +153,19 @@ export function Batalhoes() {
                 </Row>
 
                 <Col className="d-flex justify-content-end pt-3 pb-2">
+                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarBatalhao('')}} className="align-items-center mx-4">
+                        Limpar <FaTimes/>
+                    </Button>
                     <Button variant="outline-primary" type="submit" className="align-items-center">
                         Pesquisar <FaSearch/>
                     </Button>
                 </Col>
             </Form>
 
-            {/* <Form onSubmit={handleSearch}>
-                <Form.Group controlId="searchQuery">
-                    <Form.Label>Buscar por Nome ou Tipo:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Digite a consulta"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                    />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                Pesquisar
-                </Button>
-            </Form>         */}
 
             <Row className="justify-content-between m-4 align-items-center bg-light">
                 <h5>Batalhões</h5>
-                <Table responsive striped bordered hover className="col-md-10 my-1">
+                <Table responsive striped bordered hover className="col-md-10 my-1 d-none d-md-block">
                     <thead>
                         <tr>
                             <th>id</th>

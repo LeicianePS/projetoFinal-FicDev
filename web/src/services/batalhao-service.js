@@ -62,3 +62,16 @@ export async function createBatalhao(data) {
     });
     return result;
 }
+
+
+export async function filtroBatalhao(search) {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.post('/batalhao-filtro', {
+        paramPesquisa: search
+    }, {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}
