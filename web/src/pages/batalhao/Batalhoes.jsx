@@ -49,21 +49,30 @@ export function Batalhoes() {
             console.error(error);
         }
     }
+    const [isUpdated, setIsUpdated] = useState(false);
 
     async function editBatalhao(data) {
         try {
             await updateBatalhao({
-                id: data.id,
-                nameBatalhao: data.nameBatalhao,
-                crnBatalhao: data.crnBatalhao
+                id: batalhaoEdit.id,
+                nomeBatalhao: data.nomeBatalhao,
+                dataFundacao: data.dataFundacao,
+                comandante: data.comandante,
+                tipo: data.tipo,
+                efetivo: data.efetivo,
+                missaoValores: data.missaoValores,
+                contato: data.contato,
+                comandoRegional: data.comandoRegional,
+                status: data.statusC,
+                idRegiao: data.idRegiao
             });
+            setIsUpdated(false);
             await findBatalhoes();
         } catch (error) {
             console.error(error);
         }
     }
 
-    const [isUpdated, setIsUpdated] = useState(false);
     const [batalhaoEdit, setBatalhaoEdit] = useState([]);
     const abrirModal = (trueFalse, batalhao ) => {
         setIsUpdated(trueFalse);
@@ -204,106 +213,253 @@ export function Batalhoes() {
             </Row>
 
 
-            <Modal show={isUpdated} onHide={() => setIsUpdated(false)}>
+            <Modal show={isUpdated} onHide={() => setIsUpdated(false)} size="xl">
                 <Modal.Header>
                     <Modal.Title>Editar batalhao: {batalhaoEdit.nome_batalhao}</Modal.Title>
                 </Modal.Header>
-                <Form noValidate onSubmit={handleSubmit(editBatalhao)} validated={!!errors}>
-                    <Modal.Body>
-                        <Input
-                            className="mb-3"
-                            type='text'
-                            defaultValue={batalhaoEdit.nome_batalhao}
-                            label='Nome do batalhao'
-                            placeholder='Insira o nome do batalhao'
-                            required={true}
-                            name='nomeBatalhao'
-                            error={errors.nomeBatalhao}
-                            validations={register('nomeBatalhao', {
-                                required: {
-                                    value: true,
-                                    message: 'Nome do batalhao é obrigatório.'
-                                }
-                            })}
-                        />
-                        <Input
-                            className="mb-3"
-                            type='text'
-                            defaultValue={batalhaoEdit.comandante}
-                            label='CRN do batalhao'
-                            placeholder='Insira o crn do batalhao'
-                            required={true}
-                            name='comandante'
-                            error={errors.comandante}
-                            validations={register('comandante', {
-                                required: {
-                                    value: true,
-                                    message: 'CRN do batalhao é obrigatório.'
-                                }
-                            })}
-                        />
+                
+
+
+                <Form className="mx-2 pb-3" validate onSubmit={handleSubmit(editBatalhao)} validated={!!errors}>
+                    <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light">
+
+                        <Row>
+                            <Col md='8'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Nome do Batalhão</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={batalhaoEdit.nome_batalhao}
+                                        label=''
+                                        placeholder='Insira o nome do Batalhão'
+                                        required={true}
+                                        name='nomeBatalhao'
+                                        error={errors.nomeBatalhao}
+                                        validations={register('nomeBatalhao', {
+                                            required: {
+                                                value: true,
+                                                message: 'Nome do batalhão é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md='4'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Comandante</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={batalhaoEdit.comandante}
+                                        label=''
+                                        placeholder='Comandante'
+                                        required={true}
+                                        name='comandante'
+                                        error={errors.comandante}
+                                        validations={register('comandante', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+
+                        <Row>
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Data de Fundação</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='date'
+                                        defaultValue={batalhaoEdit.data_fundacao}
+                                        label=''
+                                        placeholder='Data de fundacao do Batalhão'
+                                        required={true}
+                                        name='dataFundacao'
+                                        error={errors.dataFundacao}
+                                        validations={register('dataFundacao', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Tipo de Batalhão:</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={batalhaoEdit.tipo}
+                                        label=''
+                                        placeholder='Tipo do Batalhão'
+                                        required={true}
+                                        name='tipo'
+                                        error={errors.tipo}
+                                        validations={register('tipo', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Nº de Efetivo:</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='number'
+                                        defaultValue={batalhaoEdit.efetivo}
+                                        label=''
+                                        placeholder='Efetivo do Batalhão'
+                                        required={true}
+                                        name='efetivo'
+                                        error={errors.efetivo}
+                                        validations={register('efetivo', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Comando Regional:</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={batalhaoEdit.comando_regional}
+                                        label=''
+                                        placeholder='Insira o nome CR do Batalhão'
+                                        required={true}
+                                        name='comandoRegional'
+                                        error={errors.comandoRegional}
+                                        validations={register('comandoRegional', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Missões e Valores</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={batalhaoEdit.missao_valores}
+                                        label=''
+                                        placeholder='Insira missão e valor'
+                                        required={false}
+                                        name='missaoValores'
+                                        error={errors.missaoValores}
+                                        validations={register('missaoValores', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Contato (E-mail e telefone)</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={batalhaoEdit.contato}
+                                        label=''
+                                        placeholder='Insira o nome do Batalhão'
+                                        required={true}
+                                        name='contato'
+                                        error={errors.contato}
+                                        validations={register('contato', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md='6'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Status</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={batalhaoEdit.status}
+                                        label=''
+                                        placeholder='Insira status do Batalhão'
+                                        required={true}
+                                        name='statusC'
+                                        error={errors.statusC}
+                                        validations={register('statusC', {
+                                            required: {
+                                                value: true,
+                                                message: 'Nome do batalhão é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md='6'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Região de atuação</Form.Label>
+                                    <Input
+                                        className="mb-3"
+                                        type='number'
+                                        defaultValue={batalhaoEdit.id_regiao}
+                                        label=''
+                                        placeholder='Insira o Comando Regional do Batalhão'
+                                        required={true}
+                                        name='idRegiao'
+                                        error={errors.idRegiao}
+                                        validations={register('idRegiao', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary" type="submit">
-                            Editar
-                        </Button>
-                        <Button variant="secondary" onClick={() => setIsUpdated(false)}>
-                            Fechar
-                        </Button>
+                            <Button variant="primary" type="submit">
+                                Criar
+                            </Button>
+                            <Button variant="secondary" onClick={() => setIsUpdated(false)}>
+                                Fechar
+                            </Button>
+                        
                     </Modal.Footer>
                 </Form>
             </Modal>
 
 
-
-            {/* Formulário dentro do Modal, ideal seria componentizar também, pois é parecido com o Modal de editar */}
-            {/* <Modal show={isCreated} onHide={() => setIsCreated(false)}>
-                <Modal.Header>
-                    <Modal.Title>Cadastrar novo batalhão</Modal.Title>
-                </Modal.Header>
-                <Form noValidate onSubmit={handleSubmit(addBatalhao)} validated={!!errors}>
-                    <Modal.Body>
-                        <Input
-                            className="mb-3"
-                            type='text'
-                            label='Nome do batalhão'
-                            placeholder='Insira o nome do batalhão'
-                            required={true}
-                            name='nameBatalhao'
-                            error={errors.nameBatalhao}
-                            validations={register('nameBatalhao', {
-                                required: {
-                                    value: true,
-                                    message: 'Nome do batalhão é obrigatório.'
-                                }
-                            })}
-                        />
-                        <Input
-                            className="mb-3"
-                            type='text'
-                            label='CRN do batalhão'
-                            placeholder='Insira o crn do batalhão'
-                            required={true}
-                            name='crnBatalhao'
-                            error={errors.crnBatalhao}
-                            validations={register('crnBatalhao', {
-                                required: {
-                                    value: true,
-                                    message: 'CRN do batalhão é obrigatório.'
-                                }
-                            })}
-                        />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="primary" type="submit">
-                            Criar
-                        </Button>
-                        <Button variant="secondary" onClick={() => setIsCreated(false)}>
-                            Fechar
-                        </Button>
-                    </Modal.Footer>
-                </Form>
-            </Modal> */}
 
 
         </Container>
