@@ -2,6 +2,11 @@ const { HttpHelper } = require('../utils/http-helper');
 const { RegiaoModel } = require('../models/regiao-model');
 const { Validates } = require('../utils/validates');
 
+const { Sequelize } = require('sequelize');
+const configDatabase = require('../database/config');
+
+const sequelize = new Sequelize(configDatabase);
+
 class RegiaoController {
     async create(request, response) {
         const httpHelper = new HttpHelper(response);
@@ -67,6 +72,35 @@ class RegiaoController {
             return httpHelper.ok({
                 message: 'Região atualizado com sucesso!'
             });
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    async regioesFiltro(request, response) {
+        const httpHelper = new HttpHelper(response);
+
+        const paramPesquisa = request.body.paramPesquisa;
+
+        try {
+            const results = await sequelize.query(
+                `SELECT * FROM regiao WHERE nome_regiao LIKE :paramPesquisa OR cidadesbairros_atuacao LIKE :paramPesquisa`,
+            {
+                replacements: { paramPesquisa: `%${paramPesquisa}%` }, // % é usado para corresponder a qualquer parte da string
+                type: sequelize.QueryTypes.SELECT,
+            }
+              );
+            return httpHelper.ok(results);
         } catch (error) {
             return httpHelper.internalError(error);
         }

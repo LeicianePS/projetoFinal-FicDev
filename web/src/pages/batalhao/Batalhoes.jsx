@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes } from 'react-icons/fa';
 
-import { Batalhao } from "../../components/Batalhao";
+//import { Batalhao } from "../../components/Batalhao";
 import { Header } from "../../components/Header";
 import { Input } from '../../components/Input';
 
@@ -141,7 +141,7 @@ export function Batalhoes() {
                     </Col> */}
                     <Col>
                         <Form.Group controlId="searchQuery">
-                            <Form.Label  className="b-0">Buscar por Nome ou Tipo ou Comandante:</Form.Label>
+                            <Form.Label  className="b-0">Buscar por Nome, Tipo ou Comandante:</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Digite a consulta"
@@ -163,9 +163,9 @@ export function Batalhoes() {
             </Form>
 
 
-            <Row className="justify-content-between m-4 align-items-center bg-light">
+            <Row className="justify-content-between m-4 align-items-center bg-light ">   {/* d-none d-md-block */}
                 <h5>Batalhões</h5>
-                <Table responsive striped bordered hover className="col-md-10 my-1 d-none d-md-block">
+                <Table responsive striped bordered hover className="col-md-10 my-1 ">
                     <thead>
                         <tr>
                             <th>id</th>

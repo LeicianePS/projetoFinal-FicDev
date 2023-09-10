@@ -13,6 +13,10 @@ import { Batalhoes } from './pages/batalhao/Batalhoes'
 import { AdicionarBatalhao } from './pages/batalhao/AdicionarBatalhao'
 import { EditarBatalhao } from './pages/batalhao/EditarBatalhao'
 
+import { Regioes } from './pages/regiao/Regioes'
+import { AdicionarRegiao } from './pages/regiao/AdicionarRegiao'
+import { EditarRegiao } from './pages/regiao/EditarRegiao'
+
 
 import { isAuthenticated } from './utils/is-authenticated';
 
@@ -73,6 +77,40 @@ export function Navigations() {
                         <PrivateRoute>
                             <MainLayout>
                                 <EditarBatalhao />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+
+
+
+
+                <Route
+                    path="/regioes"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <Regioes />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+                <Route
+                    path="/regiao-adicionar"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <AdicionarRegiao />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+                <Route
+                    path="/regiao-editar/:id"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <EditarRegiao />
                             </MainLayout>
                         </PrivateRoute>
                     )}

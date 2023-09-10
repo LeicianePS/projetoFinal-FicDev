@@ -22,12 +22,15 @@ const DrawerMenu = () => {
             <li className={isActive('/batalhoes') ? 'active' : ''}>
               <Link to="/batalhoes">Batalhões</Link>
             </li>
-            <li className={isActive('/darkmode') ? 'active' : ''}>
+            <li className={isActive('/regioes') ? 'active' : ''}>
+              <Link to="/regioes">Regiões</Link>
+            </li>
+            {/* <li className={isActive('/darkmode') ? 'active' : ''}>
               <Link to="/darkmode">Dark Mode</Link>
             </li>
             <li className={isActive('/nutricionistas') ? 'active' : ''}>
               <Link to="/nutricionistas">Nutricionista</Link>
-            </li>
+            </li> */}
           </ul>
           <ul>
             <b>ACESSO</b>

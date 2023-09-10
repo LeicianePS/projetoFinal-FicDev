@@ -61,6 +61,7 @@ routes.post('/regiao', regiaoController.create);
 routes.get('/regioes', regiaoController.getAll);
 routes.delete('/regiao/:id_regiao', regiaoController.delete);
 routes.put('/regiao/:id_regiao', regiaoController.update);
+routes.post('/regiao-filtro', regiaoController.regioesFiltro);
 
 
 routes.post('/register', userController.register);
