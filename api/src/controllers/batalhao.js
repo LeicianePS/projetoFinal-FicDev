@@ -2,7 +2,10 @@ const { HttpHelper } = require('../utils/http-helper');
 const { BatalhaoModel } = require('../models/batalhao-model');
 const { Validates } = require('../utils/validates');
 
-const sequelize = require("sequelize")
+const { Sequelize } = require('sequelize');
+const configDatabase = require('../database/config');
+
+const sequelize = new Sequelize(configDatabase);
 
 class BatalhaoController {
     async create(request, response) {
@@ -112,6 +115,29 @@ class BatalhaoController {
             return httpHelper.ok({
                 message: 'Batalhao atualizado com sucesso!'
             });
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
+
+
+
+
+    async batalhoesFiltro(request, response) {
+        const httpHelper = new HttpHelper(response);
+
+        const paramPesquisa = request.body.paramPesquisa;
+
+        try {
+            const results = await sequelize.query(
+                `SELECT * FROM batalhao WHERE nome_batalhao LIKE :paramPesquisa OR tipo LIKE :paramPesquisa OR comandante LIKE :paramPesquisa`,
+            {
+                replacements: { paramPesquisa: `%${paramPesquisa}%` }, // % é usado para corresponder a qualquer parte da string
+                type: sequelize.QueryTypes.SELECT,
+            }
+              );
+            return httpHelper.ok(results);
         } catch (error) {
             return httpHelper.internalError(error);
         }
