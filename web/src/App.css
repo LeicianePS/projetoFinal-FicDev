@@ -38,6 +38,16 @@
     background-color: #fff !important;
   }
 
+  .pagination .page-item {
+    margin:1px !important;
+    padding: 0px ;
+  }
+  .pagination .active {
+    --bs-pagination-active-bg: #3e4e54 !important;
+    --bs-pagination-active-border-color: rgb(0, 183, 255);
+    border: none;
+  }
+
   .caixa-pesquisa{
     border: 1px solid #bfc4c7;
     padding: 10px 15px;

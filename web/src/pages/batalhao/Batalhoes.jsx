@@ -2,24 +2,59 @@ import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes, FaPen } from 'react-icons/fa';
 
 //import { Batalhao } from "../../components/Batalhao";
 import { Header } from "../../components/Header";
 import { Input } from '../../components/Input';
 
 import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao, filtroBatalhao } from "../../services/batalhao-service";
+import PaginationComponent from "../../components/PaginationComponent";
+import {  getRegioes } from "../../services/regiao-service";
 
 export function Batalhoes() {
     const [batalhoes, setBatalhoes] = useState([]);
     const [isCreated, setIsCreated] = useState(false);
     const { handleSubmit, register, formState: { errors } } = useForm();
+    const [regioes, setRegioes] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         findBatalhoes();
+        findRegioes();
         // eslint-disable-next-line
     }, []);
+    async function findRegioes() {
+        try {
+            const result = await getRegioes();
+            setRegioes(result.data);
+        } catch (error) {
+            console.error(error);
+            navigate('/');
+        }
+    }
+
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5); // Número de itens por página
+   
+    const totalPages = Math.ceil(batalhoes.length / itemsPerPage);
+
+    // getCurrentPageData carrega os dados da pagina atual, que são mostrados na tabela
+    const getCurrentPageData = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return batalhoes.slice(startIndex, endIndex);
+    };
+    // Função para ir para uma página específica
+    const goToPage = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+        setCurrentPage(pageNumber);
+        }
+    };
+
+
+
 
     async function findBatalhoes() {
         try {
@@ -179,7 +214,7 @@ export function Batalhoes() {
                     </thead>
                     <tbody>
                         {batalhoes && batalhoes.length > 0
-                        ? batalhoes.map((batalhao, index) => (
+                        ? getCurrentPageData().map((batalhao, index) => (
                             <tr key={index}>
                                 <td>{batalhao.id}</td>
                                 <td>{batalhao.nome_batalhao}</td>
@@ -190,7 +225,7 @@ export function Batalhoes() {
                                 <td className="d-flex justify-content-center">
                                     <Link className="mx-1 px-1" onClick={() => abrirModal(true, batalhao)}><FaEdit size="18px"/></Link> 
                                     
-                                    {/* <Link className="mx-1 px-1" to={`/batalhao-editar/${batalhao.id}`}><FaEdit size="18px"/></Link>  */}
+                                    {/* <Link className="mx-1 px-1" to={`/batalhao-editar/${batalhao.id}`}><FaPen size="18px"/></Link>  */}
                                     
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarBatalhao(batalhao)}><FaEdit size="18px"/></button>  */}
                                     <Link className="mx-1 px-1" onClick={async () => await removeBatalhao(batalhao.id)}><FaTrash size="18px"/></Link>
@@ -206,6 +241,13 @@ export function Batalhoes() {
                         )}
                     </tbody>
                 </Table>
+
+                <PaginationComponent
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={goToPage}
+                />
+
             </Row>
 
 
@@ -420,7 +462,7 @@ export function Batalhoes() {
                                     />
                                 </Form.Group>
                             </Col>
-                            <Col md='6'>
+                            {/* <Col md='6'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Região de atuação</Form.Label>
                                     <Input
@@ -440,12 +482,37 @@ export function Batalhoes() {
                                         })}
                                     />
                                 </Form.Group>
+                            </Col> */}
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Região de Atuação</Form.Label>
+                                    {/* Use o Form.Select para selecionar a região */}
+                                    <Form.Select
+                                    aria-label="Selecione uma região"
+                                    defaultValue={batalhaoEdit.id_regiao}
+                                    name='idRegiao'
+                                    error={errors.idRegiao}
+                                    {...register('idRegiao', {
+                                        required: {
+                                        value: true,
+                                        message: 'Região de atuação é obrigatória.'
+                                        }
+                                    })}
+                                    >
+                                    <option value="">Selecione uma região</option>
+                                    {regioes.map((regiao, index) => (
+                                        <option key={index} value={regiao.id_regiao}>
+                                            {regiao.nome_regiao}
+                                        </option>
+                                    ))}
+                                    </Form.Select>
+                                </Form.Group>
                             </Col>
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
                             <Button variant="primary" type="submit">
-                                Criar
+                                Editar
                             </Button>
                             <Button variant="secondary" onClick={() => setIsUpdated(false)}>
                                 Fechar

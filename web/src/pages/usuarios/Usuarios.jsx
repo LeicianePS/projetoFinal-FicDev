@@ -2,16 +2,17 @@ import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes, FaPen } from 'react-icons/fa';
 
 //import { Usuario } from "../../components/Usuario";
 import { Header } from "../../components/Header";
 import { Input } from '../../components/Input';
 
 import { createUsuario, deleteUsuario, getUsuarios, updateUsuario, filtroUsuario } from "../../services/usuario-service";
+import PaginationComponent from "../../components/PaginationComponent";
 
 export function Usuarios() {
-    const [batalhoes, setUsuarios] = useState([]);
+    const [usuarios, setUsuarios] = useState([]);
     const [isCreated, setIsCreated] = useState(false);
     const { handleSubmit, register, formState: { errors } } = useForm();
     const navigate = useNavigate();
@@ -20,6 +21,28 @@ export function Usuarios() {
         findUsuarios();
         // eslint-disable-next-line
     }, []);
+
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5); // Número de itens por página
+   
+    const totalPages = Math.ceil(usuarios.length / itemsPerPage);
+
+    // getCurrentPageData carrega os dados da pagina atual, que são mostrados na tabela
+    const getCurrentPageData = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return usuarios.slice(startIndex, endIndex);
+    };
+    // Função para ir para uma página específica
+    const goToPage = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+        setCurrentPage(pageNumber);
+        }
+    };
+
+
+
 
     async function findUsuarios() {
         try {
@@ -174,8 +197,8 @@ export function Usuarios() {
                         </tr>
                     </thead>
                     <tbody>
-                        {batalhoes && batalhoes.length > 0
-                        ? batalhoes.map((usuario, index) => (
+                        {usuarios && usuarios.length > 0
+                        ? getCurrentPageData().map((usuario, index) => (
                             <tr key={index}>
                                 <td>{usuario.id}</td>
                                 <td>{usuario.nome}</td>
@@ -186,7 +209,7 @@ export function Usuarios() {
                                 <td className="d-flex justify-content-center">
                                     <Link className="mx-1 px-1" onClick={() => abrirModal(true, usuario)}><FaEdit size="18px"/></Link> 
                                     
-                                    {/* <Link className="mx-1 px-1" to={`/usuario-editar/${usuario.id}`}><FaEdit size="18px"/></Link>  */}
+                                    {/* <Link className="mx-1 px-1" to={`/usuario-editar/${usuario.id}`}><FaPen size="18px"/></Link>  */}
                                     
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarUsuario(usuario)}><FaEdit size="18px"/></button>  */}
                                     <Link className="mx-1 px-1" onClick={async () => await removeUsuario(usuario.id)}><FaTrash size="18px"/></Link>
@@ -202,6 +225,13 @@ export function Usuarios() {
                         )}
                     </tbody>
                 </Table>
+
+                <PaginationComponent
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={goToPage}
+                />
+
             </Row>
 
 

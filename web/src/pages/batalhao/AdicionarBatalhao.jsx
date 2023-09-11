@@ -1,16 +1,32 @@
-import { useState } from "react";
-import { Container, Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Container, Button, Col, Form, Modal, Row, FloatingLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 import { Input } from "../../components/Input";
 
 import { useNavigate } from "react-router-dom";
 import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao } from "../../services/batalhao-service";
+import {  getRegioes } from "../../services/regiao-service";
+
 import { Header } from "../../components/Header";
 
 export function AdicionarBatalhao(props) {
     const { handleSubmit, register, formState: { errors } } = useForm();
-    
+    const [regioes, setRegioes] = useState([]);
+    useEffect(() => {
+        findRegioes();
+        
+        // eslint-disable-next-line
+    }, []);
+    async function findRegioes() {
+        try {
+            const result = await getRegioes();
+            setRegioes(result.data);
+        } catch (error) {
+            console.error(error);
+            navigate('/');
+        }
+    }
  
     const navigate = useNavigate();
 
@@ -245,7 +261,7 @@ export function AdicionarBatalhao(props) {
                                 />
                             </Form.Group>
                         </Col>
-                        <Col md='6'>
+                        {/* <Col md='3'>
                             <Form.Group controlId="searchQuery">
                                 <Form.Label className="mb-0">Região de atuação</Form.Label>
                                 <Input
@@ -264,7 +280,47 @@ export function AdicionarBatalhao(props) {
                                     })}
                                 />
                             </Form.Group>
+                        </Col> */}
+
+                        {/* <Col md='3'>
+                            <Form.Group controlId="searchQuery">
+                                <Form.Label className="mb-0">Região de atuação</Form.Label>
+                                <Form.Select aria-label="Floating label select example" >
+                                    <option value="">Selecione uma região</option>
+                                    {regioes.map((regiao, index) => (
+                                        <option key={index} value={regiao.id_regiao}>
+                                            {regiao.nome_regiao}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+                        </Col> */}
+
+                        <Col md='3'>
+                            <Form.Group controlId="searchQuery">
+                                <Form.Label className="mb-0">Região de Atuação</Form.Label>
+                                {/* Use o Form.Select para selecionar a região */}
+                                <Form.Select
+                                aria-label="Selecione uma região"
+                                name='idRegiao'
+                                error={errors.idRegiao}
+                                {...register('idRegiao', {
+                                    required: {
+                                    value: true,
+                                    message: 'Região de atuação é obrigatória.'
+                                    }
+                                })}
+                                >
+                                <option value="">Selecione uma região</option>
+                                {regioes.map((regiao, index) => (
+                                    <option key={index} value={regiao.id_regiao}>
+                                    {regiao.nome_regiao}
+                                    </option>
+                                ))}
+                                </Form.Select>
+                            </Form.Group>
                         </Col>
+                            
                     </Row>
                     {/* <Input
                         className="mb-3"

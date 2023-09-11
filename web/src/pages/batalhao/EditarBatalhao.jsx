@@ -7,11 +7,13 @@ import { Input } from "../../components/Input";
 import { useNavigate, useParams } from "react-router-dom";
 import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao, getBatalhaoById } from "../../services/batalhao-service";
 import { Header } from "../../components/Header";
+import {  getRegioes } from "../../services/regiao-service";
 
 export function EditarBatalhao(props) {
     const { handleSubmit, register, formState: { errors } } = useForm();
     
     const [batalhaoEdit, setBatalhaoEdit] = useState([]);
+    const [regioes, setRegioes] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
@@ -21,16 +23,29 @@ export function EditarBatalhao(props) {
         
         async function fetchBatalhao() {
             try {
-              const response = await getBatalhaoById(id);
-              setBatalhaoEdit(response.data);
+                const response = await getBatalhaoById(id);
+                await setBatalhaoEdit(response.data);
+                await findRegioes()
             } catch (error) {
-              console.error(error);
+                console.error(error);
             }
         }
-      
+        
         fetchBatalhao(); // Chame a função assíncrona imediatamenteta)
-
     }, [id]);
+    
+    async function findRegioes() {
+        try {
+            const result = await getRegioes();
+            setRegioes(result.data);
+            debugger
+        } catch (error) {
+            console.error(error);
+            navigate('/');
+        }
+    }
+    
+    
     const navigate = useNavigate();
 
     
@@ -286,7 +301,7 @@ export function EditarBatalhao(props) {
                                 />
                             </Form.Group>
                         </Col>
-                        <Col md='6'>
+                        {/* <Col md='6'>
                             <Form.Group controlId="searchQuery">
                                 <Form.Label className="mb-0">Região de atuação</Form.Label>
                                 <Input
@@ -305,6 +320,31 @@ export function EditarBatalhao(props) {
                                         }
                                     })}
                                 />
+                            </Form.Group>
+                        </Col> */}
+                        <Col md='3'>
+                            <Form.Group controlId="searchQuery">
+                                <Form.Label className="mb-0">Região de Atuação</Form.Label>
+                                {/* Use o Form.Select para selecionar a região */}
+                                <Form.Select
+                                aria-label="Selecione uma região"
+                                defaultValue="Teste"
+                                name='idRegiao'
+                                error={errors.idRegiao}
+                                {...register('idRegiao', {
+                                    required: {
+                                    value: true,
+                                    message: 'Região de atuação é obrigatória.'
+                                    }
+                                })}
+                                >
+                                <option value="">Selecione uma região</option>
+                                {regioes.map((regiao, index) => (
+                                    <option key={index} value={regiao.id_regiao}>
+                                        {regiao.nome_regiao}
+                                    </option>
+                                ))}
+                                </Form.Select>
                             </Form.Group>
                         </Col>
                     </Row>

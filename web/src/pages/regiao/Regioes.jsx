@@ -1,14 +1,17 @@
-import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap";
+import { Container, Col, Modal, Row, Table, Form, Button, Pagination } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes, FaPen } from 'react-icons/fa';
 
 //import { Regiao } from "../../components/Regiao";
 import { Header } from "../../components/Header";
 import { Input } from '../../components/Input';
 
 import { createRegiao, deleteRegiao, getRegioes, updateRegiao, filtroRegiao } from "../../services/regiao-service";
+import PaginationComponent from "../../components/PaginationComponent";
+
+
 
 export function Regioes() {
     const [regioes, setRegioes] = useState([]);
@@ -16,11 +19,31 @@ export function Regioes() {
     const { handleSubmit, register, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
+    
     useEffect(() => {
         findRegioes();
         // eslint-disable-next-line
     }, []);
+    
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5); // Número de itens por página
+   
+    const totalPages = Math.ceil(regioes.length / itemsPerPage);
 
+    // getCurrentPageData carrega os dados da pagina atual, que são mostrados na tabela
+    const getCurrentPageData = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return regioes.slice(startIndex, endIndex);
+    };
+    // Função para ir para uma página específica
+    const goToPage = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+        setCurrentPage(pageNumber);
+        }
+    };
+
+    
     async function findRegioes() {
         try {
             const result = await getRegioes();
@@ -170,7 +193,7 @@ export function Regioes() {
                     </thead>
                     <tbody>
                         {regioes && regioes.length > 0
-                        ? regioes.map((regiao, index) => (
+                        ? getCurrentPageData().map((regiao, index) => (
                             <tr key={index}>
                                 <td>{regiao.id_regiao}</td>
                                 <td>{regiao.nome_regiao}</td>
@@ -179,7 +202,7 @@ export function Regioes() {
                                 <td className="d-flex justify-content-center">
                                     <Link className="mx-1 px-1" onClick={() => abrirModal(true, regiao)}><FaEdit size="18px"/></Link> 
                                     
-                                    {/* <Link className="mx-1 px-1" to={`/regiao-editar/${regiao.id}`}><FaEdit size="18px"/></Link>  */}
+                                    {/* <Link className="mx-1 px-1" to={`/regiao-editar/${regiao.id_regiao}`}><FaPen size="18px"/></Link>  */}
                                     
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarRegiao(regiao)}><FaEdit size="18px"/></button>  */}
                                     <Link className="mx-1 px-1" onClick={async () => await removeRegiao(regiao.id_regiao)}><FaTrash size="18px"/></Link>
@@ -195,6 +218,36 @@ export function Regioes() {
                         )}
                     </tbody>
                 </Table>
+
+
+
+                {/* <Pagination>
+                    <Pagination.Prev
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    />
+                        {Array.from({ length: totalPages }).map((_, index) => (
+                        
+                            <Pagination.Item
+                                key={index + 1}
+                                active={index + 1 === currentPage}
+                                onClick={() => setCurrentPage(index + 1)}
+                            >
+                                {index + 1}
+                            </Pagination.Item>
+                        ))}
+                    <Pagination.Next
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    />
+                </Pagination> */}
+
+                <PaginationComponent
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={goToPage}
+                />
+
             </Row>
 
 
