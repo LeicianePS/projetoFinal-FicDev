@@ -5,21 +5,32 @@ import { useForm } from "react-hook-form";
 import { Input } from "../../components/Input";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao } from "../../services/batalhao-service";
+import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao, getBatalhaoById } from "../../services/batalhao-service";
 import { Header } from "../../components/Header";
 
 export function EditarBatalhao(props) {
     const { handleSubmit, register, formState: { errors } } = useForm();
     
     const [batalhaoEdit, setBatalhaoEdit] = useState([]);
-    const { idBatalhao } = useParams();
+    const { id } = useParams();
 
     useEffect(() => {
-        var jsonBatalhaoEdit = window.localStorage.getItem('batalhaoEditar')
-        var batalhaoEditar = JSON.parse(jsonBatalhaoEdit);
-        setBatalhaoEdit(batalhaoEditar);
-        // eslint-disable-next-line
-    }, []);
+        // var jsonBatalhaoEdit = window.localStorage.getItem('batalhaoEditar')
+        // var batalhaoEditar = JSON.parse(jsonBatalhaoEdit);
+        // setBatalhaoEdit(batalhaoEditar);
+        
+        async function fetchBatalhao() {
+            try {
+              const response = await getBatalhaoById(id);
+              setBatalhaoEdit(response.data);
+            } catch (error) {
+              console.error(error);
+            }
+        }
+      
+        fetchBatalhao(); // Chame a função assíncrona imediatamenteta)
+
+    }, [id]);
     const navigate = useNavigate();
 
     
@@ -57,13 +68,13 @@ export function EditarBatalhao(props) {
         <Container fluid className="cor-page min-height ">
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
-                    <Header title="Atualização de Batalhões"  />
+                    <Header title="Atualizar Batalhão"  />
                 </Col>
 
             </Row>
 
 
-            <Card.Title><strong>Nome: </strong>{batalhaoEdit.nome_batalhao}</Card.Title>
+            <Card.Title className="mx-4 pb-3"><strong>Nome: </strong>{batalhaoEdit.nome_batalhao}</Card.Title>
             
             <Form className="mx-4 pb-3" validate onSubmit={handleSubmit(editBatalhao)} validated={!!errors}>
                 <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light">

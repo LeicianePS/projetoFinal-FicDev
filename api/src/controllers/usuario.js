@@ -136,6 +136,19 @@ class UsuarioController {
 
 
 
+
+    async getById(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const { id } = request.params;
+            const usuario = await UsuarioModel.findByPk(id);
+            return httpHelper.ok(usuario);
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
+
     async usuariosFiltro(request, response) {
         const httpHelper = new HttpHelper(response);
 

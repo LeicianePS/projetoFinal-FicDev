@@ -1,13 +1,25 @@
 // Footer.jsx
 import React from 'react';
+import { Container, Row } from 'react-bootstrap';
+import brasao from '../../assets/images/brasao_mt.png'; // Importe a imagem
+
 
 const Footer = () => {
   return (
-    <footer className="footer cor-layout">
-      {/* Conteúdo do rodapé */}
-      <p>Secretaria Estadual de Segurança Pública (SESP-MT) </p>
-       
-    </footer>
+    <Container className='align-items-center cor-layout'>
+      <footer className="footer d-flex justify-content-between" >
+        {/* Conteúdo do rodapé */}
+
+        <div>
+          <img src={brasao} alt="" width={"30px"} className='mx-2'/>
+          Governo de Mato Grosso
+        </div>
+        <div className='mx-2'>
+          Secretaria Estadual de Segurança Pública (SESP-MT)
+        </div>
+        
+      </footer>
+    </Container>
   );
 }
 

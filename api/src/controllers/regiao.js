@@ -82,7 +82,16 @@ class RegiaoController {
 
 
 
-
+    async getById(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const { id_regiao } = request.params;
+            const regiao = await RegiaoModel.findByPk(id_regiao);
+            return httpHelper.ok(regiao);
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
 
 
 

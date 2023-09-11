@@ -21,7 +21,7 @@ export function Login() {
         try {
             const user = await loginUser(data);
             setResult(user);
-            navigate('/nutricionistas');
+            navigate('/home-dash');
         } catch (error) {
             setResult({
                 title: 'Houve um erro no login!',

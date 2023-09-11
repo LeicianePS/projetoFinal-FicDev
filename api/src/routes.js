@@ -27,6 +27,7 @@ routes.post('/usuario-login', usuarioController.login);
 routes.get('/usuarios', authMiddleware, usuarioController.getAll);
 routes.delete('/usuario/:id', authMiddleware, usuarioController.delete);
 routes.put('/usuario/:id', authMiddleware, usuarioController.update);
+routes.get('/usuario/:id', usuarioController.getById);
 routes.post('/usuario-filtro', usuarioController.usuariosFiltro);
 
 
@@ -56,12 +57,14 @@ routes.get('/batalhoes', batalhaoController.getAll);
 routes.delete('/batalhao/:id', batalhaoController.delete);
 routes.put('/batalhao/:id', batalhaoController.update);
 routes.post('/batalhao-filtro', batalhaoController.batalhoesFiltro);
+routes.get('/batalhao/:id', batalhaoController.getById);
 routes.get('/batalhao-cr', batalhaoController.batalhoesCR);
 
 routes.post('/regiao', regiaoController.create);
 routes.get('/regioes', regiaoController.getAll);
 routes.delete('/regiao/:id_regiao', regiaoController.delete);
 routes.put('/regiao/:id_regiao', regiaoController.update);
+routes.get('/regiao/:id_regiao', regiaoController.getById);
 routes.post('/regiao-filtro', regiaoController.regioesFiltro);
 
 

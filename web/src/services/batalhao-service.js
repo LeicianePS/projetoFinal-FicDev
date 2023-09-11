@@ -64,6 +64,19 @@ export async function createBatalhao(data) {
 }
 
 
+
+
+export async function getBatalhaoById(id) {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get(`/batalhao/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}
+
+
 export async function filtroBatalhao(search) {
     const accessToken = sessionStorage.getItem('token');
     const result = await api.post('/batalhao-filtro', {

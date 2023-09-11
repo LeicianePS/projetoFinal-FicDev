@@ -160,7 +160,7 @@ export function Usuarios() {
 
 
             <Row className="justify-content-between m-4 align-items-center bg-light ">   {/* d-none d-md-block */}
-                <h5>Batalhões</h5>
+                <h5>Usuários</h5>
                 <Table responsive striped bordered hover className="col-md-10 my-1 ">
                     <thead>
                         <tr>

@@ -60,7 +60,8 @@ const Header = () => {
         </Nav>
 
         <Nav className="d-flex justify-content-start ">
-          <img src={logo} alt="" width={"100px"}/>
+        <Link to="/home-dash"><img src={logo} alt="" width={"100px"}/></Link>
+          
         </Nav>
 
         <Nav className="ml-auto d-flex justify-content-end" color='white'>

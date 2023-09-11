@@ -22,6 +22,7 @@ import { isAuthenticated } from './utils/is-authenticated';
 import { Usuarios } from './pages/usuarios/Usuarios';
 import { AdicionarUsuario } from './pages/usuarios/AdicionarUsuario';
 import { EditarUsuario } from './pages/usuarios/EditarUsuario';
+import { HomeDashboard } from './pages/HomeDashboard';
 
 /**
  * Cria rotas autenticadas
@@ -53,6 +54,17 @@ export function Navigations() {
             <Routes>
                 <Route index path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+
+                <Route
+                    path="/home-dash"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <HomeDashboard />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
 
                 <Route
                     path="/batalhoes"

@@ -51,6 +51,18 @@ export async function createRegiao(data) {
 }
 
 
+
+export async function getRegiaoById(id_regiao) {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get(`/regiao/${id_regiao}`, {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}
+
+
 export async function filtroRegiao(search) {
     const accessToken = sessionStorage.getItem('token');
     const result = await api.post('/regiao-filtro', {

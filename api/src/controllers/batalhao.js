@@ -124,6 +124,20 @@ class BatalhaoController {
 
 
 
+
+
+    async getById(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const { id } = request.params;
+            const batalhao = await BatalhaoModel.findByPk(id);
+            return httpHelper.ok(batalhao);
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
+
     async batalhoesFiltro(request, response) {
         const httpHelper = new HttpHelper(response);
 

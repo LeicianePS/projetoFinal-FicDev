@@ -56,6 +56,17 @@ export async function createUsuario(data) {
 }
 
 
+
+export async function getUsuarioById(id) {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get(`/usuario/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}
+
 export async function filtroUsuario(search) {
     const accessToken = sessionStorage.getItem('token');
     const result = await api.post('/usuario-filtro', {
