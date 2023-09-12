@@ -88,3 +88,24 @@ export async function filtroBatalhao(search) {
     });
     return result;
 }
+
+
+export async function getBatalhoesCR() {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get('/batalhoes-cr', {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}
+
+export async function getEfetivoCR() {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get('/efetivo-cr', {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}

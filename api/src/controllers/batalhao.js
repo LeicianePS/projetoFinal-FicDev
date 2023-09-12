@@ -145,12 +145,12 @@ class BatalhaoController {
 
         try {
             const results = await sequelize.query(
-                `SELECT * FROM batalhao WHERE nome_batalhao LIKE :paramPesquisa OR tipo LIKE :paramPesquisa OR comandante LIKE :paramPesquisa`,
-            {
-                replacements: { paramPesquisa: `%${paramPesquisa}%` }, // % é usado para corresponder a qualquer parte da string
-                type: sequelize.QueryTypes.SELECT,
-            }
-              );
+                    `SELECT * FROM batalhao WHERE nome_batalhao LIKE :paramPesquisa OR tipo LIKE :paramPesquisa OR comandante LIKE :paramPesquisa`,
+                {
+                    replacements: { paramPesquisa: `%${paramPesquisa}%` }, // % é usado para corresponder a qualquer parte da string
+                    type: sequelize.QueryTypes.SELECT,
+                }
+            );
             return httpHelper.ok(results);
         } catch (error) {
             return httpHelper.internalError(error);
@@ -169,6 +169,22 @@ class BatalhaoController {
                 group: ['comando_regional'], // Substitua pelo nome correto do campo que identifica o Comando Regional
             });
             return httpHelper.ok(batalhao_CR);
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
+     async efetivoCR(request, response) { //`SELECT SUM(efetivo), comando_regional FROM batalhao GROUP BY comando_regional`
+        const httpHelper = new HttpHelper(response);
+        try {
+            const efetivoCR = await BatalhaoModel.findAll({
+                attributes: [
+                  'comando_regional',
+                  [sequelize.fn('SUM', sequelize.col('efetivo')), 'somaEfetivo'],
+                ],
+                group: ['comando_regional'],
+              });
+            return httpHelper.ok(efetivoCR);
         } catch (error) {
             return httpHelper.internalError(error);
         }

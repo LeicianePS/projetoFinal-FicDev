@@ -58,7 +58,8 @@ routes.delete('/batalhao/:id', batalhaoController.delete);
 routes.put('/batalhao/:id', batalhaoController.update);
 routes.post('/batalhao-filtro', batalhaoController.batalhoesFiltro);
 routes.get('/batalhao/:id', batalhaoController.getById);
-routes.get('/batalhao-cr', batalhaoController.batalhoesCR);
+routes.get('/batalhoes-cr', batalhaoController.batalhoesCR);
+routes.get('/efetivo-cr', batalhaoController.efetivoCR);
 
 routes.post('/regiao', regiaoController.create);
 routes.get('/regioes', regiaoController.getAll);

@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import ApexCharts from 'react-apexcharts';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
