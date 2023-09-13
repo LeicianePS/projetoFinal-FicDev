@@ -12,10 +12,12 @@ class UsuarioController {
     async register(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
-            const { nome, cpf, email, senha, telefone, matricula } = request.body;
-            if (!email || !senha) return httpHelper.badRequest('E-mail e senha são obrigatórios!');
+            const { nome, cpf, email, telefone, matricula } = request.body;
+            const senha = cpf;
+            if (!nome || !cpf || !email || !telefone || !matricula) return httpHelper.badRequest('E-mail e senha são obrigatórios!');
             const usuarioAlreadyExists = await UsuarioModel.findOne({ where: { email } });
             if (usuarioAlreadyExists) return httpHelper.badRequest('E-mail de usuário já cadastrado!');
+            
             const passwordHashed = await bcrypt.hash(
                 senha,
                 Number(process.env.SALT)
@@ -78,7 +80,9 @@ class UsuarioController {
     async getAll(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
-            const usuarios = await UsuarioModel.findAll();
+            const usuarios = await UsuarioModel.findAll({
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
+            });
             return httpHelper.ok(usuarios);
         } catch (error) {
             return httpHelper.internalError(error);
@@ -141,7 +145,10 @@ class UsuarioController {
         const httpHelper = new HttpHelper(response);
         try {
             const { id } = request.params;
-            const usuario = await UsuarioModel.findByPk(id);
+            const usuario = await UsuarioModel.findByPk(id, {
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
+                
+            });
             return httpHelper.ok(usuario);
         } catch (error) {
             return httpHelper.internalError(error);
