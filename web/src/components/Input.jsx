@@ -11,7 +11,7 @@ export function Input(props) {
                     required={props.required}
                     id={props.name}
                     name={props.name}
-                    defaultValue={props.defaultValue} 
+                    defaultValue={props.defaultValue}
                     {...props.validations}
                 />
                 {props.error && (
@@ -20,7 +20,7 @@ export function Input(props) {
                     </Form.Control.Feedback>
                 )}
             {/* </FloatingLabel>*/}
-        </Form.Group> 
+        </Form.Group>
     );
 
 

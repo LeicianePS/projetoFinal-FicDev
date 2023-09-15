@@ -70,7 +70,9 @@ class RegiaoController {
                 where: { id_regiao }
             });
             return httpHelper.ok({
-                message: 'Região atualizado com sucesso!'
+                message: 'Região atualizado com sucesso!',
+                variant: "success"
+
             });
         } catch (error) {
             return httpHelper.internalError(error);

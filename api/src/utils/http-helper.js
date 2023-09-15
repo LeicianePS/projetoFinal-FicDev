@@ -32,7 +32,9 @@ class HttpHelper {
 
     internalError(error) {
         return this.response.status(500).json({
-            error: `Erro interno: ${error}`
+            message: `Erro interno: ${error}`,
+            variant: "danger",
+
         });
     }
 }

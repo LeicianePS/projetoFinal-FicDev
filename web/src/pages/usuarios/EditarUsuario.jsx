@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "../../components/Input";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { createUsuario, deleteUsuario, getUsuarios, updateUsuario, getUsuarioById } from "../../services/usuario-service";
+import { updateUsuario, getUsuarioById } from "../../services/usuario-service";
 import { Header } from "../../components/Header";
 
 export function EditarUsuario(props) {

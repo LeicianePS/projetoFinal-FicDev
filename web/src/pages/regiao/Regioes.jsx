@@ -10,24 +10,27 @@ import { Input } from '../../components/Input';
 
 import { createRegiao, deleteRegiao, getRegioes, updateRegiao, filtroRegiao } from "../../services/regiao-service";
 import PaginationComponent from "../../components/PaginationComponent";
+import AlertaFeedback from "../../components/layout/Alert";
 
 
 
 export function Regioes() {
     const [regioes, setRegioes] = useState([]);
+    const [alerta, setAlerta] = useState({});
     const [isCreated, setIsCreated] = useState(false);
+    const [show, setShow] = useState(false);
     const { handleSubmit, register, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-    
+
     useEffect(() => {
         findRegioes();
         // eslint-disable-next-line
     }, []);
-    
+
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5); // Número de itens por página
-   
+
     const totalPages = Math.ceil(regioes.length / itemsPerPage);
 
     // getCurrentPageData carrega os dados da pagina atual, que são mostrados na tabela
@@ -43,7 +46,7 @@ export function Regioes() {
         }
     };
 
-    
+
     async function findRegioes() {
         try {
             const result = await getRegioes();
@@ -82,26 +85,31 @@ export function Regioes() {
         }
     }
 
-    
+
 
     const [isUpdated, setIsUpdated] = useState(false);
 
     async function editRegiao(data) {
         try {
-            await updateRegiao({
+            const result = await updateRegiao({
                 id: regiaoEdit.id_regiao,
                 nomeRegiao: data.nomeRegiao,
                 populacao: data.populacao,
                 cidadesJurisdicao: data.cidadesJurisdicao,
             });
+
             setIsUpdated(false);
+            setShow(true);
+            setAlerta(result.data);
             await findRegioes();
         } catch (error) {
             console.error(error);
+            setShow(true);
+            setAlerta(error.response.data);
         }
     }
 
-    const [regiaoEdit, setRegiaoEdit] = useState([]);
+    const [regiaoEdit, setRegiaoEdit] = useState({});
     const abrirModal = (trueFalse, regiao ) => {
         setIsUpdated(trueFalse);
         setRegiaoEdit(regiao)
@@ -116,7 +124,7 @@ export function Regioes() {
 
 
     const [query, setQuery] = useState('');
-  
+
     // Função que ativa a filtragem de pesquisa
     const handleSearch = async (e) => {
       e.preventDefault();
@@ -131,7 +139,13 @@ export function Regioes() {
 
 
     return (
+
         <Container fluid className="cor-page min-height">
+
+            { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
+
+
+
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
                     <Header title="Listagem de Regiões"  />
@@ -146,7 +160,7 @@ export function Regioes() {
                     }}>Sair</Button> */}
                 </Col>
             </Row>
-                     
+
             <Form className="mx-4 my-3 caixa-pesquisa " onSubmit={handleSearch}>
                 <Row className="justify-content-between align-items-center">
                     {/* <Col >
@@ -200,10 +214,10 @@ export function Regioes() {
                                 <td>{regiao.populacao}</td>
                                 <td>{regiao. cidadesbairros_atuacao}</td>
                                 <td className="d-flex justify-content-center">
-                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, regiao)}><FaEdit size="18px"/></Link> 
-                                    
+                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, regiao)}><FaEdit size="18px"/></Link>
+
                                     {/* <Link className="mx-1 px-1" to={`/regiao-editar/${regiao.id_regiao}`}><FaPen size="18px"/></Link>  */}
-                                    
+
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarRegiao(regiao)}><FaEdit size="18px"/></button>  */}
                                     <Link className="mx-1 px-1" onClick={async () => await removeRegiao(regiao.id_regiao)}><FaTrash size="18px"/></Link>
                                 </td>
@@ -227,7 +241,7 @@ export function Regioes() {
                         disabled={currentPage === 1}
                     />
                         {Array.from({ length: totalPages }).map((_, index) => (
-                        
+
                             <Pagination.Item
                                 key={index + 1}
                                 active={index + 1 === currentPage}
@@ -255,13 +269,11 @@ export function Regioes() {
                 <Modal.Header>
                     <Modal.Title>Editar regiao: {regiaoEdit.nome_regiao}</Modal.Title>
                 </Modal.Header>
-                
-
 
                 <Form className="mx-2 pb-3" validate onSubmit={handleSubmit(editRegiao)} validated={!!errors}>
                     <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light">
 
-                        <Row>
+                        {/* <Row>
                             <Col md='8'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Nome do Região</Form.Label>
@@ -269,7 +281,7 @@ export function Regioes() {
                                         className="mb-3"
                                         type='text'
                                         defaultValue={regiaoEdit.nome_regiao}
-                                        label=''
+                                        label='Nome da Região'
                                         placeholder='Insira o nome do Região'
                                         required={true}
                                         name='nomeRegiao'
@@ -306,11 +318,10 @@ export function Regioes() {
                             </Col>
                         </Row>
 
-
                         <Row>
                             <Col md='12'>
                                 <Form.Group controlId="searchQuery">
-                                    <Form.Label className="mb-0">Tipo de Região:</Form.Label>
+                                    <Form.Label className="mb-0">Jurisdição:</Form.Label>
                                     <Input
                                         className="mb-3"
                                         type='text'
@@ -329,26 +340,76 @@ export function Regioes() {
                                     />
                                 </Form.Group>
                             </Col>
-                            
-    
-                        </Row>
-                        
+                        </Row> */}
+
+                        <Form.Group controlId="searchQuery" className="mb-3">
+                            <Form.Label className="mb-0">Nome do Região</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder='Insira o nome da Região'
+                                defaultValue={regiaoEdit.nome_regiao}
+                                name='nomeRegiao'
+                                error={errors.nomeRegiao}
+                                required={true}
+
+                                validations={register('nomeRegiao', {
+                                    required: {
+                                        value: true,
+                                        message: 'Nome da região é obrigatório.'
+                                    }
+                                })}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="searchQuery" className="mb-3">
+                            <Form.Label className="mb-0">Nome do Região</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder='Insira o nome da Região'
+                                defaultValue={regiaoEdit.populacao}
+                                name='nomeRegiao'
+                                error={errors.nomeRegiao}
+                                required={true}
+
+                                validations={register('nomeRegiao', {
+                                    required: {
+                                        value: true,
+                                        message: 'Nome da região é obrigatório.'
+                                    }
+                                })}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="searchQuery" className="mb-3">
+                            <Form.Label className="mb-0">Nome do Região</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder='Insira o nome da Região'
+                                defaultValue={regiaoEdit.cidadesbairros_atuacao}
+                                name='nomeRegiao'
+                                error={errors.nomeRegiao}
+                                required={true}
+
+                                validations={register('nomeRegiao', {
+                                    required: {
+                                        value: true,
+                                        message: 'Nome da região é obrigatório.'
+                                    }
+                                })}
+                            />
+                        </Form.Group>
+
                     </Modal.Body>
                     <Modal.Footer>
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="submit" onClick={() => navigate('/regioes')}>
                                 Editar
                             </Button>
                             <Button variant="secondary" onClick={() => setIsUpdated(false)}>
                                 Fechar
                             </Button>
-                        
                     </Modal.Footer>
                 </Form>
             </Modal>
-
-
-
-
         </Container>
     );
 }

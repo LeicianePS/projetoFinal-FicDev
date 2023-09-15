@@ -22,7 +22,7 @@ class RegiaoModel extends Model {
 
 
     static associate(models) {
-        this.belongsTo(models.BatalhaoModel, { foreignKey: 'id_regiao'})
+        this.hasOne(models.BatalhaoModel, { foreignKey: 'id_regiao'})
     }
 }
 

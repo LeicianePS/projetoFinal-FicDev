@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Card} from "react-bootstrap";
 import ApexCharts from 'react-apexcharts';
 import { getEfetivoCR } from '../../services/batalhao-service'; // Importe a função da API correta
 
@@ -60,7 +61,8 @@ const EfetivoCRChart = () => {
   }, []);
 
   return (
-    <div>
+    <div className='p-5'>
+      <Card.Header className="d-flex justify-content-start"><Card.Title> Efetivo por Comando Regional</Card.Title></Card.Header>
       <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={350} width={500} />
     </div>
   );

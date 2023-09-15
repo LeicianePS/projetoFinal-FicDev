@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "../../components/Input";
 
 import { useNavigate } from "react-router-dom";
-import { createRegiao, deleteRegiao, getRegioes, updateRegiao } from "../../services/regiao-service";
+import { createRegiao } from "../../services/regiao-service";
 import { Header } from "../../components/Header";
 
 export function AdicionarRegiao(props) {

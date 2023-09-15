@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "../../components/Input";
 
 import { useNavigate } from "react-router-dom";
-import { createUsuario, deleteUsuario, getUsuarios, updateUsuario } from "../../services/usuario-service";
+import { createUsuario} from "../../services/usuario-service";
 import { Header } from "../../components/Header";
 
 export function AdicionarUsuario(props) {

@@ -11,7 +11,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        unique: true,
         references: { model: 'regiao', key: 'id_regiao' },
       }
     );

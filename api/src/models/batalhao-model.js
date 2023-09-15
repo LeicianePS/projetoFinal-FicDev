@@ -27,7 +27,7 @@ class BatalhaoModel extends Model {
 
 
     static associate(models) {
-        this.hasOne(models.RegiaoModel, { foreignKey: 'id_regiao'})
+        this.belongsTo(models.RegiaoModel, { foreignKey: 'id_regiao'})
     }
 }
 

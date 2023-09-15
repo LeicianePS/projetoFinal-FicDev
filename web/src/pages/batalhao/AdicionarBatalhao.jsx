@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "../../components/Input";
 
 import { useNavigate } from "react-router-dom";
-import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao } from "../../services/batalhao-service";
+import { createBatalhao } from "../../services/batalhao-service";
 import {  getRegioes } from "../../services/regiao-service";
 
 import { Header } from "../../components/Header";

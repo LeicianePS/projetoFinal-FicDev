@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "../../components/Input";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao, getBatalhaoById } from "../../services/batalhao-service";
+import { updateBatalhao, getBatalhaoById } from "../../services/batalhao-service";
 import { Header } from "../../components/Header";
 import {  getRegioes } from "../../services/regiao-service";
 
@@ -69,8 +69,6 @@ export function EditarBatalhao(props) {
             console.error(error);
         }
     }
-
-
 
 
     const cancel = ()=> {

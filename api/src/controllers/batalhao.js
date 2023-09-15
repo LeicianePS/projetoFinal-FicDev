@@ -157,6 +157,19 @@ class BatalhaoController {
         }
     }
 
+    async batalhoesTotal(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const batalhaoTotal = await BatalhaoModel.findAll({
+                attributes: [
+                    [sequelize.fn('COUNT', sequelize.col('id')), 'somaBatalhao'],
+                ]
+            });
+            return httpHelper.ok(batalhaoTotal);
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
 
     async batalhoesCR(request, response) {
         const httpHelper = new HttpHelper(response);
@@ -185,6 +198,20 @@ class BatalhaoController {
                 group: ['comando_regional'],
               });
             return httpHelper.ok(efetivoCR);
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
+    async efetivoTotal(request, response) { 
+        const httpHelper = new HttpHelper(response);
+        try {
+            const efetivoTotal = await BatalhaoModel.findAll({
+                attributes: [
+                  [sequelize.fn('SUM', sequelize.col('efetivo')), 'somaEfetivo'],
+                ],
+              });
+            return httpHelper.ok(efetivoTotal);
         } catch (error) {
             return httpHelper.internalError(error);
         }

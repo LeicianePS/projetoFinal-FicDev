@@ -109,3 +109,23 @@ export async function getEfetivoCR() {
     });
     return result;
 }
+
+export async function getBatalhoesTotal() {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get('/batalhoes-total', {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}
+
+export async function getEfetivoTotal() {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get('/efetivo-total', {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}

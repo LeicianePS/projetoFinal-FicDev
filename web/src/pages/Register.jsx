@@ -18,7 +18,7 @@ export function Register() {
         try {
             const user = await registerUser(data);
             setResult(user);
-            navigate('/nutricionistas');
+            navigate('/home-dash');
         } catch (error) {
             setResult({
                 title: 'Houve um erro no cadastro!',
