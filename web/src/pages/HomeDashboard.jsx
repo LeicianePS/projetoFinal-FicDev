@@ -40,7 +40,7 @@ export function HomeDashboard(){
     return(
         <Container fluid className="cor-page min-height ">
     
-            {/* <Card style={{ width: '18rem' }}>
+            {/* <Card style={{ width: '15rem' }}>
                 <Card.Body>
                     <Card.Title>Card Title</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
@@ -50,13 +50,13 @@ export function HomeDashboard(){
                     </Card.Text>
                 </Card.Body>
             </Card> */}
-            <Row className="d-flex justify-content-between p-4">
+            <Row className="d-flex justify-content-between p-3">
                 <Row className="d-flex justify-content-between col-6">
                     <Row>
                         <Col>
                             <Card
                                 key='dark'
-                                style={{ width: '18rem' }}
+                                style={{ width: '15rem' }}
                                 className="mb-2"
                                 bg="dark"
                                 text="light"
@@ -73,7 +73,7 @@ export function HomeDashboard(){
                         <Col>
                             <Card
                                 key='dark'
-                                style={{ width: '18rem' }}
+                                style={{ width: '15rem' }}
                                 className="mb-2"
                                 bg="dark"
                                 text="light"
@@ -93,7 +93,7 @@ export function HomeDashboard(){
                         <Col>
                             <Card
                                 key='dark'
-                                style={{ width: '18rem' }}
+                                style={{ width: '15rem' }}
                                 className="mb-2"
                                 bg="dark"
                                 text="light"
@@ -110,7 +110,7 @@ export function HomeDashboard(){
                         <Col>
                             <Card
                                 key='dark'
-                                style={{ width: '18rem' }}
+                                style={{ width: '15rem' }}
                                 className="mb-2"
                                 bg="dark"
                                 text="light"

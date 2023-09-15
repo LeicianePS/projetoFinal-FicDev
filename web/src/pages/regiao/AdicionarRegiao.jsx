@@ -94,7 +94,7 @@ export function AdicionarRegiao(props) {
                         <Row>
                             <Col md='12'>
                                 <Form.Group controlId="searchQuery">
-                                    <Form.Label className="mb-0">Tipo de Região:</Form.Label>
+                                    <Form.Label className="mb-0">Jurisdição</Form.Label>
                                     <Input
                                         className="mb-3"
                                         type='text'
