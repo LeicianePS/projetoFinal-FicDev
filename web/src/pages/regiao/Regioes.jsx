@@ -13,12 +13,13 @@ import PaginationComponent from "../../components/PaginationComponent";
 import AlertaFeedback from "../../components/layout/Alert";
 
 
-
 export function Regioes() {
     const [regioes, setRegioes] = useState([]);
-    const [alerta, setAlerta] = useState({});
     const [isCreated, setIsCreated] = useState(false);
+    const [alerta, setAlerta] = useState({});
     const [show, setShow] = useState(false);
+    const [showRemove, setShowRemove] = useState(false);
+    
     const { handleSubmit, register, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
@@ -27,10 +28,24 @@ export function Regioes() {
         findRegioes();
         // eslint-disable-next-line
 
-        if (currentPage){
-            getCurrentPageData();
-        }
+        // if (currentPage){
+        //     getCurrentPageData();
+        // }
     }, []);
+
+    // Função para abrir o modal de remoção
+    const [idToRemove, setIdToRemove] = useState(null); // Estado para armazenar o ID a ser removido
+
+    const abrirModalDeRemocao = (id) => {
+        setIdToRemove(id); // Define o ID a ser removido
+        setShowRemove(true); // Abre o modal
+    };
+
+    // Função para fechar o modal
+    const handleClose = () => {
+        setShowRemove(false);
+    };
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5); // Número de itens por página
@@ -68,6 +83,7 @@ export function Regioes() {
         } catch (error) {
             console.error(error);
         }
+       handleClose()
     }
 
     async function addRegiao(data) {
@@ -223,6 +239,7 @@ export function Regioes() {
 
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarRegiao(regiao)}><FaEdit size="18px"/></button>  */}
                                     <Link className="mx-1 px-1" onClick={async () => await removeRegiao(regiao.id_regiao)}><FaTrash size="18px"/></Link>
+                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(regiao.id_regiao)}><FaTrash size="18px"/></Link>
                                 </td>
                             </tr>
                         ))
@@ -235,6 +252,23 @@ export function Regioes() {
                         )}
                     </tbody>
                 </Table>
+
+
+
+                <Modal show={showRemove} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Removendo item!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Tem certeza que deseja remover este item?</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="primary" onClick={async () => removeRegiao(idToRemove)}>
+                        Continuar
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
 
 
 

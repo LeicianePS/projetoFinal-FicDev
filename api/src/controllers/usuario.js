@@ -12,8 +12,8 @@ class UsuarioController {
     async register(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
-            const { nome, cpf, email, telefone, matricula } = request.body;
-            const senha = cpf;
+            const { nome, cpf, email, senha, telefone, matricula } = request.body;
+            //const senha = cpf;
             if (!nome || !cpf || !email || !telefone || !matricula) return httpHelper.badRequest('E-mail e senha são obrigatórios!');
             const usuarioAlreadyExists = await UsuarioModel.findOne({ where: { email } });
             if (usuarioAlreadyExists) return httpHelper.badRequest('E-mail de usuário já cadastrado!');
@@ -49,8 +49,22 @@ class UsuarioController {
             if (!cpf || !senha) return httpHelper.badRequest('CPF e senha são obrigatórios!');
             const usuarioExists = await UsuarioModel.findOne({ where: { cpf } });
             if (!usuarioExists) return httpHelper.notFound('Usuário não encontrado!');
+
+            // const passwordHashed = await bcrypt.hash(
+            //     senha,
+            //     Number(process.env.SALT)
+            // );
+
+
+            const passwordHashed = await bcrypt.hash(
+                senha,
+                Number(process.env.SALT)
+            );
+
+            
+
             const isPasswordValid = await bcrypt.compare(senha, usuarioExists.senha);
-            if (!isPasswordValid) return httpHelper.badRequest('Senha incorreta!');
+            if (!isPasswordValid) return httpHelper.badRequest('Senha incorreta!'+passwordHashed+" - \n"+usuarioExists.senha);
             const accessToken = jwt.sign(
                 { id: usuarioExists.id },
                 process.env.TOKEN_SECRET,

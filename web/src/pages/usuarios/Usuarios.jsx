@@ -10,10 +10,15 @@ import { Input } from '../../components/Input';
 
 import { createUsuario, deleteUsuario, getUsuarios, updateUsuario, filtroUsuario } from "../../services/usuario-service";
 import PaginationComponent from "../../components/PaginationComponent";
+import AlertaFeedback from "../../components/layout/Alert";
 
 export function Usuarios() {
     const [usuarios, setUsuarios] = useState([]);
     const [isCreated, setIsCreated] = useState(false);
+    const [alerta, setAlerta] = useState({});
+    const [show, setShow] = useState(false);
+    const [showRemove, setShowRemove] = useState(false);
+
     const { handleSubmit, register, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
@@ -21,6 +26,20 @@ export function Usuarios() {
         findUsuarios();
         // eslint-disable-next-line
     }, []);
+
+
+     // Função para abrir o modal de remoção
+     const [idToRemove, setIdToRemove] = useState(null); // Estado para armazenar o ID a ser removido
+
+     const abrirModalDeRemocao = (id) => {
+         setIdToRemove(id); // Define o ID a ser removido
+         setShowRemove(true); // Abre o modal
+     };
+ 
+     // Função para fechar o modal
+     const handleClose = () => {
+         setShowRemove(false);
+     };
 
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -85,17 +104,17 @@ export function Usuarios() {
     
 
     const [isUpdated, setIsUpdated] = useState(false);
-
-    async function editUsuario(data) {
+    const [usuarioEdit, setUsuarioEdit] = useState({});
+    async function editUsuario() {
         try {
             await updateUsuario({
                 id: usuarioEdit.id,
-                nome: data.nome,
-                cpf: data.cpf,
-                email: data.email,
-                senha: data.senha,
-                telefone: data.telefone,
-                matricula: data.matricula
+                nome: usuarioEdit.nome,
+                cpf: usuarioEdit.cpf,
+                email: usuarioEdit.email,
+                senha: usuarioEdit.senha,
+                telefone: usuarioEdit.telefone,
+                matricula: usuarioEdit.matricula
             });
             setIsUpdated(false);
             await findUsuarios();
@@ -104,7 +123,7 @@ export function Usuarios() {
         }
     }
 
-    const [usuarioEdit, setUsuarioEdit] = useState([]);
+    
     const abrirModal = (trueFalse, usuario ) => {
         setIsUpdated(trueFalse);
         setUsuarioEdit(usuario)
@@ -135,6 +154,11 @@ export function Usuarios() {
 
     return (
         <Container fluid className="cor-page min-height">
+
+        { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
+
+
+
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
                     <Header title="Listagem de Usuários"  />
@@ -212,7 +236,7 @@ export function Usuarios() {
                                     {/* <Link className="mx-1 px-1" to={`/usuario-editar/${usuario.id}`}><FaPen size="18px"/></Link>  */}
                                     
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarUsuario(usuario)}><FaEdit size="18px"/></button>  */}
-                                    <Link className="mx-1 px-1" onClick={async () => await removeUsuario(usuario.id)}><FaTrash size="18px"/></Link>
+                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(usuario.id)}><FaTrash size="18px"/></Link>
                                 </td>
                             </tr>
                         ))
@@ -225,6 +249,24 @@ export function Usuarios() {
                         )}
                     </tbody>
                 </Table>
+
+
+                <Modal show={showRemove} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Removendo item!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Tem certeza que deseja remover este item?</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="primary" onClick={async () => removeUsuario(idToRemove)}>
+                        Continuar
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+
+
 
                 <PaginationComponent
                     currentPage={currentPage}
@@ -249,7 +291,7 @@ export function Usuarios() {
                             <Col md='8'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Nome do Usuário</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={usuarioEdit.nome}
@@ -258,6 +300,12 @@ export function Usuarios() {
                                         required={true}
                                         name='nome'
                                         error={errors.nome}
+                                        onChange={(e) =>
+                                            setUsuarioEdit({
+                                              ...usuarioEdit,
+                                              nome: e.target.value,
+                                            })
+                                          }
                                         validations={register('nome', {
                                             required: {
                                                 value: true,
@@ -270,7 +318,7 @@ export function Usuarios() {
                             <Col md='4'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">CPF</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={usuarioEdit.cpf}
@@ -279,6 +327,12 @@ export function Usuarios() {
                                         required={true}
                                         name='cpf'
                                         error={errors.cpf}
+                                        onChange={(e) =>
+                                            setUsuarioEdit({
+                                              ...usuarioEdit,
+                                              cpf: e.target.value,
+                                            })
+                                          }
                                         validations={register('cpf', {
                                             required: {
                                                 value: true,
@@ -295,15 +349,21 @@ export function Usuarios() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">E-mail</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
-                                        type='text'
+                                        type='email'
                                         defaultValue={usuarioEdit.email}
                                         label=''
                                         placeholder='E-mail'
                                         required={true}
                                         name='email'
                                         error={errors.email}
+                                        onChange={(e) =>
+                                            setUsuarioEdit({
+                                              ...usuarioEdit,
+                                              email: e.target.value,
+                                            })
+                                          }
                                         validations={register('email', {
                                             required: {
                                                 value: true,
@@ -316,7 +376,7 @@ export function Usuarios() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Senha:</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={usuarioEdit.senha}
@@ -325,6 +385,12 @@ export function Usuarios() {
                                         required={true}
                                         name='senha'
                                         error={errors.senha}
+                                        onChange={(e) =>
+                                            setUsuarioEdit({
+                                              ...usuarioEdit,
+                                              senha: e.target.value,
+                                            })
+                                          }
                                         validations={register('senha', {
                                             required: {
                                                 value: true,
@@ -337,7 +403,7 @@ export function Usuarios() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Telefone:</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={usuarioEdit.telefone}
@@ -346,6 +412,12 @@ export function Usuarios() {
                                         required={true}
                                         name='telefone'
                                         error={errors.telefone}
+                                        onChange={(e) =>
+                                            setUsuarioEdit({
+                                              ...usuarioEdit,
+                                              telefone: e.target.value,
+                                            })
+                                          }
                                         validations={register('telefone', {
                                             required: {
                                                 value: true,
@@ -358,7 +430,7 @@ export function Usuarios() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Matrícula:</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={usuarioEdit.matricula}
@@ -367,6 +439,12 @@ export function Usuarios() {
                                         required={true}
                                         name='matricula'
                                         error={errors.matricula}
+                                        onChange={(e) =>
+                                            setUsuarioEdit({
+                                              ...usuarioEdit,
+                                              matricula: e.target.value,
+                                            })
+                                          }
                                         validations={register('matricula', {
                                             required: {
                                                 value: true,

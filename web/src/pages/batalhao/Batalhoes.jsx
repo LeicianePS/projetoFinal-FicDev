@@ -10,11 +10,14 @@ import { Input } from '../../components/Input';
 
 import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao, filtroBatalhao } from "../../services/batalhao-service";
 import PaginationComponent from "../../components/PaginationComponent";
+import AlertaFeedback from "../../components/layout/Alert";
 import {  getRegioes } from "../../services/regiao-service";
 
 export function Batalhoes() {
     const [batalhoes, setBatalhoes] = useState([]);
     const [isCreated, setIsCreated] = useState(false);
+    const [show, setShow] = useState(false);
+    const [alerta, setAlerta] = useState({});
     const { handleSubmit, register, formState: { errors } } = useForm();
     const [regioes, setRegioes] = useState([]);
     const navigate = useNavigate();
@@ -93,34 +96,51 @@ export function Batalhoes() {
             console.error(error);
         }
     }
-
     
-
+    
+    
     const [isUpdated, setIsUpdated] = useState(false);
-
-    async function editBatalhao(data) {
+    
+    const [batalhaoEdit, setBatalhaoEdit] = useState({});
+    async function editBatalhao() {
         try {
-            await updateBatalhao({
+            const result = await updateBatalhao({
                 id: batalhaoEdit.id,
-                nomeBatalhao: data.nomeBatalhao,
-                dataFundacao: data.dataFundacao,
-                comandante: data.comandante,
-                tipo: data.tipo,
-                efetivo: data.efetivo,
-                missaoValores: data.missaoValores,
-                contato: data.contato,
-                comandoRegional: data.comandoRegional,
-                status: data.statusC,
-                idRegiao: data.idRegiao
+                nomeBatalhao: batalhaoEdit.nome_batalhao,
+                dataFundacao: batalhaoEdit.data_fundacao,
+                comandante: batalhaoEdit.comandante,
+                tipo: batalhaoEdit.tipo,
+                efetivo: batalhaoEdit.efetivo,
+                missaoValores: batalhaoEdit.missao_valores,
+                contato: batalhaoEdit.contato,
+                comandoRegional: batalhaoEdit.comando_regional,
+                status: batalhaoEdit.status,
+                idRegiao: batalhaoEdit.id_regiao
+
+                // nomeBatalhao: data.nomeBatalhao,
+                // dataFundacao: data.dataFundacao,
+                // comandante: data.comandante,
+                // tipo: data.tipo,
+                // efetivo: data.efetivo,
+                // missaoValores: data.missaoValores,
+                // contato: data.contato,
+                // comandoRegional: data.comandoRegional,
+                // status: data.statusC,
+                // idRegiao: data.idRegiao
             });
+        
+
             setIsUpdated(false);
+            setShow(true);
+            setAlerta(result.data);
             await findBatalhoes();
         } catch (error) {
             console.error(error);
+            setShow(true);
+            setAlerta(error.response.data);
         }
     }
 
-    const [batalhaoEdit, setBatalhaoEdit] = useState([]);
     const abrirModal = (trueFalse, batalhao ) => {
         setIsUpdated(trueFalse);
         setBatalhaoEdit(batalhao)
@@ -151,6 +171,10 @@ export function Batalhoes() {
 
     return (
         <Container fluid className="cor-page min-height">
+            
+            { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
+
+            
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
                     <Header title="Listagem de Batalhões"  />
@@ -265,15 +289,20 @@ export function Batalhoes() {
                             <Col md='8'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Nome do Batalhão</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.nome_batalhao}
-                                        label=''
                                         placeholder='Insira o nome do Batalhão'
                                         required={true}
                                         name='nomeBatalhao'
                                         error={errors.nomeBatalhao}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            nome_batalhao: e.target.value,
+                                            })
+                                        }
                                         validations={register('nomeBatalhao', {
                                             required: {
                                                 value: true,
@@ -286,7 +315,7 @@ export function Batalhoes() {
                             <Col md='4'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Comandante</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.comandante}
@@ -295,6 +324,12 @@ export function Batalhoes() {
                                         required={true}
                                         name='comandante'
                                         error={errors.comandante}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            comandante: e.target.value,
+                                            })
+                                        }
                                         validations={register('comandante', {
                                             required: {
                                                 value: true,
@@ -311,7 +346,7 @@ export function Batalhoes() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Data de Fundação</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='date'
                                         defaultValue={batalhaoEdit.data_fundacao}
@@ -320,6 +355,12 @@ export function Batalhoes() {
                                         required={true}
                                         name='dataFundacao'
                                         error={errors.dataFundacao}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            data_fundacao: e.target.value,
+                                            })
+                                        }
                                         validations={register('dataFundacao', {
                                             required: {
                                                 value: true,
@@ -332,7 +373,7 @@ export function Batalhoes() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Tipo de Batalhão:</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.tipo}
@@ -341,6 +382,12 @@ export function Batalhoes() {
                                         required={true}
                                         name='tipo'
                                         error={errors.tipo}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            tipo: e.target.value,
+                                            })
+                                        }
                                         validations={register('tipo', {
                                             required: {
                                                 value: true,
@@ -353,7 +400,7 @@ export function Batalhoes() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Nº de Efetivo:</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='number'
                                         defaultValue={batalhaoEdit.efetivo}
@@ -362,6 +409,12 @@ export function Batalhoes() {
                                         required={true}
                                         name='efetivo'
                                         error={errors.efetivo}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            efetivo: e.target.value,
+                                            })
+                                        }
                                         validations={register('efetivo', {
                                             required: {
                                                 value: true,
@@ -374,7 +427,7 @@ export function Batalhoes() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Comando Regional:</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.comando_regional}
@@ -383,6 +436,12 @@ export function Batalhoes() {
                                         required={true}
                                         name='comandoRegional'
                                         error={errors.comandoRegional}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            comando_regional: e.target.value,
+                                            })
+                                        }
                                         validations={register('comandoRegional', {
                                             required: {
                                                 value: true,
@@ -397,7 +456,7 @@ export function Batalhoes() {
                             <Col>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Missões e Valores</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.missao_valores}
@@ -406,6 +465,12 @@ export function Batalhoes() {
                                         required={false}
                                         name='missaoValores'
                                         error={errors.missaoValores}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            missao_valores: e.target.value,
+                                            })
+                                        }
                                         validations={register('missaoValores', {
                                             required: {
                                                 value: true,
@@ -420,7 +485,7 @@ export function Batalhoes() {
                             <Col>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Contato (E-mail e telefone)</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.contato}
@@ -429,6 +494,12 @@ export function Batalhoes() {
                                         required={true}
                                         name='contato'
                                         error={errors.contato}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            contato: e.target.value,
+                                            })
+                                        }
                                         validations={register('contato', {
                                             required: {
                                                 value: true,
@@ -444,7 +515,7 @@ export function Batalhoes() {
                             <Col md='6'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Status</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.status}
@@ -453,6 +524,12 @@ export function Batalhoes() {
                                         required={true}
                                         name='statusC'
                                         error={errors.statusC}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            status: e.target.value,
+                                            })
+                                        }
                                         validations={register('statusC', {
                                             required: {
                                                 value: true,
@@ -465,7 +542,7 @@ export function Batalhoes() {
                             {/* <Col md='6'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Região de atuação</Form.Label>
-                                    <Input
+                                    <Form.Control
                                         className="mb-3"
                                         type='number'
                                         defaultValue={batalhaoEdit.id_regiao}
@@ -492,6 +569,12 @@ export function Batalhoes() {
                                     defaultValue={batalhaoEdit.id_regiao}
                                     name='idRegiao'
                                     error={errors.idRegiao}
+                                    // onChange={(e) =>
+                                    //     setBatalhaoEdit({
+                                    //     ...batalhaoEdit,
+                                    //     id_regiao: e.target.value,
+                                    //     })
+                                    // }
                                     {...register('idRegiao', {
                                         required: {
                                         value: true,
@@ -511,7 +594,7 @@ export function Batalhoes() {
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="submit" onClick={()=> {editBatalhao()}}>
                                 Editar
                             </Button>
                             <Button variant="secondary" onClick={() => setIsUpdated(false)}>

@@ -22,6 +22,7 @@ export async function deleteBatalhao(id) {
 
 export async function updateBatalhao(data) {
     const accessToken = sessionStorage.getItem('token');
+    debugger
     const result = await api.put(`/batalhao/${data.id}`, {
         nome_batalhao: data.nomeBatalhao,
         data_fundacao: data.dataFundacao,
