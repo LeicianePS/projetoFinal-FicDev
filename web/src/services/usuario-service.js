@@ -26,7 +26,6 @@ export async function updateUsuario(data) {
         nome: data.nome,
         cpf: data.cpf,
         email: data.email,
-        senha: data.senha,
         telefone: data.telefone,
         matricula: data.matricula
 
@@ -66,6 +65,17 @@ export async function getUsuarioById(id) {
     });
     return result;
 }
+
+export async function getUsuarioByCPF(cpf) {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get(`/usuario-perfil/${cpf}`, {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}
+
 
 export async function filtroUsuario(search) {
     const accessToken = sessionStorage.getItem('token');

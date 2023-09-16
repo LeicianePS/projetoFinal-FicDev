@@ -64,7 +64,7 @@ class UsuarioController {
             
 
             const isPasswordValid = await bcrypt.compare(senha, usuarioExists.senha);
-            if (!isPasswordValid) return httpHelper.badRequest('Senha incorreta!'+passwordHashed+" - \n"+usuarioExists.senha);
+            if (!isPasswordValid) return httpHelper.badRequest('Senha incorreta!');
             const accessToken = jwt.sign(
                 { id: usuarioExists.id },
                 process.env.TOKEN_SECRET,
@@ -123,19 +123,19 @@ class UsuarioController {
         const httpHelper = new HttpHelper(response);
         try {
             const { id } = request.params;
-            const { nome, cpf, email, senha, telefone, matricula } = request.body;
+            const { nome, cpf, email, telefone, matricula } = request.body;
             if (!id) return httpHelper.badRequest('Parâmetros inválidos!');
             const usuarioExists = await UsuarioModel.findByPk(id);
-            const passwordHashed = await bcrypt.hash(
-                senha,
-                Number(process.env.SALT)
-            );
+            // const passwordHashed = await bcrypt.hash(
+            //     senha,
+            //     Number(process.env.SALT)
+            // );
             if (!usuarioExists) return httpHelper.notFound('Usuário não encontrado!');
             await UsuarioModel.update({
                 nome,
                 cpf,
                 email,
-                senha: passwordHashed,
+                //senha: passwordHashed,
                 telefone,
                 matricula
             }, {
@@ -168,6 +168,47 @@ class UsuarioController {
             return httpHelper.internalError(error);
         }
     }
+
+    async getByCPF(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const { cpf } = request.params;
+            const usuario = await UsuarioModel.findOne( {
+                where: {cpf},
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
+            },);
+            return httpHelper.ok(usuario);
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
+    async postAtualizaSenha(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const { cpf, senha, novaSenha, novaSenha2 } = request.params;
+            const usuarioExists = await UsuarioModel.findOne({ where: { cpf } });
+            if (!usuarioExists) return httpHelper.notFound('Usuário não encontrado!');       
+
+            const isPasswordValid = await bcrypt.compare(senha, usuarioExists.senha);
+            if (!isPasswordValid) return httpHelper.badRequest('Senha incorreta!');
+            
+            const passwordHashed = await bcrypt.hash(
+                novaSenha,
+                Number(process.env.SALT)
+            );
+
+            const usuario = await UsuarioModel.update({
+                senha: passwordHashed
+            }, {
+                where: { cpf }
+            });
+            return httpHelper.ok('Senha atualizada com sucesso!');
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
 
 
     async usuariosFiltro(request, response) {

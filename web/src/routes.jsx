@@ -22,6 +22,7 @@ import { isAuthenticated } from './utils/is-authenticated';
 import { Usuarios } from './pages/usuarios/Usuarios';
 import { AdicionarUsuario } from './pages/usuarios/AdicionarUsuario';
 import { EditarUsuario } from './pages/usuarios/EditarUsuario';
+import { PerfilUsuario } from './pages/usuarios/PerfilUsuario';
 import { HomeDashboard } from './pages/HomeDashboard';
 
 /**
@@ -162,6 +163,16 @@ export function Navigations() {
                         <PrivateRoute>
                             <MainLayout>
                                 <EditarUsuario />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+                <Route
+                    path="/usuario-perfil/:cpf"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <PerfilUsuario />
                             </MainLayout>
                         </PrivateRoute>
                     )}

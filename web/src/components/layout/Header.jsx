@@ -71,11 +71,12 @@ const Header = () => {
               alignRight={false} // Impede que o menu ajuste o tamanho da tela
               style={{ position: 'absolute', top: '50px', left: 'auto', right: '0' }}
             >
-              <Dropdown.Item>Usuário: {window.localStorage.getItem('user')}</Dropdown.Item>
+              <Dropdown.Item onClick={()=> {navigate(`/usuario-perfil/${window.localStorage.getItem('user')}`)}} >Usuário: {window.localStorage.getItem('user')}</Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout}>
                 <FaSignOutAlt /> Sair
               </Dropdown.Item>
+              {/* <Link className="mx-1 px-1" to={`/regiao-editar/${regiao.id_regiao}`}><FaPen size="18px"/></Link>  */}
             </Dropdown.Menu>
           </Dropdown>
         </Nav>
