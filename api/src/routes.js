@@ -21,6 +21,7 @@ routes.delete('/usuario/:id', authMiddleware, usuarioController.delete);
 routes.put('/usuario/:id',authMiddleware, usuarioController.update);
 routes.get('/usuario/:id', authMiddleware, usuarioController.getById);
 routes.get('/usuario-perfil/:cpf', authMiddleware, usuarioController.getByCPF);
+routes.put('/usuario-senha/:id',authMiddleware, usuarioController.updateAtualizarSenha);
 routes.post('/usuario-filtro', authMiddleware, usuarioController.usuariosFiltro);
 
 

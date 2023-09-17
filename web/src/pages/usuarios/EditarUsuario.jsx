@@ -143,7 +143,7 @@ export function EditarUsuario(props) {
                             />
                         </Form.Group>
                     </Col>
-                    <Col md='3'>
+                    {/* <Col md='3'>
                         <Form.Group controlId="searchQuery">
                             <Form.Label className="mb-0">Senha:</Form.Label>
                             <Input
@@ -163,7 +163,7 @@ export function EditarUsuario(props) {
                                 })}
                             />
                         </Form.Group>
-                    </Col>
+                    </Col> */}
                     <Col md='3'>
                         <Form.Group controlId="searchQuery">
                             <Form.Label className="mb-0">Telefone:</Form.Label>

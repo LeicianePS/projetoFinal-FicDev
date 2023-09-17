@@ -2,9 +2,10 @@ import { FloatingLabel, Form } from "react-bootstrap";
 
 export function Input(props) {
     return (
-        <Form.Group className={props.className}>
+        <>
+        {/* // <Form.Group className={props.className}> */}
             {/* <FloatingLabel label={props.label}> */}
-                <Form.Control
+                <Form.Control className={props.className}
                     type={props.type}
                     placeholder={props.placeholder}
                     isInvalid={props.error}
@@ -20,7 +21,8 @@ export function Input(props) {
                     </Form.Control.Feedback>
                 )}
             {/* </FloatingLabel>*/}
-        </Form.Group>
+        {/* // </Form.Group> */}
+        </>
     );
 
 

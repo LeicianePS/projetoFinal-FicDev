@@ -80,6 +80,7 @@ export function Usuarios() {
         } catch (error) {
             console.error(error);
         }
+        handleClose();
     }
 
     async function addUsuario(data) {
@@ -112,7 +113,6 @@ export function Usuarios() {
                 nome: usuarioEdit.nome,
                 cpf: usuarioEdit.cpf,
                 email: usuarioEdit.email,
-                senha: usuarioEdit.senha,
                 telefone: usuarioEdit.telefone,
                 matricula: usuarioEdit.matricula
             });
@@ -346,7 +346,7 @@ export function Usuarios() {
 
 
                         <Row>
-                            <Col md='3'>
+                            <Col md='6'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">E-mail</Form.Label>
                                     <Form.Control
@@ -373,7 +373,7 @@ export function Usuarios() {
                                     />
                                 </Form.Group>
                             </Col>
-                            <Col md='3'>
+                            {/* <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Senha:</Form.Label>
                                     <Form.Control
@@ -399,7 +399,7 @@ export function Usuarios() {
                                         })}
                                     />
                                 </Form.Group>
-                            </Col>
+                            </Col> */}
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Telefone:</Form.Label>
@@ -457,11 +457,11 @@ export function Usuarios() {
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
-                            <Button variant="primary" type="submit">
-                                Editar
-                            </Button>
-                            <Button variant="secondary" onClick={() => setIsUpdated(false)}>
+                            <Button variant="secondary" onClick={() => setIsUpdated(false)} className="mx-4">
                                 Fechar
+                            </Button>
+                            <Button variant="primary" type="submit" onClick={() => editUsuario()}>
+                                Editar
                             </Button>
                     </Modal.Footer>
                 </Form>

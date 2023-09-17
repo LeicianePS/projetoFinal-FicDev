@@ -1,16 +1,36 @@
 // Header.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation} from "react-router-dom";
 import { Navbar, Nav, Row, Container, Col,  Modal, Button, Dropdown } from 'react-bootstrap';
 import { FaUser, FaSignOutAlt, FaBars } from 'react-icons/fa'; // Importe o ícone de usuário
 import logo from '../../assets/images/logo_govmt.png'; // Importe a imagem
+import {getUsuarioByCPF} from '../../services/usuario-service';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showMenuBars, setShowMenuBars] = useState(false);
+  const [usuario, setUsuario] = useState({})
 
   const handleToggleMenu = () => setShowMenu(!showMenu);
   const handleToggleMenuBars = () => setShowMenuBars(!showMenu);
+
+  useEffect( () => {
+
+    async function findUsuarioPerfil() {
+        try {
+          const response = await getUsuarioByCPF(window.localStorage.getItem('user'));
+          setUsuario(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+    }
+  
+    findUsuarioPerfil(); 
+    
+}, []); 
+
+
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -51,8 +71,8 @@ const Header = () => {
               </Dropdown.Item> */}
               <br/>
               <b>ACESSO</b>
-              <Dropdown.Item className={isActive('/foods') ? 'active' : ''}>
-                <Link to="/foods">Usuários</Link>
+              <Dropdown.Item className={isActive('/usuarios') ? 'active' : ''}>
+                <Link to="/usuarios">Usuários</Link>
               </Dropdown.Item>
 
             </Dropdown.Menu>
@@ -71,7 +91,7 @@ const Header = () => {
               alignRight={false} // Impede que o menu ajuste o tamanho da tela
               style={{ position: 'absolute', top: '50px', left: 'auto', right: '0' }}
             >
-              <Dropdown.Item onClick={()=> {navigate(`/usuario-perfil/${window.localStorage.getItem('user')}`)}} >Usuário: {window.localStorage.getItem('user')}</Dropdown.Item>
+              <Dropdown.Item onClick={()=> {navigate(`/usuario-perfil/${window.localStorage.getItem('user')}`)}} ><b>Usuário:</b> {usuario.nome}</Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout}>
                 <FaSignOutAlt /> Sair

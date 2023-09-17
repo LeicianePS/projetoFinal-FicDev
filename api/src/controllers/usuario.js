@@ -12,10 +12,10 @@ class UsuarioController {
     async register(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
-            const { nome, cpf, email, senha, telefone, matricula } = request.body;
-            //const senha = cpf;
+            const { nome, cpf, email, telefone, matricula } = request.body;
+            const senha = cpf;
             if (!nome || !cpf || !email || !telefone || !matricula) return httpHelper.badRequest('E-mail e senha são obrigatórios!');
-            const usuarioAlreadyExists = await UsuarioModel.findOne({ where: { email } });
+            const usuarioAlreadyExists = await UsuarioModel.findOne({ where: { cpf } });
             if (usuarioAlreadyExists) return httpHelper.badRequest('E-mail de usuário já cadastrado!');
             
             const passwordHashed = await bcrypt.hash(
@@ -183,11 +183,12 @@ class UsuarioController {
         }
     }
 
-    async postAtualizaSenha(request, response) {
+    async updateAtualizarSenha(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
-            const { cpf, senha, novaSenha, novaSenha2 } = request.params;
-            const usuarioExists = await UsuarioModel.findOne({ where: { cpf } });
+            const { senha, novaSenha, novaSenha2 } = request.body;
+            const { id } = request.params;
+            const usuarioExists = await UsuarioModel.findByPk(id);
             if (!usuarioExists) return httpHelper.notFound('Usuário não encontrado!');       
 
             const isPasswordValid = await bcrypt.compare(senha, usuarioExists.senha);
@@ -201,7 +202,7 @@ class UsuarioController {
             const usuario = await UsuarioModel.update({
                 senha: passwordHashed
             }, {
-                where: { cpf }
+                where: { id }
             });
             return httpHelper.ok('Senha atualizada com sucesso!');
         } catch (error) {

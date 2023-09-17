@@ -18,6 +18,8 @@ export function Batalhoes() {
     const [isCreated, setIsCreated] = useState(false);
     const [show, setShow] = useState(false);
     const [alerta, setAlerta] = useState({});
+    const [showRemove, setShowRemove] = useState(false);
+
     const { handleSubmit, register, formState: { errors } } = useForm();
     const [regioes, setRegioes] = useState([]);
     const navigate = useNavigate();
@@ -36,6 +38,20 @@ export function Batalhoes() {
             navigate('/');
         }
     }
+
+    // Função para abrir o modal de remoção
+    const [idToRemove, setIdToRemove] = useState(null); // Estado para armazenar o ID a ser removido
+
+    const abrirModalDeRemocao = (id) => {
+        setIdToRemove(id); // Define o ID a ser removido
+        setShowRemove(true); // Abre o modal
+    };
+
+    // Função para fechar o modal
+    const handleClose = () => {
+        setShowRemove(false);
+    };
+
 
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -76,6 +92,7 @@ export function Batalhoes() {
         } catch (error) {
             console.error(error);
         }
+        handleClose()
     }
 
     async function addBatalhao(data) {
@@ -252,7 +269,8 @@ export function Batalhoes() {
                                     {/* <Link className="mx-1 px-1" to={`/batalhao-editar/${batalhao.id}`}><FaPen size="18px"/></Link>  */}
                                     
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarBatalhao(batalhao)}><FaEdit size="18px"/></button>  */}
-                                    <Link className="mx-1 px-1" onClick={async () => await removeBatalhao(batalhao.id)}><FaTrash size="18px"/></Link>
+                                    {/* <Link className="mx-1 px-1" onClick={async () => await removeBatalhao(batalhao.id)}><FaTrash size="18px"/></Link> */}
+                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(batalhao.id)}><FaTrash size="18px"/></Link>
                                 </td>
                             </tr>
                         ))
@@ -265,6 +283,23 @@ export function Batalhoes() {
                         )}
                     </tbody>
                 </Table>
+
+
+                <Modal show={showRemove} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Removendo item!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Tem certeza que deseja remover este item?</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="primary" onClick={async () => removeBatalhao(idToRemove)}>
+                        Continuar
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+
 
                 <PaginationComponent
                     currentPage={currentPage}
@@ -594,11 +629,11 @@ export function Batalhoes() {
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setIsUpdated(false)} className="mx-4">
+                                Fechar
+                            </Button>
                             <Button variant="primary" type="submit" onClick={()=> {editBatalhao()}}>
                                 Editar
-                            </Button>
-                            <Button variant="secondary" onClick={() => setIsUpdated(false)}>
-                                Fechar
                             </Button>
                         
                     </Modal.Footer>

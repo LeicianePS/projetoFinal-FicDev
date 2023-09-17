@@ -238,7 +238,7 @@ export function Regioes() {
                                     {/* <Link className="mx-1 px-1" to={`/regiao-editar/${regiao.id_regiao}`}><FaPen size="18px"/></Link>  */}
 
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarRegiao(regiao)}><FaEdit size="18px"/></button>  */}
-                                    <Link className="mx-1 px-1" onClick={async () => await removeRegiao(regiao.id_regiao)}><FaTrash size="18px"/></Link>
+                                    {/* <Link className="mx-1 px-1" onClick={async () => await removeRegiao(regiao.id_regiao)}><FaTrash size="18px"/></Link> */}
                                     <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(regiao.id_regiao)}><FaTrash size="18px"/></Link>
                                 </td>
                             </tr>
@@ -463,11 +463,11 @@ export function Regioes() {
 
                     </Modal.Body>
                     <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setIsUpdated(false)} className="mx-4">
+                                Fechar
+                            </Button>
                             <Button variant="primary" type="submit" onClick={()=> {editRegiao()}}>  {/*onClick={() => navigate('/regioes')} */}
                                 Editar
-                            </Button>
-                            <Button variant="secondary" onClick={() => setIsUpdated(false)}>
-                                Fechar
                             </Button>
                     </Modal.Footer>
                 </Form>

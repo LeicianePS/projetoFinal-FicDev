@@ -73,7 +73,7 @@ export function AdicionarUsuario(props) {
                                     <Form.Label className="mb-0">E-mail</Form.Label>
                                     <Input
                                         className="mb-3"
-                                        type='text'
+                                        type='email'
                                         label=''
                                         placeholder='E-mail'
                                         required={true}
@@ -93,7 +93,7 @@ export function AdicionarUsuario(props) {
 
 
                         <Row>
-                            <Col md='3'>
+                            {/* <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Senha</Form.Label>
                                     <Input
@@ -113,7 +113,7 @@ export function AdicionarUsuario(props) {
                                     />
                                 </Form.Group>
                                 
-                            </Col>
+                            </Col> */}
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">CPF</Form.Label>

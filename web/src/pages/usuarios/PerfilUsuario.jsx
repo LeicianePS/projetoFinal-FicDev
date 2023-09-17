@@ -9,8 +9,7 @@ import logo from '../../assets/images/logo_govmt.png'; // Importe a imagem
 import { Header } from "../../components/Header";
 import { Input } from '../../components/Input';
 
-import { createUsuario, deleteUsuario, getUsuarios, updateUsuario, filtroUsuario, getUsuarioByCPF } from "../../services/usuario-service";
-import PaginationComponent from "../../components/PaginationComponent";
+import { createUsuario, updateUsuario, updateSenhaUsuario, getUsuarioByCPF } from "../../services/usuario-service";
 import AlertaFeedback from "../../components/layout/Alert";
 
 export function PerfilUsuario() {
@@ -19,8 +18,7 @@ export function PerfilUsuario() {
     const [isCreated, setIsCreated] = useState(false);
     const [alerta, setAlerta] = useState({});
     const [show, setShow] = useState(false);
-    const [showRemove, setShowRemove] = useState(false);
-
+    
     const { handleSubmit, register, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
@@ -39,22 +37,11 @@ export function PerfilUsuario() {
         findUsuarioPerfil(); 
         
     }, [param]); 
-    
-
-
-   
-
-    async function addUsuario(data) {
-        try {
-            await createUsuario(data);
-            setIsCreated(false);
-        } catch (error) {
-            console.error(error);
-        }
-    }
+     
 
     
-
+    
+    
     const [isUpdated, setIsUpdated] = useState(false);
     const [usuarioEdit, setUsuarioEdit] = useState({});
     async function editUsuario() {
@@ -73,27 +60,42 @@ export function PerfilUsuario() {
             console.error(error);
         }
     }
-
     
+    
+    const handleClose = () => {
+        setShowAtualizarSenha(false);
+    };
+    const [usuarioSenha, setUsuarioSenha] = useState({}) 
+    const [showAtualizarSenha, setShowAtualizarSenha] = useState(false);
+    async function atualizarSenha() {
+        try {
+            await updateSenhaUsuario({
+                id: usuarioSenha.id,
+                senha: usuarioSenha.senha,
+                novaSenha: usuarioSenha.novaSenha,
+                novaSenha2: usuarioSenha.novaSenha2
+            });
+            setIsUpdated(false);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const abrirModal = ( usuario ) => {
         setIsUpdated(true);
         setUsuarioEdit(usuario)
     }
+
     const abrirModalSenha = ( usuario ) => {
-        setIsUpdated(true);
-        setUsuarioEdit(usuario)
+        setShowAtualizarSenha(true);
+        setUsuarioSenha({
+            ...usuarioSenha,
+            id: usuario.id,
+          })
+        //setUsuarioSenha(usuario)
     }
 
-    const abrirEditarUsuario = (usuario) => {
-        //var jsonUsuario = JSON.stringify(usuario)
-        window.localStorage.setItem('usuarioEditar', JSON.stringify(usuario))
-        navigate(`/usuario-editar/${usuario.id}`);
-    }
-
-
-
-
-
+    
     return (
         <Container fluid className="cor-page min-height d-flex justify-content-center align-items-center">
 
@@ -101,9 +103,8 @@ export function PerfilUsuario() {
 
             <div className="d-flex flex-column align-items-center justify-content-center col-md-8 col-sm-10 m-3 p-0 perfil" variant="outline-danger">
                 <FaUser size="50px" className="mb-3" />
-                <h4 className="mb-4">Perfil do Usuário</h4>
+                <h4 className="mb-4"> {usuario.nome} </h4>
                 <div className="col-12">
-                    <p><strong>Nome:</strong> {usuario.nome}</p>
                     <p><strong>CPF:</strong> {usuario.cpf}</p>
                     <p><strong>Email:</strong> {usuario.email}</p>
                     <p><strong>Telefone:</strong> {usuario.telefone}</p>
@@ -306,11 +307,122 @@ export function PerfilUsuario() {
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setIsUpdated(false)} className="mx-4">
+                                Fechar
+                            </Button>
                             <Button variant="primary" type="submit" onClick={()=> {editUsuario()}}>
                                 Salvar
                             </Button>
-                            <Button variant="secondary" onClick={() => setIsUpdated(false)}>
+                    </Modal.Footer>
+                </Form>
+            </Modal>
+
+
+
+            <Modal show={showAtualizarSenha} onHide={handleClose} size="md">
+                <Modal.Header closeButton>
+                    <Modal.Title>Atualizar Senha</Modal.Title>
+                </Modal.Header>
+                <Form className="mx-2 pb-3" validate onSubmit={handleSubmit(()=> {atualizarSenha()})} validated={!!errors}>
+                    <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light " size="md">
+
+                        <Row className="d-flex justify-content-center">                            
+                            <Col md='8'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Senha Atual</Form.Label>
+                                    <Form.Control
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={usuarioSenha.senha}
+                                        label=''
+                                        placeholder='Senha'
+                                        required={true}
+                                        name='senha'
+                                        error={errors.senha}
+                                        onChange={(e) =>
+                                            setUsuarioSenha({
+                                              ...usuarioSenha,
+                                              senha: e.target.value,
+                                            })
+                                          }
+                                        validations={register('senha', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <Row className="d-flex justify-content-center">
+                            <Col md='8'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Nova Senha </Form.Label>
+                                    <Form.Control
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={usuarioSenha.novaSenha}
+                                        label=''
+                                        placeholder='Senha'
+                                        required={true}
+                                        name='novaSenha'
+                                        error={errors.novaSenha}
+                                        onChange={(e) =>
+                                            setUsuarioSenha({
+                                              ...usuarioSenha,
+                                              novaSenha: e.target.value,
+                                            })
+                                          }
+                                        validations={register('novaSenha', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                            
+                        <Row className="d-flex justify-content-center">
+
+                            <Col md='8'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Confirmar Nova Senha:</Form.Label>
+                                    <Form.Control
+                                        className="mb-3"
+                                        type='text'
+                                        defaultValue={usuarioSenha.novaSenha2}
+                                        label=''
+                                        placeholder='Senha'
+                                        required={true}
+                                        name='novaSenha2'
+                                        error={errors.novaSenha2}
+                                        onChange={(e) =>
+                                            setUsuarioSenha({
+                                              ...usuarioSenha,
+                                              novaSenha2: e.target.value,
+                                            })
+                                          }
+                                        validations={register('novaSenha2', {
+                                            required: {
+                                                value: true,
+                                                message: ' é obrigatório.'
+                                            }
+                                        })}
+                                    />
+                                </Form.Group>
+                            </Col>                            
+                        </Row>
+                    </Modal.Body>
+                    <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose} className="mx-4">
                                 Fechar
+                            </Button>
+                            <Button variant="primary" type="submit" onClick={()=> {atualizarSenha()}}>
+                                Salvar
                             </Button>
                     </Modal.Footer>
                 </Form>

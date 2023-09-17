@@ -43,7 +43,7 @@ export async function createUsuario(data) {
         nome: data.nome,
         cpf: data.cpf,
         email: data.email,
-        senha: data.senha,
+        //senha: data.senha,
         telefone: data.telefone,
         matricula: data.matricula
     }, {
@@ -69,6 +69,21 @@ export async function getUsuarioById(id) {
 export async function getUsuarioByCPF(cpf) {
     const accessToken = sessionStorage.getItem('token');
     const result = await api.get(`/usuario-perfil/${cpf}`, {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
+    });
+    return result;
+}
+
+
+export async function updateSenhaUsuario(data) {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.put(`/usuario-senha/${data.id}`, {
+        senha: data.senha,
+        novaSenha: data.novaSenha,
+        novaSenha2: data.novaSenha2
+    },{
         headers: {
             'Authorization': `Bearer ${JSON.parse(accessToken)}`
         }

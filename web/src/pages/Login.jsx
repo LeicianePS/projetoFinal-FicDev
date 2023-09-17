@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Row, Col, Container, Form } from "react-bootstrap";
+import { Button, Row, Col, Container, Form, InputGroup } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import { Modal } from '../components/Modal';
 import { loginUser } from '../services/user-services';
 
 import login from '../assets/images/login_img.png';
+import { FaEye, FaEyeDropper, FaEyeSlash } from "react-icons/fa";
 
 
 export function Login() {
@@ -29,6 +30,12 @@ export function Login() {
             });
         }
     }
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     return (
         
@@ -65,21 +72,48 @@ export function Login() {
                                     // }
                                 })}
                             />
-                            <Input
-                                className="mb-4"
-                                label="Senha"
-                                type="senha"
-                                placeholder="Insira sua senha"
-                                error={errors.senha}
-                                required={true}
-                                name="senha"
-                                validations={register('senha', {
-                                    required: {
-                                        value: true,
-                                        message: 'Senha é obrigatório'
-                                    }
-                                })}
-                            />
+                            
+                               {/* <Input
+                                    className="mb-4"
+                                    label="Senha"
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder="Insira sua senha"
+                                    error={errors.senha}
+                                    required={true}
+                                    name="senha"
+                                    validations={register('senha', {
+                                        required: {
+                                            value: true,
+                                            message: 'Senha é obrigatório'
+                                        }
+                                    })}
+                                />  */}
+                                
+                            <InputGroup className="mb-3">
+                                <Input
+                                    className="mb-10 col-md-10"
+                                    label="Senha"
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder="Insira sua senha"
+                                    error={errors.senha}
+                                    required={true}
+                                    name="senha"
+                                    validations={register('senha', {
+                                        required: {
+                                            value: true,
+                                            message: 'Senha é obrigatório'
+                                        }
+                                    })}
+                                />
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary"
+                                    onClick={togglePasswordVisibility}
+                                >
+                                    {showPassword ? <FaEye/> : <FaEyeSlash/>}
+                                </button>
+                            </InputGroup>
+                            
                             <div className="d-flex justify-content-between">
                                 <Button type="submit">Entrar</Button>
                                 <Link to="/register">Criar conta</Link>
