@@ -105,6 +105,7 @@ export function PerfilUsuario() {
                 <FaUser size="50px" className="mb-3" />
                 <h4 className="mb-4"> {usuario.nome} </h4>
                 <div className="col-12">
+                    <p><strong>Perfil:</strong> {usuario.perfil}</p>
                     <p><strong>CPF:</strong> {usuario.cpf}</p>
                     <p><strong>Email:</strong> {usuario.email}</p>
                     <p><strong>Telefone:</strong> {usuario.telefone}</p>

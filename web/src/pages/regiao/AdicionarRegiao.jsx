@@ -7,17 +7,25 @@ import { Input } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
 import { createRegiao } from "../../services/regiao-service";
 import { Header } from "../../components/Header";
+import AlertaFeedback from "../../components/layout/Alert";
 
 export function AdicionarRegiao(props) {
     const { handleSubmit, register, formState: { errors } } = useForm();
+    const [alerta, setAlerta] = useState({});
+    const [show, setShow] = useState(false);
     
  
     const navigate = useNavigate();
 
     async function addRegiao(data) {
         try {
-            await createRegiao(data);
-            navigate('/regioes');
+            const result = await createRegiao(data);
+            setAlerta(result.data);
+            setShow(true);
+
+            setTimeout(() => {
+                navigate('/regioes');
+            }, 2500);
         } catch (error) {
             console.error(error);
         }
@@ -30,6 +38,10 @@ export function AdicionarRegiao(props) {
 
     return (
         <Container fluid className="cor-page min-height ">
+
+            { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
+
+
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
                     <Header title="Cadastro de Regiões"  />

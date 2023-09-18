@@ -7,19 +7,29 @@ import { Input } from "../../components/Input";
 import { useNavigate } from "react-router-dom";
 import { createUsuario} from "../../services/usuario-service";
 import { Header } from "../../components/Header";
+import AlertaFeedback from "../../components/layout/Alert";
 
 export function AdicionarUsuario(props) {
     const { handleSubmit, register, formState: { errors } } = useForm();
+    const [alerta, setAlerta] = useState({});
+    const [show, setShow] = useState(false);
     
  
     const navigate = useNavigate();
 
     async function addUsuario(data) {
         try {
-            await createUsuario(data);
-            navigate('/usuarios');
+            const result = await createUsuario(data);
+            setAlerta(result.data);
+            setShow(true);
+
+            setTimeout(() => {
+                navigate('/usuarios');
+            }, 2500);
         } catch (error) {
             console.error(error);
+            setAlerta(error.response.data);
+            setShow(true);
         }
     }
 
@@ -30,6 +40,10 @@ export function AdicionarUsuario(props) {
 
     return (
         <Container fluid className="cor-page min-height ">
+
+            { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
+
+
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
                     <Header title="Cadastro de Usuários"  />
@@ -172,6 +186,27 @@ export function AdicionarUsuario(props) {
                                             }
                                         })}
                                     />
+                                </Form.Group>
+                            </Col>
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Perfil</Form.Label>
+                                    {/* Use o Form.Select para selecionar a região */}
+                                    <Form.Select
+                                    aria-label="Perfil do Usuário"
+                                    name='perfil'
+                                    error={errors.perfil}
+                                    {...register('perfil', {
+                                        required: {
+                                        value: true,
+                                        message: 'Perfil do usuário é obrigatório.'
+                                        }
+                                    })}
+                                    >
+                                    <option value="">Selecione uma região</option>
+                                    <option value="admin">Administrador</option>
+                                    <option value="gestor">Gestor</option>
+                                    </Form.Select>
                                 </Form.Group>
                             </Col>
                         </Row>

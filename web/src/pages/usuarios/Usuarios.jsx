@@ -75,10 +75,14 @@ export function Usuarios() {
 
     async function removeUsuario(id) {
         try {
-            await deleteUsuario(id);
+            const result = await deleteUsuario(id);
+            setAlerta(result.data);
+            setShow(true);
             await findUsuarios();
         } catch (error) {
             console.error(error);
+            setAlerta(error.response.data);
+            setShow(true);
         }
         handleClose();
     }
@@ -108,7 +112,8 @@ export function Usuarios() {
     const [usuarioEdit, setUsuarioEdit] = useState({});
     async function editUsuario() {
         try {
-            await updateUsuario({
+            setIsUpdated(false);
+            const result = await updateUsuario({
                 id: usuarioEdit.id,
                 nome: usuarioEdit.nome,
                 cpf: usuarioEdit.cpf,
@@ -116,10 +121,13 @@ export function Usuarios() {
                 telefone: usuarioEdit.telefone,
                 matricula: usuarioEdit.matricula
             });
-            setIsUpdated(false);
+            setAlerta(result.data);
+            setShow(true);
             await findUsuarios();
         } catch (error) {
             console.error(error);
+            setAlerta(error.response.data);
+            setShow(true);
         }
     }
 
@@ -184,7 +192,7 @@ export function Usuarios() {
                     </Col> */}
                     <Col>
                         <Form.Group controlId="searchQuery">
-                            <Form.Label  className="b-0">Buscar por Nome, email ou cpf:</Form.Label>
+                            <Form.Label  className="b-0">Buscar por nome, email ou cpf:</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Digite a consulta"

@@ -119,13 +119,15 @@ export function Regioes() {
                 populacao: regiaoEdit.populacao,
                 cidadesJurisdicao: regiaoEdit.cidadesbairros_atuacao,
             });
-            setShow(true);
             setAlerta(result.data);
+            setShow(true);
+            
             await findRegioes();
         } catch (error) {
             console.error(error);
-            setShow(true);
             setAlerta(error.response.data);
+            setShow(true);
+           
         }
     }
 
@@ -161,7 +163,7 @@ export function Regioes() {
 
         <Container fluid className="cor-page min-height">
 
-            { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
+            { show ?  <AlertaFeedback setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
 
 

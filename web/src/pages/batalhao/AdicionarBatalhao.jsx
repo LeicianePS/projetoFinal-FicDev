@@ -9,10 +9,14 @@ import { createBatalhao } from "../../services/batalhao-service";
 import {  getRegioes } from "../../services/regiao-service";
 
 import { Header } from "../../components/Header";
+import AlertaFeedback from "../../components/layout/Alert";
 
 export function AdicionarBatalhao(props) {
     const { handleSubmit, register, formState: { errors } } = useForm();
     const [regioes, setRegioes] = useState([]);
+    const [alerta, setAlerta] = useState({});
+    const [show, setShow] = useState(false);
+
     useEffect(() => {
         findRegioes();
         
@@ -32,8 +36,13 @@ export function AdicionarBatalhao(props) {
 
     async function addBatalhao(data) {
         try {
-            await createBatalhao(data);
-            navigate('/batalhoes');
+            const result = await createBatalhao(data);
+            setAlerta(result.data);
+            setShow(true);
+
+            setTimeout(() => {
+                navigate('/batalhoes');
+            }, 2500);
         } catch (error) {
             console.error(error);
         }
@@ -46,6 +55,10 @@ export function AdicionarBatalhao(props) {
 
     return (
         <Container fluid className="cor-page min-height ">
+
+            { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
+
+
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
                     <Header title="Cadastro de Batalhões"  />

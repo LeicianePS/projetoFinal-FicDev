@@ -61,7 +61,7 @@ const EfetivoCRChart = () => {
   }, []);
 
   return (
-    <div className='p-5'>
+    <div className='px-5 py-2'>
       <Card.Header className="d-flex justify-content-start"><Card.Title> Efetivo por Comando Regional</Card.Title></Card.Header>
       <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={350} width={500} />
     </div>

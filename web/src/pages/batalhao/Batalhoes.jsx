@@ -87,7 +87,9 @@ export function Batalhoes() {
 
     async function removeBatalhao(id) {
         try {
-            await deleteBatalhao(id);
+            const result = await deleteBatalhao(id);
+            setAlerta(result.data);
+            setShow(true);
             await findBatalhoes();
         } catch (error) {
             console.error(error);

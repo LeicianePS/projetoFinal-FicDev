@@ -45,7 +45,8 @@ export async function createUsuario(data) {
         email: data.email,
         //senha: data.senha,
         telefone: data.telefone,
-        matricula: data.matricula
+        matricula: data.matricula,
+        perfil: data.perfil
     }, {
         headers: {
             'Authorization': `Bearer ${JSON.parse(accessToken)}`

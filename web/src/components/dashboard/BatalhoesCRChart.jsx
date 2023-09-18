@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ApexCharts from 'react-apexcharts';
 import { getBatalhoesCR } from '../../services/batalhao-service'; // Importe a função da API correta
+import { Card } from 'react-bootstrap';
 
 const BatalhoesCRChart = () => {
   const [chartData, setChartData] = useState({
@@ -54,7 +55,8 @@ const BatalhoesCRChart = () => {
   }, []);
 
   return (
-    <div>
+    <div className='px-5 py-2'>
+      <Card.Header className="d-flex justify-content-start"><Card.Title> Batalhão por Comando Regional</Card.Title></Card.Header>
       <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={350} width={500} />
     </div>
   );

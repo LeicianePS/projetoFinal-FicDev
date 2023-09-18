@@ -63,12 +63,7 @@ const Header = () => {
               <Dropdown.Item className={isActive('/regioes') ? 'active' : ''}>
                 <Link to="/regioes">Regiões</Link>
               </Dropdown.Item>
-              {/* <Dropdown.Item className={isActive('/darkmode') ? 'active' : ''}>
-                <Link to="/darkmode">Dark Mode</Link>
-              </Dropdown.Item>
-              <Dropdown.Item className={isActive('/nutricionistas') ? 'active' : ''}>
-                <Link to="/nutricionistas">Nutricionista</Link>
-              </Dropdown.Item> */}
+               
               <br/>
               <b>ACESSO</b>
               <Dropdown.Item className={isActive('/usuarios') ? 'active' : ''}>
