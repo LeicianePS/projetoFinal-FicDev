@@ -9,12 +9,12 @@ class HttpHelper {
 
     ok(data) {
         return this.response.status(200).json(data);
-        debugger
     }
 
     badRequest(message) {
         return this.response.status(400).json({
-            error: message
+            message: message,
+            variant: "danger",
         });
     }
 
@@ -26,15 +26,15 @@ class HttpHelper {
 
     notFound(message) {
         return this.response.status(404).json({
-            error: message
+            message: message,
+            variant: "danger",
         });
     }
 
     internalError(error) {
         return this.response.status(500).json({
-            message: `Erro interno: ${error}`,
+            message: `Erro interno, a operação não pode ser concluída`,
             variant: "danger",
-
         });
     }
 }

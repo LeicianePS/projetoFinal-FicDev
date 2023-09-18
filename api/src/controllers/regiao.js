@@ -58,10 +58,7 @@ class RegiaoController {
             const { id_regiao } = request.params;
             const { nome_regiao, populacao, cidadesbairros_atuacao } = request.body;
             if (!id_regiao) return httpHelper.badRequest('Parâmetros inválidos!');
-            // if (crn) {
-            //     const unityIsValid = Validates.validUnity(crn);
-            //     if (!unityIsValid) return httpHelper.badRequest('Unidade de medida inválido!');
-            // }
+            
             const regiaoExists = await RegiaoModel.findByPk(id_regiao);
             if (!regiaoExists) return httpHelper.notFound('Região não encontrado!');
             await RegiaoModel.update({

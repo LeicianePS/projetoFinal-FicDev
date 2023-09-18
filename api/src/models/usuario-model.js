@@ -9,6 +9,7 @@ class UsuarioModel extends Model {
             senha: DataTypes.STRING,
             telefone: DataTypes.STRING,
             matricula: DataTypes.INTEGER,
+            perfil: DataTypes.STRING,
         }, {
             tableName: 'usuario',
             modelName: 'UsuarioModel',

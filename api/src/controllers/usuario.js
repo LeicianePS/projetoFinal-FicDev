@@ -12,11 +12,11 @@ class UsuarioController {
     async register(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
-            const { nome, cpf, email, telefone, matricula } = request.body;
+            const { nome, cpf, email, telefone, matricula, perfil } = request.body;
             const senha = cpf;
-            if (!nome || !cpf || !email || !telefone || !matricula) return httpHelper.badRequest('E-mail e senha são obrigatórios!');
+            if (!nome || !cpf || !email || !telefone || !matricula || !perfil) return httpHelper.badRequest('E-mail e senha são obrigatórios!');
             const usuarioAlreadyExists = await UsuarioModel.findOne({ where: { cpf } });
-            if (usuarioAlreadyExists) return httpHelper.badRequest('E-mail de usuário já cadastrado!');
+            if (usuarioAlreadyExists) return httpHelper.badRequest('Informações de usuário já cadastrado!');
             
             const passwordHashed = await bcrypt.hash(
                 senha,
@@ -28,7 +28,8 @@ class UsuarioController {
                 email,
                 senha: passwordHashed,
                 telefone,
-                matricula
+                matricula,
+                perfil
             });
             if (!usuario) return httpHelper.badRequest('Houve um erro ao criar usuário');
             const accessToken = jwt.sign(
@@ -36,7 +37,10 @@ class UsuarioController {
                 process.env.TOKEN_SECRET,
                 { expiresIn: process.env.TOKEN_EXPIRES_IN }
             );
-            return httpHelper.created({ accessToken });
+            return httpHelper.created({
+                message: "Usuário criado com sucesso!",
+                variant: "success"
+            });
         } catch (error) {
             return httpHelper.internalError(error);
         }
@@ -55,14 +59,12 @@ class UsuarioController {
             //     Number(process.env.SALT)
             // );
 
-
             const passwordHashed = await bcrypt.hash(
                 senha,
                 Number(process.env.SALT)
             );
 
             
-
             const isPasswordValid = await bcrypt.compare(senha, usuarioExists.senha);
             if (!isPasswordValid) return httpHelper.badRequest('Senha incorreta!');
             const accessToken = jwt.sign(
@@ -95,7 +97,7 @@ class UsuarioController {
         const httpHelper = new HttpHelper(response);
         try {
             const usuarios = await UsuarioModel.findAll({
-                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula', 'perfil']
             });
             return httpHelper.ok(usuarios);
         } catch (error) {
@@ -112,7 +114,8 @@ class UsuarioController {
             if (!usuarioExists) return httpHelper.notFound('Usuário não encontrado!');
             await UsuarioModel.destroy({ where: { id } });
             return httpHelper.ok({
-                message: 'Usuário deletado com sucesso!'
+                message: 'Usuário deletado com sucesso!',
+                variant: 'success'
             })
         } catch (error) {
             return httpHelper.internalError(error);
@@ -142,7 +145,9 @@ class UsuarioController {
                 where: { id }
             });
             return httpHelper.ok({
-                message: 'Usuário atualizado com sucesso!'
+                message: 'Região atualizada com sucesso!',
+                variant: "success"
+
             });
         } catch (error) {
             return httpHelper.internalError(error);
@@ -160,7 +165,7 @@ class UsuarioController {
         try {
             const { id } = request.params;
             const usuario = await UsuarioModel.findByPk(id, {
-                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula', 'perfil']
                 
             });
             return httpHelper.ok(usuario);
@@ -175,7 +180,7 @@ class UsuarioController {
             const { cpf } = request.params;
             const usuario = await UsuarioModel.findOne( {
                 where: {cpf},
-                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula', 'perfil']
             },);
             return httpHelper.ok(usuario);
         } catch (error) {

@@ -31,13 +31,17 @@ module.exports = {
             },
             telefone: {
                 type: Sequelize.STRING,
-                allowNull: true,
+                allowNull: false,
             },
             matricula: { 
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 unique: true
-            }
+            },
+            perfil: {
+                type: Sequelize.STRING,
+                allowNull: false,
+            },
         });
     },
 
