@@ -87,11 +87,11 @@ export function HomeDashboard(){
                         bg="dark"
                         text="light"
                         >
-                        <Card.Header className="d-flex justify-content-center"><Card.Title> 1x2 Informação</Card.Title></Card.Header>
+                        <Card.Header className="d-flex justify-content-center"><Card.Title> Informação 3</Card.Title></Card.Header>
                         <Card.Body>
                             
                             <Card.Text className="d-flex justify-content-center" >
-                                <h2>{batalhoesTotal.somaBatalhao}</h2>
+                                <h2>0</h2>
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -104,11 +104,11 @@ export function HomeDashboard(){
                         bg="dark"
                         text="light"
                         >
-                        <Card.Header className="d-flex justify-content-center"><Card.Title> 2x2 Info</Card.Title></Card.Header>
+                        <Card.Header className="d-flex justify-content-center"><Card.Title> Informação 4</Card.Title></Card.Header>
                         <Card.Body>
                             
                             <Card.Text className="d-flex justify-content-center" >
-                                <h2>{efetivoTotal.somaEfetivo}</h2>
+                                <h2>0</h2>
                             </Card.Text>
                         </Card.Body>
                     </Card>

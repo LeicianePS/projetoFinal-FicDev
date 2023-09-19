@@ -19,7 +19,7 @@ export function AdicionarBatalhao(props) {
 
     useEffect(() => {
         findRegioes();
-        
+
         // eslint-disable-next-line
     }, []);
     async function findRegioes() {
@@ -31,7 +31,7 @@ export function AdicionarBatalhao(props) {
             navigate('/');
         }
     }
- 
+
     const navigate = useNavigate();
 
     async function addBatalhao(data) {
@@ -42,7 +42,7 @@ export function AdicionarBatalhao(props) {
 
             setTimeout(() => {
                 navigate('/batalhoes');
-            }, 2500);
+            }, 1500);
         } catch (error) {
             console.error(error);
         }
@@ -67,12 +67,12 @@ export function AdicionarBatalhao(props) {
                     <Button className="align-items-center" onClick={() => setIsCreated(true)}>
                         <Link to="/batalhao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
-                  
+
                 </Col> */}
             </Row>
 
 
-            
+
             <Form className="mx-4 pb-3" noValidate onSubmit={handleSubmit(addBatalhao)} validated={!!errors}>
                 <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light">
 
@@ -109,7 +109,7 @@ export function AdicionarBatalhao(props) {
                                 <Input
                                     className="mb-3"
                                     type='text'
-                        
+
                                     placeholder='Comandante'
                                     required={true}
                                     name='comandante'
@@ -117,7 +117,7 @@ export function AdicionarBatalhao(props) {
                                     validations={register('comandante', {
                                         required: {
                                             value: true,
-                                            message: ' é obrigatório.'
+                                            message: 'Comandante é obrigatório.'
                                         }
                                     })}
                                 />
@@ -141,7 +141,7 @@ export function AdicionarBatalhao(props) {
                                     validations={register('dataFundacao', {
                                         required: {
                                             value: true,
-                                            message: ' é obrigatório.'
+                                            message: 'Data de Fundação é obrigatório.'
                                         }
                                     })}
                                 />
@@ -161,7 +161,7 @@ export function AdicionarBatalhao(props) {
                                     validations={register('tipo', {
                                         required: {
                                             value: true,
-                                            message: ' é obrigatório.'
+                                            message: 'Tipo é obrigatório.'
                                         }
                                     })}
                                 />
@@ -181,7 +181,7 @@ export function AdicionarBatalhao(props) {
                                     validations={register('efetivo', {
                                         required: {
                                             value: true,
-                                            message: ' é obrigatório.'
+                                            message: 'Efetivo é obrigatório.'
                                         }
                                     })}
                                 />
@@ -201,7 +201,7 @@ export function AdicionarBatalhao(props) {
                                     validations={register('comandoRegional', {
                                         required: {
                                             value: true,
-                                            message: ' é obrigatório.'
+                                            message: 'Comando Regional é obrigatório.'
                                         }
                                     })}
                                 />
@@ -223,7 +223,7 @@ export function AdicionarBatalhao(props) {
                                     validations={register('missaoValores', {
                                         required: {
                                             value: true,
-                                            message: ' é obrigatório.'
+                                            message: 'Missões e Valores é obrigatório.'
                                         }
                                     })}
                                 />
@@ -245,7 +245,7 @@ export function AdicionarBatalhao(props) {
                                     validations={register('contato', {
                                         required: {
                                             value: true,
-                                            message: ' é obrigatório.'
+                                            message: 'Contato é obrigatório.'
                                         }
                                     })}
                                 />
@@ -268,7 +268,7 @@ export function AdicionarBatalhao(props) {
                                     validations={register('statusC', {
                                         required: {
                                             value: true,
-                                            message: 'Nome do batalhão é obrigatório.'
+                                            message: 'Status é obrigatório.'
                                         }
                                     })}
                                 />
@@ -333,7 +333,7 @@ export function AdicionarBatalhao(props) {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                            
+
                     </Row>
                     {/* <Input
                         className="mb-3"
@@ -359,7 +359,7 @@ export function AdicionarBatalhao(props) {
                     <Button variant="primary" type="submit">
                         Salvar
                     </Button>
-                    
+
                 </Modal.Footer>
             </Form>
 

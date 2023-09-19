@@ -1,30 +1,22 @@
-import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { Container, Col, Modal, Row, Form, Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes, FaPen, FaUser } from 'react-icons/fa';
-import logo from '../../assets/images/logo_govmt.png'; // Importe a imagem
+import { FaEdit, FaPen, FaUser } from 'react-icons/fa';
 
-//import { Usuario } from "../../components/Usuario";
-import { Header } from "../../components/Header";
-import { Input } from '../../components/Input';
 
-import { createUsuario, updateUsuario, updateSenhaUsuario, getUsuarioByCPF } from "../../services/usuario-service";
+import { updateUsuario, updateSenhaUsuario, getUsuarioByCPF } from "../../services/usuario-service";
 import AlertaFeedback from "../../components/layout/Alert";
 
 export function PerfilUsuario() {
     const [usuario, setUsuario] = useState({});
-
-    const [isCreated, setIsCreated] = useState(false);
     const [alerta, setAlerta] = useState({});
     const [show, setShow] = useState(false);
-    
     const { handleSubmit, register, formState: { errors } } = useForm();
-    const navigate = useNavigate();
-
+ 
     const param = useParams();
-    useEffect( () => {
 
+    useEffect( () => {
         async function findUsuarioPerfil() {
             try {
               const response = await getUsuarioByCPF(param.cpf);
@@ -33,20 +25,17 @@ export function PerfilUsuario() {
               console.error(error);
             }
         }
-      
-        findUsuarioPerfil(); 
-        
-    }, [param]); 
-     
+        findUsuarioPerfil();
+    }, [param]);
 
-    
-    
-    
+
     const [isUpdated, setIsUpdated] = useState(false);
     const [usuarioEdit, setUsuarioEdit] = useState({});
+
     async function editUsuario() {
         try {
-            await updateUsuario({
+            setIsUpdated(false);
+            const result = await updateUsuario({
                 id: usuarioEdit.id,
                 nome: usuarioEdit.nome,
                 cpf: usuarioEdit.cpf,
@@ -54,30 +43,38 @@ export function PerfilUsuario() {
                 telefone: usuarioEdit.telefone,
                 matricula: usuarioEdit.matricula
             });
-            setIsUpdated(false);
             setUsuario(usuarioEdit)
+            setAlerta(result.data);
+            setShow(true);
         } catch (error) {
             console.error(error);
         }
     }
-    
-    
+
+
     const handleClose = () => {
         setShowAtualizarSenha(false);
     };
-    const [usuarioSenha, setUsuarioSenha] = useState({}) 
+    const [usuarioSenha, setUsuarioSenha] = useState({})
     const [showAtualizarSenha, setShowAtualizarSenha] = useState(false);
     async function atualizarSenha() {
         try {
-            await updateSenhaUsuario({
+            const result = await updateSenhaUsuario({
                 id: usuarioSenha.id,
                 senha: usuarioSenha.senha,
                 novaSenha: usuarioSenha.novaSenha,
                 novaSenha2: usuarioSenha.novaSenha2
             });
-            setIsUpdated(false);
+            setShowAtualizarSenha(false);
+            setUsuarioEdit({})
+
+            setAlerta(result.data);
+            setShow(true);
         } catch (error) {
             console.error(error);
+            setAlerta(error.response.data);
+            setShow(true);
+            setShowAtualizarSenha(false);
         }
     }
 
@@ -95,24 +92,24 @@ export function PerfilUsuario() {
         //setUsuarioSenha(usuario)
     }
 
-    
+
     return (
         <Container fluid className="cor-page min-height d-flex justify-content-center align-items-center">
 
-        { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
             <div className="d-flex flex-column align-items-center justify-content-center col-md-8 col-sm-10 m-3 p-0 perfil" variant="outline-danger">
+                { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
                 <FaUser size="50px" className="mb-3" />
                 <h4 className="mb-4"> {usuario.nome} </h4>
                 <div className="col-12">
-                    <p><strong>Perfil:</strong> {usuario.perfil}</p>
+                    {/* <p><strong>Perfil:</strong> {usuario.perfil}</p> */}
                     <p><strong>CPF:</strong> {usuario.cpf}</p>
                     <p><strong>Email:</strong> {usuario.email}</p>
                     <p><strong>Telefone:</strong> {usuario.telefone}</p>
                     <p><strong>Matrícula:</strong> {usuario.matricula}</p>
                     {/* Adicione mais informações do usuário aqui */}
                 </div>
-                
+
                 <Row className="justify-content-between align-items-center col-12">
                     <Col className="p-0 m-0">
                        <Button className="mt-3" onClick={() => abrirModal(usuario)}>
@@ -134,7 +131,7 @@ export function PerfilUsuario() {
                 <Modal.Header>
                     <Modal.Title>Editar usuário: {usuarioEdit.nome}</Modal.Title>
                 </Modal.Header>
-                
+
                 <Form className="mx-2 pb-3" validate onSubmit={handleSubmit(editUsuario)} validated={!!errors}>
                     <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light">
 
@@ -195,7 +192,6 @@ export function PerfilUsuario() {
                             </Col>
                         </Row>
 
-
                         <Row>
                             <Col md='6'>
                                 <Form.Group controlId="searchQuery">
@@ -224,33 +220,6 @@ export function PerfilUsuario() {
                                     />
                                 </Form.Group>
                             </Col>
-                            {/* <Col md='3'>
-                                <Form.Group controlId="searchQuery">
-                                    <Form.Label className="mb-0">Senha:</Form.Label>
-                                    <Form.Control
-                                        className="mb-3"
-                                        type='text'
-                                        defaultValue={usuarioEdit.senha}
-                                        label=''
-                                        placeholder='Senha'
-                                        required={true}
-                                        name='senha'
-                                        error={errors.senha}
-                                        onChange={(e) =>
-                                            setUsuarioEdit({
-                                              ...usuarioEdit,
-                                              senha: e.target.value,
-                                            })
-                                          }
-                                        validations={register('senha', {
-                                            required: {
-                                                value: true,
-                                                message: ' é obrigatório.'
-                                            }
-                                        })}
-                                    />
-                                </Form.Group>
-                            </Col> */}
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Telefone:</Form.Label>
@@ -327,14 +296,13 @@ export function PerfilUsuario() {
                 <Form className="mx-2 pb-3" validate onSubmit={handleSubmit(()=> {atualizarSenha()})} validated={!!errors}>
                     <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light " size="md">
 
-                        <Row className="d-flex justify-content-center">                            
+                        <Row className="d-flex justify-content-center">
                             <Col md='8'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Senha Atual</Form.Label>
                                     <Form.Control
                                         className="mb-3"
                                         type='text'
-                                        defaultValue={usuarioSenha.senha}
                                         label=''
                                         placeholder='Senha'
                                         required={true}
@@ -364,7 +332,6 @@ export function PerfilUsuario() {
                                     <Form.Control
                                         className="mb-3"
                                         type='text'
-                                        defaultValue={usuarioSenha.novaSenha}
                                         label=''
                                         placeholder='Senha'
                                         required={true}
@@ -386,7 +353,7 @@ export function PerfilUsuario() {
                                 </Form.Group>
                             </Col>
                         </Row>
-                            
+
                         <Row className="d-flex justify-content-center">
 
                             <Col md='8'>
@@ -395,7 +362,6 @@ export function PerfilUsuario() {
                                     <Form.Control
                                         className="mb-3"
                                         type='text'
-                                        defaultValue={usuarioSenha.novaSenha2}
                                         label=''
                                         placeholder='Senha'
                                         required={true}
@@ -415,7 +381,7 @@ export function PerfilUsuario() {
                                         })}
                                     />
                                 </Form.Group>
-                            </Col>                            
+                            </Col>
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>

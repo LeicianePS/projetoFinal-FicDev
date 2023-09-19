@@ -14,10 +14,10 @@ class UsuarioController {
         try {
             const { nome, cpf, email, telefone, matricula, perfil } = request.body;
             const senha = cpf;
-            if (!nome || !cpf || !email || !telefone || !matricula || !perfil) return httpHelper.badRequest('E-mail e senha são obrigatórios!');
+            if (!nome || !cpf || !email || !telefone || !matricula) return httpHelper.badRequest('E-mail e senha são obrigatórios!');
             const usuarioAlreadyExists = await UsuarioModel.findOne({ where: { cpf } });
             if (usuarioAlreadyExists) return httpHelper.badRequest('Informações de usuário já cadastrado!');
-            
+
             const passwordHashed = await bcrypt.hash(
                 senha,
                 Number(process.env.SALT)
@@ -38,6 +38,7 @@ class UsuarioController {
                 { expiresIn: process.env.TOKEN_EXPIRES_IN }
             );
             return httpHelper.created({
+                accessToken,
                 message: "Usuário criado com sucesso!",
                 variant: "success"
             });
@@ -64,7 +65,7 @@ class UsuarioController {
                 Number(process.env.SALT)
             );
 
-            
+
             const isPasswordValid = await bcrypt.compare(senha, usuarioExists.senha);
             if (!isPasswordValid) return httpHelper.badRequest('Senha incorreta!');
             const accessToken = jwt.sign(
@@ -147,7 +148,6 @@ class UsuarioController {
             return httpHelper.ok({
                 message: 'Região atualizada com sucesso!',
                 variant: "success"
-
             });
         } catch (error) {
             return httpHelper.internalError(error);
@@ -165,8 +165,8 @@ class UsuarioController {
         try {
             const { id } = request.params;
             const usuario = await UsuarioModel.findByPk(id, {
-                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula', 'perfil']
-                
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
+
             });
             return httpHelper.ok(usuario);
         } catch (error) {
@@ -180,7 +180,7 @@ class UsuarioController {
             const { cpf } = request.params;
             const usuario = await UsuarioModel.findOne( {
                 where: {cpf},
-                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula', 'perfil']
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
             },);
             return httpHelper.ok(usuario);
         } catch (error) {
@@ -194,11 +194,11 @@ class UsuarioController {
             const { senha, novaSenha, novaSenha2 } = request.body;
             const { id } = request.params;
             const usuarioExists = await UsuarioModel.findByPk(id);
-            if (!usuarioExists) return httpHelper.notFound('Usuário não encontrado!');       
+            if (!usuarioExists) return httpHelper.notFound('Usuário não encontrado!');
 
             const isPasswordValid = await bcrypt.compare(senha, usuarioExists.senha);
             if (!isPasswordValid) return httpHelper.badRequest('Senha incorreta!');
-            
+
             const passwordHashed = await bcrypt.hash(
                 novaSenha,
                 Number(process.env.SALT)
@@ -209,7 +209,10 @@ class UsuarioController {
             }, {
                 where: { id }
             });
-            return httpHelper.ok('Senha atualizada com sucesso!');
+            return httpHelper.ok({
+                message: 'Senha atualizada com sucesso!',
+                variant: "success"
+            });
         } catch (error) {
             return httpHelper.internalError(error);
         }

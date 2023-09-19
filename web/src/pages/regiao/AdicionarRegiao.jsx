@@ -13,8 +13,8 @@ export function AdicionarRegiao(props) {
     const { handleSubmit, register, formState: { errors } } = useForm();
     const [alerta, setAlerta] = useState({});
     const [show, setShow] = useState(false);
-    
- 
+
+
     const navigate = useNavigate();
 
     async function addRegiao(data) {
@@ -25,7 +25,7 @@ export function AdicionarRegiao(props) {
 
             setTimeout(() => {
                 navigate('/regioes');
-            }, 2500);
+            }, 1500);
         } catch (error) {
             console.error(error);
         }
@@ -50,12 +50,12 @@ export function AdicionarRegiao(props) {
                     <Button className="align-items-center" onClick={() => setIsCreated(true)}>
                         <Link to="/regiao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
-                  
+
                 </Col> */}
             </Row>
 
 
-            
+
             <Form className="mx-2 pb-3" validate onSubmit={handleSubmit(addRegiao)} validated={!!errors}>
                     <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light">
 
@@ -124,10 +124,10 @@ export function AdicionarRegiao(props) {
                                     />
                                 </Form.Group>
                             </Col>
-                            
-    
+
+
                         </Row>
-                        
+
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="outline-secondary" onClick={() => cancel()} className="mx-4">
@@ -137,7 +137,7 @@ export function AdicionarRegiao(props) {
                         <Button variant="primary" type="submit">
                             Salvar
                         </Button>
-                        
+
                     </Modal.Footer>
                 </Form>
 

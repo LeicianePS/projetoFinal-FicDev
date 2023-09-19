@@ -42,7 +42,11 @@ class BatalhaoController {
                 status,
                 id_regiao
             });
-            return httpHelper.created(batalhao);
+            return httpHelper.created({
+                batalhao,
+                message: "Batalhão criado com sucesso!",
+                variant: "success"
+            });
         } catch (error) {
             return httpHelper.internalError(error);
         }
@@ -68,7 +72,8 @@ class BatalhaoController {
             if (!batalhaoExists) return httpHelper.notFound('Batalhao não encontrado!');
             await BatalhaoModel.destroy({ where: { id } });
             return httpHelper.ok({
-                message: 'Batalhao deletado com sucesso!'
+                message: 'Batalhao deletado com sucesso!',
+                variant: 'success',
             })
         } catch (error) {
             return httpHelper.internalError(error);
@@ -113,7 +118,8 @@ class BatalhaoController {
                 where: { id }
             });
             return httpHelper.ok({
-                message: 'Batalhao atualizado com sucesso!'
+                message: 'Batalhao atualizado com sucesso!',
+                variant: "success"
             });
         } catch (error) {
             return httpHelper.internalError(error);
@@ -187,7 +193,7 @@ class BatalhaoController {
         }
     }
 
-     async efetivoCR(request, response) { //`SELECT SUM(efetivo), comando_regional FROM batalhao GROUP BY comando_regional`
+    async efetivoCR(request, response) { //`SELECT SUM(efetivo), comando_regional FROM batalhao GROUP BY comando_regional`
         const httpHelper = new HttpHelper(response);
         try {
             const efetivoCR = await BatalhaoModel.findAll({
@@ -203,7 +209,7 @@ class BatalhaoController {
         }
     }
 
-    async efetivoTotal(request, response) { 
+    async efetivoTotal(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
             const efetivoTotal = await BatalhaoModel.findAll({

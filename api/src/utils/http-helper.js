@@ -33,7 +33,7 @@ class HttpHelper {
 
     internalError(error) {
         return this.response.status(500).json({
-            message: `Erro interno, a operação não pode ser concluída`,
+            message: `Erro interno, a operação não pode ser concluída. `,
             variant: "danger",
         });
     }

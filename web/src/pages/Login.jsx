@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Button, Row, Col, Container, Form, InputGroup } from "react-bootstrap";
+import { Button, Row, Col, Form, InputGroup } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Input } from "../components/Input";
-import { Header } from '../components/Header';
-import { Modal } from '../components/Modal';
 
 import { loginUser } from '../services/user-services';
 
@@ -38,14 +36,14 @@ export function Login() {
     };
 
     return (
-        
+
             <Row className="align-items-center">
                 <Col className="d-flex justify-content-center login-left">
                     <img src={login} alt="" className="image-login align-items-center"/>
                 </Col>
 
                 <Col className="justify-content-center m-0 p-0  bordered">
-                    <h3 className="rounded d-flex justify-content-center py-4 " > Entre na sua conta </h3> 
+                    <h3 className="rounded d-flex justify-content-center py-4 " > Entre na sua conta </h3>
                     <Form
                         noValidate
                         validated={!!errors}
@@ -72,7 +70,7 @@ export function Login() {
                                     // }
                                 })}
                             />
-                            
+
                                {/* <Input
                                     className="mb-4"
                                     label="Senha"
@@ -88,7 +86,7 @@ export function Login() {
                                         }
                                     })}
                                 />  */}
-                                
+
                             <InputGroup className="mb-3">
                                 <Input
                                     className="mb-10 col-md-10"
@@ -113,10 +111,10 @@ export function Login() {
                                     {showPassword ? <FaEye/> : <FaEyeSlash/>}
                                 </button>
                             </InputGroup>
-                            
+
                             <div className="d-flex justify-content-between">
                                 <Button type="submit">Entrar</Button>
-                                <Link to="/register">Criar conta</Link>
+                                {/* <Link to="/register">Criar conta</Link> */}
                             </div>
                         </Col>
                     </Form>

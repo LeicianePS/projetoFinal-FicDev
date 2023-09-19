@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Alert from 'react-bootstrap/Alert';
 
 function AlertaFeedback(props) {
-  
+
   useEffect(() => {
     setTimeout(() => {
       props.setShow(false);
@@ -11,8 +11,8 @@ function AlertaFeedback(props) {
   }, []);
 
   return (
-    <>
-        <Alert key={props.alerta.variant} variant={props.alerta.variant}>
+    <div className='d-flex justify-content-end'>
+        <Alert key={props.alerta.variant} variant={props.alerta.variant} className='col-md-6'>
             {props.alerta.message}
         </Alert>
 
@@ -20,7 +20,7 @@ function AlertaFeedback(props) {
         {/* <Alert onClose={() => props.setShow(false) } dismissible key={props.alerta.variant} variant={props.alerta.variant}>
             {props.alerta.message}
         </Alert> */}
-    </>
+    </div>
   );
 }
 

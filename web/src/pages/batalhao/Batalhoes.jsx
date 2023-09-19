@@ -2,20 +2,18 @@ import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes, FaPen } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes } from 'react-icons/fa';
 
 //import { Batalhao } from "../../components/Batalhao";
 import { Header } from "../../components/Header";
-import { Input } from '../../components/Input';
 
-import { createBatalhao, deleteBatalhao, getBatalhoes, updateBatalhao, filtroBatalhao } from "../../services/batalhao-service";
+import { deleteBatalhao, getBatalhoes, updateBatalhao, filtroBatalhao } from "../../services/batalhao-service";
 import PaginationComponent from "../../components/PaginationComponent";
 import AlertaFeedback from "../../components/layout/Alert";
 import {  getRegioes } from "../../services/regiao-service";
 
 export function Batalhoes() {
     const [batalhoes, setBatalhoes] = useState([]);
-    const [isCreated, setIsCreated] = useState(false);
     const [show, setShow] = useState(false);
     const [alerta, setAlerta] = useState({});
     const [showRemove, setShowRemove] = useState(false);
@@ -56,7 +54,7 @@ export function Batalhoes() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5); // Número de itens por página
-   
+
     const totalPages = Math.ceil(batalhoes.length / itemsPerPage);
 
     // getCurrentPageData carrega os dados da pagina atual, que são mostrados na tabela
@@ -93,19 +91,12 @@ export function Batalhoes() {
             await findBatalhoes();
         } catch (error) {
             console.error(error);
+            setAlerta(error.response.data);
+            setShow(true);
         }
         handleClose()
     }
 
-    async function addBatalhao(data) {
-        try {
-            await createBatalhao(data);
-            setIsCreated(false);
-            await findBatalhoes();
-        } catch (error) {
-            console.error(error);
-        }
-    }
 
     async function filtrarBatalhao(query) {
         try {
@@ -115,11 +106,11 @@ export function Batalhoes() {
             console.error(error);
         }
     }
-    
-    
-    
+
+
+
     const [isUpdated, setIsUpdated] = useState(false);
-    
+
     const [batalhaoEdit, setBatalhaoEdit] = useState({});
     async function editBatalhao() {
         try {
@@ -147,7 +138,7 @@ export function Batalhoes() {
                 // status: data.statusC,
                 // idRegiao: data.idRegiao
             });
-        
+
 
             setIsUpdated(false);
             setShow(true);
@@ -174,7 +165,7 @@ export function Batalhoes() {
 
 
     const [query, setQuery] = useState('');
-  
+
     // Função que ativa a filtragem de pesquisa
     const handleSearch = async (e) => {
       e.preventDefault();
@@ -190,16 +181,16 @@ export function Batalhoes() {
 
     return (
         <Container fluid className="cor-page min-height">
-            
+
             { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
-            
+
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
                     <Header title="Listagem de Batalhões"  />
                 </Col>
                 <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => setIsCreated(true)}>
+                    <Button className="align-items-center" onClick={() => navigate("/batalhao-adicionar")}>
                         <Link to="/batalhao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
                     {/* <Button variant="outline-secondary" onClick={() => {
@@ -208,7 +199,7 @@ export function Batalhoes() {
                     }}>Sair</Button> */}
                 </Col>
             </Row>
-                     
+
             <Form className="mx-4 my-3 caixa-pesquisa " onSubmit={handleSearch}>
                 <Row className="justify-content-between align-items-center">
                     {/* <Col >
@@ -266,10 +257,10 @@ export function Batalhoes() {
                                 <td>{batalhao.comando_regional}</td>
                                 <td>{batalhao.comandante}</td>
                                 <td className="d-flex justify-content-center">
-                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, batalhao)}><FaEdit size="18px"/></Link> 
-                                    
+                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, batalhao)}><FaEdit size="18px"/></Link>
+
                                     {/* <Link className="mx-1 px-1" to={`/batalhao-editar/${batalhao.id}`}><FaPen size="18px"/></Link>  */}
-                                    
+
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarBatalhao(batalhao)}><FaEdit size="18px"/></button>  */}
                                     {/* <Link className="mx-1 px-1" onClick={async () => await removeBatalhao(batalhao.id)}><FaTrash size="18px"/></Link> */}
                                     <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(batalhao.id)}><FaTrash size="18px"/></Link>
@@ -316,7 +307,7 @@ export function Batalhoes() {
                 <Modal.Header>
                     <Modal.Title>Editar batalhao: {batalhaoEdit.nome_batalhao}</Modal.Title>
                 </Modal.Header>
-                
+
 
 
                 <Form className="mx-2 pb-3" validate onSubmit={handleSubmit(editBatalhao)} validated={!!errors}>
@@ -570,7 +561,7 @@ export function Batalhoes() {
                                         validations={register('statusC', {
                                             required: {
                                                 value: true,
-                                                message: 'Nome do batalhão é obrigatório.'
+                                                message: 'Status é obrigatório.'
                                             }
                                         })}
                                     />
@@ -606,18 +597,18 @@ export function Batalhoes() {
                                     defaultValue={batalhaoEdit.id_regiao}
                                     name='idRegiao'
                                     error={errors.idRegiao}
-                                    // onChange={(e) =>
-                                    //     setBatalhaoEdit({
-                                    //     ...batalhaoEdit,
-                                    //     id_regiao: e.target.value,
-                                    //     })
-                                    // }
-                                    {...register('idRegiao', {
-                                        required: {
-                                        value: true,
-                                        message: 'Região de atuação é obrigatória.'
-                                        }
-                                    })}
+                                    onChange={(e) =>
+                                        setBatalhaoEdit({
+                                        ...batalhaoEdit,
+                                        id_regiao: e.target.value,
+                                        })
+                                    }
+                                    // {...register('id_regiao', {
+                                    //     required: {
+                                    //     value: true,
+                                    //     message: 'Região de atuação é obrigatória.'
+                                    //     }
+                                    // })}
                                     >
                                     <option value="">Selecione uma região</option>
                                     {regioes.map((regiao, index) => (
@@ -637,7 +628,7 @@ export function Batalhoes() {
                             <Button variant="primary" type="submit" onClick={()=> {editBatalhao()}}>
                                 Editar
                             </Button>
-                        
+
                     </Modal.Footer>
                 </Form>
             </Modal>

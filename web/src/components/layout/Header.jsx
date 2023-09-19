@@ -1,7 +1,7 @@
 // Header.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation} from "react-router-dom";
-import { Navbar, Nav, Row, Container, Col,  Modal, Button, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Dropdown } from 'react-bootstrap';
 import { FaUser, FaSignOutAlt, FaBars } from 'react-icons/fa'; // Importe o ícone de usuário
 import logo from '../../assets/images/logo_govmt.png'; // Importe a imagem
 import {getUsuarioByCPF} from '../../services/usuario-service';
@@ -75,7 +75,7 @@ const Header = () => {
         </Nav>
 
         <Nav className="d-flex justify-content-start ">
-        <Link to="/home-dash"><img src={logo} alt="" width={"100px"}/></Link>
+          <Link to="/home-dash"><img src={logo} alt="" width={"100px"}/></Link>
           
         </Nav>
 
@@ -97,48 +97,7 @@ const Header = () => {
         </Nav>
     </Navbar>
 
-    
   );
 }
 
 export default Header;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Header.jsx
-// import React from 'react';
-// import AppBar from '@material-ui/core/AppBar';
-// import Toolbar from '@material-ui/core/Toolbar';
-// import Typography from '@material-ui/core/Typography';
-
-// const Header = () => {
-//   return (
-//     <AppBar position="static">
-//       <Toolbar>
-//         <Typography variant="h6">Seu Aplicativo</Typography>
-//       </Toolbar>
-//     </AppBar>
-//   );
-// }
-
-// export default Header;

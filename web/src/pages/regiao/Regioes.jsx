@@ -1,36 +1,30 @@
-import { Container, Col, Modal, Row, Table, Form, Button, Pagination } from "react-bootstrap";
+import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
-import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes, FaPen } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes} from 'react-icons/fa';
 
 //import { Regiao } from "../../components/Regiao";
 import { Header } from "../../components/Header";
-import { Input } from '../../components/Input';
 
-import { createRegiao, deleteRegiao, getRegioes, updateRegiao, filtroRegiao } from "../../services/regiao-service";
+import { deleteRegiao, getRegioes, updateRegiao, filtroRegiao } from "../../services/regiao-service";
 import PaginationComponent from "../../components/PaginationComponent";
 import AlertaFeedback from "../../components/layout/Alert";
 
 
 export function Regioes() {
     const [regioes, setRegioes] = useState([]);
-    const [isCreated, setIsCreated] = useState(false);
     const [alerta, setAlerta] = useState({});
     const [show, setShow] = useState(false);
     const [showRemove, setShowRemove] = useState(false);
-    
+
     const { handleSubmit, register, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
 
     useEffect(() => {
         findRegioes();
-        // eslint-disable-next-line
 
-        // if (currentPage){
-        //     getCurrentPageData();
-        // }
     }, []);
 
     // Função para abrir o modal de remoção
@@ -78,22 +72,17 @@ export function Regioes() {
 
     async function removeRegiao(id) {
         try {
-            await deleteRegiao(id);
+            const result = await deleteRegiao(id);
+            setAlerta(result.data);
+            setShow(true);
+            debugger
             await findRegioes();
         } catch (error) {
             console.error(error);
+            setAlerta(error.response.data);
+            setShow(true);
         }
        handleClose()
-    }
-
-    async function addRegiao(data) {
-        try {
-            await createRegiao(data);
-            setIsCreated(false);
-            await findRegioes();
-        } catch (error) {
-            console.error(error);
-        }
     }
 
     async function filtrarRegiao(query) {
@@ -104,7 +93,6 @@ export function Regioes() {
             console.error(error);
         }
     }
-
 
 
     const [isUpdated, setIsUpdated] = useState(false);
@@ -121,13 +109,13 @@ export function Regioes() {
             });
             setAlerta(result.data);
             setShow(true);
-            
+
             await findRegioes();
         } catch (error) {
             console.error(error);
             setAlerta(error.response.data);
             setShow(true);
-           
+
         }
     }
 
@@ -172,7 +160,7 @@ export function Regioes() {
                     <Header title="Listagem de Regiões"  />
                 </Col>
                 <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => setIsCreated(true)}>
+                    <Button className="align-items-center" onClick={() => navigate("/regiao-adicionar")}>
                         <Link to="/regiao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
                     {/* <Button variant="outline-secondary" onClick={() => {
@@ -383,59 +371,63 @@ export function Regioes() {
                                 </Form.Group>
                             </Col>
                         </Row> */}
-                        
 
 
-                        
 
-                        <Form.Group controlId="searchQuery" className="mb-3">
-                            <Form.Label className="mb-0">Nome do Região</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder='Insira a População estimada'
-                                defaultValue={regiaoEdit.nome_regiao}
-                                name='nomeRegiao'
-                                error={errors.nomeRegiao}
-                                required={true}
-                                onChange={(e) =>
-                                    setRegiaoEdit({
-                                      ...regiaoEdit,
-                                      nome_regiao: e.target.value,
-                                    })
-                                  }
-                                validations={register('nomeRegiao', {
-                                    required: {
-                                        value: true,
-                                        message: 'Nome da região é obrigatório.'
+                    <Row>
+                        <Col md='8'>
+                            <Form.Group controlId="searchQuery" className="mb-3">
+                                <Form.Label className="mb-0">Nome do Região</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder='Insira a População estimada'
+                                    defaultValue={regiaoEdit.nome_regiao}
+                                    name='nomeRegiao'
+                                    error={errors.nomeRegiao}
+                                    required={true}
+                                    onChange={(e) =>
+                                        setRegiaoEdit({
+                                        ...regiaoEdit,
+                                        nome_regiao: e.target.value,
+                                        })
                                     }
-                                })}
-                                
-                            />
-                        </Form.Group>
+                                    validations={register('nomeRegiao', {
+                                        required: {
+                                            value: true,
+                                            message: 'Nome da região é obrigatório.'
+                                        },
+                                    })}
 
-                        <Form.Group controlId="searchQuery" className="mb-3">
-                            <Form.Label className="mb-0">População</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder='Insira a População estimada'
-                                defaultValue={regiaoEdit.populacao}
-                                name='populacao'
-                                error={errors.populacao}
-                                required={true}
-                                onChange={(e) =>
-                                    setRegiaoEdit({
-                                      ...regiaoEdit,
-                                      populacao: e.target.value,
-                                    })
-                                  }
-                                validations={register('populacao', {
-                                    required: {
-                                        value: true,
-                                        message: 'População é obrigatório.'
+                                />
+                            </Form.Group>
+                        </Col>
+                        <Col md='4'>
+                            <Form.Group controlId="searchQuery" className="mb-3">
+                                <Form.Label className="mb-0">População</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder='Insira a População estimada'
+                                    defaultValue={regiaoEdit.populacao}
+                                    name='populacao'
+                                    error={errors.populacao}
+                                    required={true}
+                                    onChange={(e) =>
+                                        setRegiaoEdit({
+                                        ...regiaoEdit,
+                                        populacao: e.target.value,
+                                        })
                                     }
-                                })}
-                            />
-                        </Form.Group>
+                                    validations={register('populacao', {
+                                        required: {
+                                            value: true,
+                                            message: 'População é obrigatório.'
+                                        }
+                                    })}
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+
 
                         <Form.Group controlId="searchQuery" className="mb-3">
                             <Form.Label className="mb-0">Jurisdição</Form.Label>
