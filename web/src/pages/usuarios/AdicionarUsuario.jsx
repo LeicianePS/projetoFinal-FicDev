@@ -67,6 +67,7 @@ export function AdicionarUsuario(props) {
                                     <Form.Label className="mb-0">Nome do Usuário</Form.Label>
                                     <Input
                                         className="mb-3"
+                                        
                                         type='text'
                                         label=''
                                         placeholder='Insira o nome do Usuário'
@@ -177,7 +178,7 @@ export function AdicionarUsuario(props) {
                                                 value: /^(?:\(\d{2}\)\s?|\d{2}\s?)?\d{4,5}-\d{4}$/,
                                                 message: 'Telefone inválido',
                                             },
-                                            
+
                                         })}
                                     />
                                 </Form.Group>
@@ -207,7 +208,7 @@ export function AdicionarUsuario(props) {
                                 </Form.Group>
                             </Col>
                             <Col md='3'>
-                                {/* <Form.Group controlId="searchQuery">
+                                <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Perfil</Form.Label>
                                     <Form.Select
                                     aria-label="Perfil do Usuário"
@@ -221,10 +222,10 @@ export function AdicionarUsuario(props) {
                                     })}
                                     >
                                     <option value="">Selecione uma região</option>
-                                    <option value="admin">Administrador</option>
-                                    <option value="gestor">Gestor</option>
+                                    <option value="admin">admin</option>
+                                    <option value="gestor">gestor</option>
                                     </Form.Select>
-                                </Form.Group> */}
+                                </Form.Group>
                             </Col>
                         </Row>
                     </Modal.Body>

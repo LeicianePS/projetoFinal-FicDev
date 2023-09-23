@@ -16,7 +16,7 @@
   ul li {
     padding: 10px 20px;
   }
-  
+
   ul li a{
     color: #3e4e54 !important;
     text-decoration: none;
@@ -29,6 +29,7 @@
   a{
     color: #3e4e54 !important;
     text-decoration: none;
+    font-size: 20px;
   }
 
   .active {
@@ -56,24 +57,26 @@
   }
   .caixa-pesquisa input {
     border: solid 1px #3e4e54;
-    
+
   }
 
 
 
   .cor-layout{
-    background-color: white !important;
+
+    background-color:   #fff  !important;
     border: 1px solid #F5F5F5;
   }
 
   .cor-page{
-    background-color: #e4e1e1f3 !important;
+    border-radius: 8px;
+    background-color:  #f8f9fa !important;
     border-radius: 0px;
     min-height: 90vh;
   }
 
 .login-left{
-  background-color: #193282;
+  background-color: #193282;  /*#153f65   #e4e1e1f3*/
 }
 
  .image-login {

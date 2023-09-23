@@ -65,11 +65,13 @@ const Header = () => {
               </Dropdown.Item>
                
               <br/>
-              <b>ACESSO</b>
-              <Dropdown.Item className={isActive('/usuarios') ? 'active' : ''}>
-                <Link to="/usuarios">Usuários</Link>
-              </Dropdown.Item>
-
+              {
+                usuario.perfil == "admin" ? <div><b>ACESSO</b>
+                <Dropdown.Item className={isActive('/usuarios') ? 'active' : ''}>
+                  <Link to="/usuarios">Usuários</Link>
+                </Dropdown.Item> </div> : <></>
+              }
+              
             </Dropdown.Menu>
           </Dropdown>
         </Nav>

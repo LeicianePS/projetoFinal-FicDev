@@ -8,6 +8,7 @@ const EfetivoCRChart = () => {
     options: {
       chart: {
         type: 'bar',
+        color: 'green'
       },
       legend: {
         show: true
@@ -49,6 +50,7 @@ const EfetivoCRChart = () => {
           series: [
             {
               data: efetivoCR,
+              color: "#00A86B"
             },
           ],
         }));
@@ -63,7 +65,7 @@ const EfetivoCRChart = () => {
   return (
     <div className='px-5 py-2'>
       <Card.Header className="d-flex justify-content-start"><Card.Title> Efetivo por Comando Regional</Card.Title></Card.Header>
-      <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={350} width={500} />
+      <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={350} className="col-12" />
     </div>
   );
 };

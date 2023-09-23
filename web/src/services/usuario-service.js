@@ -27,7 +27,8 @@ export async function updateUsuario(data) {
         cpf: data.cpf,
         email: data.email,
         telefone: data.telefone,
-        matricula: data.matricula
+        matricula: data.matricula,
+        perfil: data.perfil
 
     }, {
         headers: {

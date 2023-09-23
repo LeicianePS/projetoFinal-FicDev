@@ -127,7 +127,7 @@ class UsuarioController {
         const httpHelper = new HttpHelper(response);
         try {
             const { id } = request.params;
-            const { nome, cpf, email, telefone, matricula } = request.body;
+            const { nome, cpf, email, telefone, matricula, perfil } = request.body;
             if (!id) return httpHelper.badRequest('Parâmetros inválidos!');
             const usuarioExists = await UsuarioModel.findByPk(id);
             // const passwordHashed = await bcrypt.hash(
@@ -141,7 +141,8 @@ class UsuarioController {
                 email,
                 //senha: passwordHashed,
                 telefone,
-                matricula
+                matricula, 
+                perfil
             }, {
                 where: { id }
             });
@@ -165,7 +166,7 @@ class UsuarioController {
         try {
             const { id } = request.params;
             const usuario = await UsuarioModel.findByPk(id, {
-                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula', 'perfil']
 
             });
             return httpHelper.ok(usuario);
@@ -180,7 +181,7 @@ class UsuarioController {
             const { cpf } = request.params;
             const usuario = await UsuarioModel.findOne( {
                 where: {cpf},
-                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula']
+                attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula', 'perfil']
             },);
             return httpHelper.ok(usuario);
         } catch (error) {

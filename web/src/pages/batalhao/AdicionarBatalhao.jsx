@@ -150,21 +150,27 @@ export function AdicionarBatalhao(props) {
                         <Col md='3'>
                             <Form.Group controlId="searchQuery">
                                 <Form.Label className="mb-0">Tipo de Batalhão:</Form.Label>
-                                <Input
+                                <Form.Select
+                                    size="lg"
                                     className="mb-3"
+                                    aria-label="Selecione um tipo"
                                     type='text'
                                     label=''
                                     placeholder='Tipo do Batalhão'
                                     required={true}
                                     name='tipo'
                                     error={errors.tipo}
-                                    validations={register('tipo', {
+                                    {...register('tipo', {
                                         required: {
-                                            value: true,
-                                            message: 'Tipo é obrigatório.'
+                                        value: true,
+                                        message: 'Tipo é obrigatóriao'
                                         }
                                     })}
-                                />
+                                >
+                                    <option value="">Selecione um tipo</option>
+                                    <option value="PM"> Polícia Militar </option>
+                                    <option value="CBM">Corpo de Bombeiros Militar</option>
+                                </Form.Select>
                             </Form.Group>
                         </Col>
                         <Col md='3'>
@@ -254,7 +260,7 @@ export function AdicionarBatalhao(props) {
                     </Row>
 
                     <Row>
-                        <Col md='6'>
+                        {/* <Col md='6'>
                             <Form.Group controlId="searchQuery">
                                 <Form.Label className="mb-0">Status</Form.Label>
                                 <Input
@@ -272,6 +278,30 @@ export function AdicionarBatalhao(props) {
                                         }
                                     })}
                                 />
+                            </Form.Group>
+                        </Col> */}
+                        <Col md='3'>
+                            <Form.Group controlId="searchQuery">
+                                <Form.Label className="mb-0">Status</Form.Label>
+                                {/* Use o Form.Select para selecionar a região */}
+                                <Form.Select
+                                    size="lg"
+                                    aria-label="Selecione um status"
+                                    type='text'
+                                    name='statusC'
+                                    placeholder='Insira status do Batalhão'
+                                    error={errors.statusC}
+                                    {...register('statusC', {
+                                        required: {
+                                        value: true,
+                                        message: 'Status é obrigatóriao'
+                                        }
+                                    })}
+                                >
+                                    <option value="">Selecione um status</option>
+                                    <option value="ativo" > ativo </option>
+                                    <option value="inativo"> inativo </option>
+                                </Form.Select>
                             </Form.Group>
                         </Col>
                         {/* <Col md='3'>
@@ -314,6 +344,7 @@ export function AdicionarBatalhao(props) {
                                 <Form.Label className="mb-0">Região de Atuação</Form.Label>
                                 {/* Use o Form.Select para selecionar a região */}
                                 <Form.Select
+                                size="lg"
                                 aria-label="Selecione uma região"
                                 name='idRegiao'
                                 error={errors.idRegiao}
@@ -352,11 +383,11 @@ export function AdicionarBatalhao(props) {
                     /> */}
                 </Modal.Body>
                 <Modal.Footer>
-                   <Button variant="outline-secondary" onClick={() => cancel()} className="mx-4">
+                   <Button variant="outline-secondary" onClick={() => cancel()} className="mx-4" size="lg">
                         Cancelar
                     </Button>
 
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" size="lg">
                         Salvar
                     </Button>
 

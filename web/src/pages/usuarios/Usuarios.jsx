@@ -114,7 +114,8 @@ export function Usuarios() {
                 cpf: data.cpf ? data.cpf : usuarioEdit.cpf,
                 email: data.email ? data.email : usuarioEdit.email,
                 telefone: data.telefone ? data.telefone : usuarioEdit.telefone,
-                matricula: data.matricula ? data.matricula : usuarioEdit.matricula
+                matricula: data.matricula ? data.matricula : usuarioEdit.matricula,
+                perfil: usuarioEdit.perfil,
             });
             setAlerta(result.data);
             setShow(true);
@@ -538,6 +539,30 @@ export function Usuarios() {
                                     {errors.matricula && <span>{errors.matricula.message}</span>}
                                 </Form.Group>
                             </Col>
+
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Perfil</Form.Label>
+                                    {/* Use o Form.Select para selecionar a região */}
+                                    <Form.Select
+                                    aria-label="Selecione um perfil"
+                                    defaultValue={usuarioEdit.perfil}
+                                    type='text'
+                                    name='perfilC'
+                                    error={errors.perfil}
+                                        onChange={(e) =>
+                                            setUsuarioEdit({
+                                            ...usuarioEdit,
+                                            perfil: e.target.value,
+                                            })
+                                        }
+                                    >
+                                        <option value="admin">admin</option>
+                                        <option value="gestor">gestor</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>

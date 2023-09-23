@@ -6,6 +6,7 @@ export function Input(props) {
         {/* // <Form.Group className={props.className}> */}
             {/* <FloatingLabel label={props.label}> */}
                 <Form.Control className={props.className}
+                    size="lg"
                     type={props.type}
                     placeholder={props.placeholder}
                     isInvalid={props.error}

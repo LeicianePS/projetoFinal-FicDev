@@ -1,11 +1,30 @@
 // Drawer.jsx
-import React from 'react';
-import { Nav, Col } from 'react-bootstrap';
 
+import React, { useState, useEffect } from 'react';
+import { Nav, Col } from 'react-bootstrap';
+import { FaSignOutAlt, FaBars, FaMapMarkedAlt, FaUserFriends } from 'react-icons/fa';
+import { FaBuildingShield} from 'react-icons/fa6';
 import { Link, useLocation } from 'react-router-dom';
+import {getUsuarioByCPF} from '../../services/usuario-service';
 
 const DrawerMenu = () => {
   const location = useLocation();
+  const [usuario, setUsuario] = useState({})
+
+  useEffect( () => {
+
+    async function findUsuarioPerfil() {
+        try {
+          const response = await getUsuarioByCPF(window.localStorage.getItem('user'));
+          setUsuario(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+    }
+
+    findUsuarioPerfil();
+
+}, []);
 
   // Defina uma função para verificar se um item de menu deve estar ativo
   const isActive = (pathname) => {
@@ -13,17 +32,17 @@ const DrawerMenu = () => {
   };
 
   return (
-    <Nav className="col-md-3 col-lg-2 d-md-block cor-layout text-dark">
+    <Nav className="col-md-3 col-lg-2 d-md-block cor-layout text-dark ">
       {/* Adicione links de navegação ou itens de menu aqui */}
         <Col md={6} className="d-none d-md-block col-md-12 col-lg-12">
           {/* Conteúdo visível apenas em telas médias e maiores */}
           <ul>
-            <b>GESTÃO</b>   
-            <li className={isActive('/batalhoes') ? 'active' : ''}>
-              <Link to="/batalhoes">Batalhões</Link>
+            <b>GESTÃO</b>
+            <li className={isActive('/batalhoes') ? 'active  align-items-center' : ' align-items-center'}>
+              <Link to="/batalhoes"><FaBuildingShield size="24px" className='me-3'/>Batalhões</Link>
             </li>
-            <li className={isActive('/regioes') ? 'active' : ''}>
-              <Link to="/regioes">Regiões</Link>
+            <li className={isActive('/regioes') ? 'active  align-items-center' : ' align-items-center'}>
+              <Link to="/regioes"><FaMapMarkedAlt size="24px" className='me-3'/>Regiões</Link>
             </li>
             {/* <li className={isActive('/darkmode') ? 'active' : ''}>
               <Link to="/darkmode">Dark Mode</Link>
@@ -32,13 +51,14 @@ const DrawerMenu = () => {
               <Link to="/nutricionistas">Nutricionista</Link>
             </li> */}
           </ul>
-          <ul>
+          {usuario.perfil == "admin" ? <ul>
             <b>ACESSO</b>
             <li className={isActive('/usuarios') ? 'active' : ''}>
-              <Link to="/usuarios">Usuários</Link>
+              <Link to="/usuarios"><FaUserFriends size="24px" className='me-3'/>Usuários</Link>
             </li>
-          </ul>
+          </ul> : <></>}
         </Col>
+
     </Nav>
   );
 }

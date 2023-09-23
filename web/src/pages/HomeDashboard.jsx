@@ -115,13 +115,13 @@ export function HomeDashboard(){
                 </Col>
             </Row>
 
-            <Row className="">
-                <BatalhoesCRChart className="p-4 bg-danger"></BatalhoesCRChart>
-            </Row>
+            <Col className="col-12">
+                <BatalhoesCRChart className="p-4 bg-danger col-12"></BatalhoesCRChart>
+            </Col>
             
-            <Row>
+            <Col className="col-12">
                 <EfetivoCRChart className="p-4 bg-danger"></EfetivoCRChart>
-            </Row>
+            </Col>
         </Container>
     )
 }

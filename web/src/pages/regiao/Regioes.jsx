@@ -160,7 +160,7 @@ export function Regioes() {
                     <Header title="Listagem de Regiões"  />
                 </Col>
                 <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => navigate("/regiao-adicionar")}>
+                    <Button className="align-items-center" onClick={() => navigate("/regiao-adicionar")} size="lg">
                         <Link to="/regiao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
                     {/* <Button variant="outline-secondary" onClick={() => {
@@ -182,6 +182,7 @@ export function Regioes() {
                         <Form.Group controlId="searchQuery">
                             <Form.Label  className="b-0">Buscar por Nome ou Jurisdição da Região:</Form.Label>
                             <Form.Control
+                                size="lg"
                                 type="text"
                                 placeholder="Digite a consulta"
                                 value={query}
@@ -192,10 +193,10 @@ export function Regioes() {
                 </Row>
 
                 <Col className="d-flex justify-content-end pt-3 pb-2">
-                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarRegiao('')}} className="align-items-center mx-4">
+                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarRegiao('')}} className="align-items-center mx-4" size="lg">
                         Limpar <FaTimes/>
                     </Button>
-                    <Button variant="outline-primary" type="submit" className="align-items-center">
+                    <Button variant="outline-primary" type="submit" className="align-items-center" size="lg">
                         Pesquisar <FaSearch/>
                     </Button>
                 </Col>
@@ -251,10 +252,10 @@ export function Regioes() {
                     </Modal.Header>
                     <Modal.Body>Tem certeza que deseja remover este item?</Modal.Body>
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleClose} size="lg">
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={async () => removeRegiao(idToRemove)}>
+                    <Button variant="primary" onClick={async () => removeRegiao(idToRemove)} size="lg">
                         Continuar
                     </Button>
                     </Modal.Footer>
@@ -379,6 +380,7 @@ export function Regioes() {
                             <Form.Group controlId="searchQuery" className="mb-3">
                                 <Form.Label className="mb-0">Nome do Região</Form.Label>
                                 <Form.Control
+                                    size="lg"
                                     type="text"
                                     placeholder='Insira a População estimada'
                                     defaultValue={regiaoEdit.nome_regiao}
@@ -405,6 +407,7 @@ export function Regioes() {
                             <Form.Group controlId="searchQuery" className="mb-3">
                                 <Form.Label className="mb-0">População</Form.Label>
                                 <Form.Control
+                                    size="lg"
                                     type="number"
                                     placeholder='Insira a População estimada'
                                     defaultValue={regiaoEdit.populacao}
@@ -432,6 +435,7 @@ export function Regioes() {
                         <Form.Group controlId="searchQuery" className="mb-3">
                             <Form.Label className="mb-0">Jurisdição</Form.Label>
                             <Form.Control
+                                size="lg"
                                 type="text"
                                 placeholder='Jurisdição'
                                 defaultValue={regiaoEdit.cidadesbairros_atuacao}
@@ -457,10 +461,10 @@ export function Regioes() {
 
                     </Modal.Body>
                     <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setIsUpdated(false)} className="mx-4">
+                            <Button variant="secondary" onClick={() => setIsUpdated(false)} className="mx-4" size="lg">
                                 Fechar
                             </Button>
-                            <Button variant="primary" type="submit" onClick={()=> {editRegiao()}}>  {/*onClick={() => navigate('/regioes')} */}
+                            <Button variant="primary" type="submit" onClick={()=> {editRegiao()}} size="lg">  {/*onClick={() => navigate('/regioes')} */}
                                 Editar
                             </Button>
                     </Modal.Footer>

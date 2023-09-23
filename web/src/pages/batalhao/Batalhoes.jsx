@@ -124,7 +124,7 @@ export function Batalhoes() {
                 missaoValores: batalhaoEdit.missao_valores,
                 contato: batalhaoEdit.contato,
                 comandoRegional: batalhaoEdit.comando_regional,
-                status: batalhaoEdit.status,
+                statusC: batalhaoEdit.status,
                 idRegiao: batalhaoEdit.id_regiao
 
                 // nomeBatalhao: data.nomeBatalhao,
@@ -190,7 +190,7 @@ export function Batalhoes() {
                     <Header title="Listagem de Batalhões"  />
                 </Col>
                 <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => navigate("/batalhao-adicionar")}>
+                    <Button className="align-items-center" onClick={() => navigate("/batalhao-adicionar")} size="lg">
                         <Link to="/batalhao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
                     {/* <Button variant="outline-secondary" onClick={() => {
@@ -212,6 +212,7 @@ export function Batalhoes() {
                         <Form.Group controlId="searchQuery">
                             <Form.Label  className="b-0">Buscar por Nome, Tipo ou Comandante:</Form.Label>
                             <Form.Control
+                                size="lg"
                                 type="text"
                                 placeholder="Digite a consulta"
                                 value={query}
@@ -222,10 +223,10 @@ export function Batalhoes() {
                 </Row>
 
                 <Col className="d-flex justify-content-end pt-3 pb-2">
-                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarBatalhao('')}} className="align-items-center mx-4">
+                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarBatalhao('')}} className="align-items-center mx-4" size="lg">
                         Limpar <FaTimes/>
                     </Button>
-                    <Button variant="outline-primary" type="submit" className="align-items-center">
+                    <Button variant="outline-primary" type="submit" className="align-items-center" size="lg">
                         Pesquisar <FaSearch/>
                     </Button>
                 </Col>
@@ -252,7 +253,7 @@ export function Batalhoes() {
                             <tr key={index}>
                                 <td>{batalhao.id}</td>
                                 <td>{batalhao.nome_batalhao}</td>
-                                <td>{batalhao.tipo}</td>
+                                <td>{ batalhao.tipo == "PM" ? "Polícia Militar" : "Corpo de Bombeiros"}</td>
                                 <td>{batalhao.efetivo}</td>
                                 <td>{batalhao.comando_regional}</td>
                                 <td>{batalhao.comandante}</td>
@@ -284,10 +285,10 @@ export function Batalhoes() {
                     </Modal.Header>
                     <Modal.Body>Tem certeza que deseja remover este item?</Modal.Body>
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleClose} size="lg">
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={async () => removeBatalhao(idToRemove)}>
+                    <Button variant="primary" onClick={async () => removeBatalhao(idToRemove)} size="lg">
                         Continuar
                     </Button>
                     </Modal.Footer>
@@ -318,6 +319,7 @@ export function Batalhoes() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Nome do Batalhão</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.nome_batalhao}
@@ -344,6 +346,7 @@ export function Batalhoes() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Comandante</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.comandante}
@@ -375,6 +378,7 @@ export function Batalhoes() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Data de Fundação</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         className="mb-3"
                                         type='date'
                                         defaultValue={batalhaoEdit.data_fundacao}
@@ -401,13 +405,11 @@ export function Batalhoes() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Tipo de Batalhão:</Form.Label>
-                                    <Form.Control
-                                        className="mb-3"
-                                        type='text'
+                                    <Form.Select
+                                        size="lg"
+                                        aria-label="Selecione um tipo"
                                         defaultValue={batalhaoEdit.tipo}
-                                        label=''
-                                        placeholder='Tipo do Batalhão'
-                                        required={true}
+                                        type='text'
                                         name='tipo'
                                         error={errors.tipo}
                                         onChange={(e) =>
@@ -416,19 +418,17 @@ export function Batalhoes() {
                                             tipo: e.target.value,
                                             })
                                         }
-                                        validations={register('tipo', {
-                                            required: {
-                                                value: true,
-                                                message: ' é obrigatório.'
-                                            }
-                                        })}
-                                    />
+                                    >
+                                        <option value="PM"> Polícia Militar </option>
+                                        <option value="CBM">Corpo de Bombeiros Militar</option>
+                                    </Form.Select>
                                 </Form.Group>
                             </Col>
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Nº de Efetivo:</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         className="mb-3"
                                         type='number'
                                         defaultValue={batalhaoEdit.efetivo}
@@ -456,6 +456,7 @@ export function Batalhoes() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Comando Regional:</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.comando_regional}
@@ -485,6 +486,7 @@ export function Batalhoes() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Missões e Valores</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.missao_valores}
@@ -514,6 +516,7 @@ export function Batalhoes() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Contato (E-mail e telefone)</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         className="mb-3"
                                         type='text'
                                         defaultValue={batalhaoEdit.contato}
@@ -540,7 +543,7 @@ export function Batalhoes() {
                         </Row>
 
                         <Row>
-                            <Col md='6'>
+                            {/* <Col md='6'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Status</Form.Label>
                                     <Form.Control
@@ -566,7 +569,32 @@ export function Batalhoes() {
                                         })}
                                     />
                                 </Form.Group>
+                            </Col> */}
+
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Status</Form.Label>
+                                    {/* Use o Form.Select para selecionar a região */}
+                                    <Form.Select
+                                    size="lg"
+                                    aria-label="Selecione um status"
+                                    defaultValue={batalhaoEdit.status}
+                                    type='text'
+                                    name='statusC'
+                                    error={errors.statusC}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            status: e.target.value,
+                                            })
+                                        }
+                                    >
+                                        <option value="ativo"> ativo </option>
+                                        <option value="inativo"> inativo </option>
+                                    </Form.Select>
+                                </Form.Group>
                             </Col>
+
                             {/* <Col md='6'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Região de atuação</Form.Label>
@@ -593,39 +621,40 @@ export function Batalhoes() {
                                     <Form.Label className="mb-0">Região de Atuação</Form.Label>
                                     {/* Use o Form.Select para selecionar a região */}
                                     <Form.Select
-                                    aria-label="Selecione uma região"
-                                    defaultValue={batalhaoEdit.id_regiao}
-                                    name='idRegiao'
-                                    error={errors.idRegiao}
-                                    onChange={(e) =>
-                                        setBatalhaoEdit({
-                                        ...batalhaoEdit,
-                                        id_regiao: e.target.value,
-                                        })
-                                    }
-                                    // {...register('id_regiao', {
-                                    //     required: {
-                                    //     value: true,
-                                    //     message: 'Região de atuação é obrigatória.'
-                                    //     }
-                                    // })}
-                                    >
-                                    <option value="">Selecione uma região</option>
-                                    {regioes.map((regiao, index) => (
-                                        <option key={index} value={regiao.id_regiao}>
-                                            {regiao.nome_regiao}
-                                        </option>
-                                    ))}
+                                        size="lg"
+                                        aria-label="Selecione uma região"
+                                        defaultValue={batalhaoEdit.id_regiao}
+                                        name='idRegiao'
+                                        error={errors.idRegiao}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            id_regiao: e.target.value,
+                                            })
+                                        }
+                                        // {...register('id_regiao', {
+                                        //     required: {
+                                        //     value: true,
+                                        //     message: 'Região de atuação é obrigatória.'
+                                        //     }
+                                        // })}
+                                        >
+                                        <option value="">Selecione uma região</option>
+                                        {regioes.map((regiao, index) => (
+                                            <option key={index} value={regiao.id_regiao}>
+                                                {regiao.nome_regiao}
+                                            </option>
+                                        ))}
                                     </Form.Select>
                                 </Form.Group>
                             </Col>
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setIsUpdated(false)} className="mx-4">
+                            <Button variant="secondary" onClick={() => setIsUpdated(false)} className="mx-4" size="lg">
                                 Fechar
                             </Button>
-                            <Button variant="primary" type="submit" onClick={()=> {editBatalhao()}}>
+                            <Button variant="primary" type="submit" onClick={()=> {editBatalhao()}} size="lg">
                                 Editar
                             </Button>
 

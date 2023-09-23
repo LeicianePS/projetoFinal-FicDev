@@ -38,10 +38,10 @@ module.exports = {
                 allowNull: false,
                 unique: true
             },
-            // perfil: {
-            //     type: Sequelize.STRING,
-            //     allowNull: false,
-            // },
+            perfil: {
+                type: Sequelize.STRING,
+                allowNull: false,
+            },
         });
     },
 

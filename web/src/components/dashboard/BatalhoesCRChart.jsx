@@ -43,6 +43,7 @@ const BatalhoesCRChart = () => {
           series: [
             {
               data: batalhoesQuantidade,
+              //color: "#1B1E23"
             },
           ],
         }));
@@ -55,9 +56,9 @@ const BatalhoesCRChart = () => {
   }, []);
 
   return (
-    <div className='px-5 py-2'>
+    <div className='px-5 py-2 col-12'>
       <Card.Header className="d-flex justify-content-start"><Card.Title> Batalhão por Comando Regional</Card.Title></Card.Header>
-      <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={350} width={500} />
+      <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={350} className="col-12"/>
     </div>
   );
 };
