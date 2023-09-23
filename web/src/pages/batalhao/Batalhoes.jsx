@@ -258,13 +258,13 @@ export function Batalhoes() {
                                 <td>{batalhao.comando_regional}</td>
                                 <td>{batalhao.comandante}</td>
                                 <td className="d-flex justify-content-center">
-                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, batalhao)}><FaEdit size="18px"/></Link>
+                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, batalhao)}><FaEdit size="20px"/></Link>
 
-                                    {/* <Link className="mx-1 px-1" to={`/batalhao-editar/${batalhao.id}`}><FaPen size="18px"/></Link>  */}
+                                    {/* <Link className="mx-1 px-1" to={`/batalhao-editar/${batalhao.id}`}><FaPen size="20px"/></Link>  */}
 
-                                    {/* <button className="mx-1 px-1" onClick={() => abrirEditarBatalhao(batalhao)}><FaEdit size="18px"/></button>  */}
-                                    {/* <Link className="mx-1 px-1" onClick={async () => await removeBatalhao(batalhao.id)}><FaTrash size="18px"/></Link> */}
-                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(batalhao.id)}><FaTrash size="18px"/></Link>
+                                    {/* <button className="mx-1 px-1" onClick={() => abrirEditarBatalhao(batalhao)}><FaEdit size="20px"/></button>  */}
+                                    {/* <Link className="mx-1 px-1" onClick={async () => await removeBatalhao(batalhao.id)}><FaTrash size="20px"/></Link> */}
+                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(batalhao.id)}><FaTrash size="20px"/></Link>
                                 </td>
                             </tr>
                         ))

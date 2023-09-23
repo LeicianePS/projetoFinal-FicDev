@@ -211,6 +211,7 @@ export function AdicionarUsuario(props) {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Perfil</Form.Label>
                                     <Form.Select
+                                    size="lg"
                                     aria-label="Perfil do Usuário"
                                     name='perfil'
                                     error={errors.perfil}
@@ -230,11 +231,11 @@ export function AdicionarUsuario(props) {
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="outline-secondary" onClick={() => cancel()} className="mx-4">
+                        <Button variant="outline-secondary" onClick={() => cancel()} className="mx-4" size="lg">
                             Cancelar
                         </Button>
 
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="submit" size="lg">
                             Salvar
                         </Button>
 

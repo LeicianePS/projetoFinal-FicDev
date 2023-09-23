@@ -224,13 +224,13 @@ export function Regioes() {
                                 <td>{regiao.populacao}</td>
                                 <td>{regiao. cidadesbairros_atuacao}</td>
                                 <td className="d-flex justify-content-center">
-                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, regiao)}><FaEdit size="18px"/></Link>
+                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, regiao)}><FaEdit size="20px"/></Link>
 
-                                    {/* <Link className="mx-1 px-1" to={`/regiao-editar/${regiao.id_regiao}`}><FaPen size="18px"/></Link>  */}
+                                    {/* <Link className="mx-1 px-1" to={`/regiao-editar/${regiao.id_regiao}`}><FaPen size="20px"/></Link>  */}
 
-                                    {/* <button className="mx-1 px-1" onClick={() => abrirEditarRegiao(regiao)}><FaEdit size="18px"/></button>  */}
-                                    {/* <Link className="mx-1 px-1" onClick={async () => await removeRegiao(regiao.id_regiao)}><FaTrash size="18px"/></Link> */}
-                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(regiao.id_regiao)}><FaTrash size="18px"/></Link>
+                                    {/* <button className="mx-1 px-1" onClick={() => abrirEditarRegiao(regiao)}><FaEdit size="20px"/></button>  */}
+                                    {/* <Link className="mx-1 px-1" onClick={async () => await removeRegiao(regiao.id_regiao)}><FaTrash size="20px"/></Link> */}
+                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(regiao.id_regiao)}><FaTrash size="20px"/></Link>
                                 </td>
                             </tr>
                         ))

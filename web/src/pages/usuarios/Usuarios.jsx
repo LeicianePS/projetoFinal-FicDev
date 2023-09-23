@@ -195,6 +195,7 @@ export function Usuarios() {
                         <Form.Group controlId="searchQuery">
                             <Form.Label  className="b-0">Buscar por nome, email ou cpf:</Form.Label>
                             <Form.Control
+                                size="lg"
                                 type="text"
                                 placeholder="Digite a consulta"
                                 value={query}
@@ -205,10 +206,10 @@ export function Usuarios() {
                 </Row>
 
                 <Col className="d-flex justify-content-end pt-3 pb-2">
-                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarUsuario('')}} className="align-items-center mx-4">
+                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarUsuario('')}} className="align-items-center mx-4" size="lg">
                         Limpar <FaTimes/>
                     </Button>
-                    <Button variant="outline-primary" type="submit" className="align-items-center">
+                    <Button variant="outline-primary" type="submit" className="align-items-center" size="lg">
                         Pesquisar <FaSearch/>
                     </Button>
                 </Col>
@@ -240,12 +241,12 @@ export function Usuarios() {
                                 <td>{usuario.telefone}</td>
                                 <td>{usuario.matricula}</td>
                                 <td className="d-flex justify-content-center">
-                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, usuario)}><FaEdit size="18px"/></Link>
+                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, usuario)}><FaEdit size="20px"/></Link>
 
-                                    {/* <Link className="mx-1 px-1" to={`/usuario-editar/${usuario.id}`}><FaPen size="18px"/></Link>  */}
+                                    {/* <Link className="mx-1 px-1" to={`/usuario-editar/${usuario.id}`}><FaPen size="20px"/></Link>  */}
 
-                                    {/* <button className="mx-1 px-1" onClick={() => abrirEditarUsuario(usuario)}><FaEdit size="18px"/></button>  */}
-                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(usuario.id)}><FaTrash size="18px"/></Link>
+                                    {/* <button className="mx-1 px-1" onClick={() => abrirEditarUsuario(usuario)}><FaEdit size="20px"/></button>  */}
+                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(usuario.id)}><FaTrash size="20px"/></Link>
                                 </td>
                             </tr>
                         ))

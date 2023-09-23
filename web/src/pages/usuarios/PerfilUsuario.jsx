@@ -96,7 +96,7 @@ export function PerfilUsuario() {
     return (
         <Container fluid className="cor-page min-height d-flex justify-content-center align-items-center">
 
-
+            
             <div className="d-flex flex-column align-items-center justify-content-center col-md-8 col-sm-10 m-3 p-0 perfil" variant="outline-danger">
                 { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
                 <FaUser size="50px" className="mb-3" />
