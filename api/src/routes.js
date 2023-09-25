@@ -23,6 +23,9 @@ routes.get('/usuario/:id', authMiddleware, usuarioController.getById);
 routes.get('/usuario-perfil/:cpf', authMiddleware, usuarioController.getByCPF);
 routes.put('/usuario-senha/:id',authMiddleware, usuarioController.updateAtualizarSenha);
 routes.post('/usuario-filtro', authMiddleware, usuarioController.usuariosFiltro);
+routes.post('/solicitar-recuperar-senha', usuarioController.solicitarRecuperarSenha);
+routes.post('/recuperar-senha', usuarioController.recuperarSenha);
+
 
 
 routes.post('/batalhao', authMiddleware, batalhaoController.create);

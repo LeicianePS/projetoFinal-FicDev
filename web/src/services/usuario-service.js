@@ -105,3 +105,25 @@ export async function filtroUsuario(search) {
     });
     return result;
 }
+
+
+
+
+export async function solicitarRecuperarSenhaUsuario(email) {
+    
+    const result = await api.post('/solicitar-recuperar-senha', {
+        email: email
+    });
+    return result;
+}
+
+export async function recuperarSenhaUsuario(data) {
+    debugger
+    const result = await api.post('/recuperar-senha', {
+        email: data.email,
+        novaSenha: data.novaSenha,
+        confirmacao: data.confirmarSenha,
+        tokenSenhaRecebido: data.token
+    });
+    return result;
+}

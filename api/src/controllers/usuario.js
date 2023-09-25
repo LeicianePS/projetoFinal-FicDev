@@ -8,7 +8,144 @@ const configDatabase = require('../database/config');
 
 const sequelize = new Sequelize(configDatabase);
 
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+// Configure a chave de API do SendGrid
+//const sgMail = require('@sendgrid/mail');
+//sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+let tokenSenha = ""
+
+
 class UsuarioController {
+
+
+     // Função para enviar um e-mail
+    async solicitarRecuperarSenha(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const { email } = request.body;
+        
+            const usuarioExists = await UsuarioModel.findOne({ where: { email } });
+            if (!usuarioExists) return httpHelper.notFound('Usuário não encontrado!');
+            
+            // Token JWT com o e-mail informado para envio do link e reset de senha 
+            tokenSenha = jwt.sign({ email }, process.env.TOKEN_SECRET, { expiresIn: '20m' });
+
+            // URL de redefinição de senha com o token
+            const resetPasswordUrl = `http://localhost:3000/recuperar-senha?token=${tokenSenha}`; // tive que tirar o hhtps pois o navegador não estava abrindo a página
+
+            // Configuração o transporte do nodemailer
+            const transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: process.env.GMAIL_EMAIL, // Seu endereço de e-mail configurado no .env
+                pass: process.env.GMAIL_PASSWORD, // Sua senha de e-mail configurada no .env
+              },
+            });
+        
+            // Configuração do e-mail de recuperação de senha
+            const mailOptions = {
+              from: process.env.GMAIL_EMAIL,
+              to: email,
+              subject: 'Recuperação de Senha',
+              text: `Você solicitou a recuperação de senha. Clique neste link para redefinir sua senha: ${resetPasswordUrl}`,
+            };
+                    
+            //await transporter.sendMail(mailOptions); // Enviando o e-mail com o link de recuperação
+        
+            response.status(200).json({ message: `E-mail de recuperação de senha enviado com sucesso. ${resetPasswordUrl}` });
+        } catch (error) {
+            console.error(error);
+            response.status(500).json({ message: 'Ocorreu um erro ao enviar o e-mail de recuperação de senha.' });
+        }
+    }
+
+
+    async recuperarSenha(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const { novaSenha, confirmacao, tokenSenhaRecebido } = request.body;
+            const decoded = await jwt.verify(tokenSenhaRecebido, process.env.TOKEN_SECRET);  // Verifique se o token é válido e decodifique-o
+        
+            // Se o token for válido, decoded conterá os dados do usuário
+            const usuario = await UsuarioModel.findOne({ where: { email: decoded.email } });
+            if (!usuario) { return httpHelper.notFound('Usuário não encontrado!'); }
+        
+            if (novaSenha !== confirmacao) {
+              return httpHelper.badRequest('A nova senha e a confirmação não coincidem');
+            }
+        
+            const novaSenhaHashed = await bcrypt.hash(novaSenha, Number(process.env.SALT));
+            await UsuarioModel.update({ senha: novaSenhaHashed }, { where: { email: decoded.email } });
+        
+            return httpHelper.ok({ 
+                message: 'Nova senha salva com sucesso',
+                variant: 'success' 
+            });
+        } catch (error) {
+            console.error('Erro ao salvar nova senha:', error);
+        
+            if (error.name === 'JsonWebTokenError') {
+              return httpHelper.badRequest('Token de recuperação de senha inválido');
+            }
+        
+            return httpHelper.internalError('Erro ao salvar nova senha');
+        }
+    }
+
+
+
+
+
+    // Função para enviar um e-mail
+    // async recuperarSenha(request, response) {
+    //     const httpHelper = new HttpHelper(response);
+    //     try {
+    //         const { email } = request.body;
+        
+    //         // Crie a mensagem de e-mail
+    //         const assunto = 'Assunto do E-mail';
+            
+    //         if(!email) {
+    //             httpHelper.badRequest("ERRO email vazio")
+    //         }
+
+    //         const msg = {
+    //           to: email,
+    //           from: "leicyani2011@gmail.com", // Configure o e-mail remetente no arquivo .env
+    //           subject: assunto,
+    //           text: "Email de Recuperação de Senha",
+    //         };
+        
+    //         // Envie o e-mail usando o SendGrid
+    //          const result = await sgMail.send(msg);
+        
+    //         // Responda com sucesso
+    //         if(result) {
+
+    //             return response.status(200).json({ mensagem: `E-mail enviado com sucesso ${email}` });
+    //         }
+    //       } catch (error) {
+    //         console.error('Erro ao enviar o e-mail:', error);
+        
+    //         // Responda com erro interno do servidor
+    //         return response.status(500).json({ mensagem: `Erro ao enviar o e-mail` });
+    //       }
+    // }
+      
+      // Função de exemplo para gerar um token de recuperação de senha
+      //function gerarTokenRecuperacaoSenha() {
+        // Implemente sua lógica para gerar um token único aqui
+        // Isso pode envolver a criação de um token aleatório ou a geração de um link de recuperação único
+        // Certifique-se de armazenar esse token associado ao usuário para verificar sua validade posteriormente
+        //return 'TOKEN_DE_RECUPERACAO_DE_SENHA'; // Substitua pelo seu token gerado
+    //}
+
+
+
+
     async register(request, response) {
         const httpHelper = new HttpHelper(response);
         try {

@@ -23,6 +23,9 @@ import { Usuarios } from './pages/usuarios/Usuarios';
 import { AdicionarUsuario } from './pages/usuarios/AdicionarUsuario';
 import { EditarUsuario } from './pages/usuarios/EditarUsuario';
 import { PerfilUsuario } from './pages/usuarios/PerfilUsuario';
+import  SolicitarRecuperarSenha  from './pages/usuarios/SolicitarRecuperarSenha';
+import  RecuperarSenha  from './pages/usuarios/RecuperarSenha';
+
 import { HomeDashboard } from './pages/HomeDashboard';
 
 /**
@@ -55,6 +58,17 @@ export function Navigations() {
             <Routes>
                 <Route index path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/solicitar-recuperar-senha" element={<SolicitarRecuperarSenha />} />
+
+                <Route
+                    path="/recuperar-senha"
+                    element={(
+                        
+                        <RecuperarSenha/>
+                        
+                    )}
+                />
+
 
                 <Route
                     path="/home-dash"

@@ -115,7 +115,7 @@ export function Login() {
 
                             <div className="d-flex justify-content-between">
                                 <Button type="submit" size="lg">Entrar</Button>
-                                {/* <Link to="/register">Criar conta</Link> */}
+                                <Link to="/solicitar-recuperar-senha">Recuperar Senha</Link>
                             </div>
                         </Col>
                     </Form>
