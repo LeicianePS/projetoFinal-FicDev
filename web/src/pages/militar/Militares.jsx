@@ -3,27 +3,39 @@ import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { FaPlus, FaSearch, FaTrash, FaEdit, FaTimes } from 'react-icons/fa';
+import {  getBatalhoes } from "../../services/batalhao-service";
 
-//import { Usuario } from "../../components/Usuario";
 import { Header } from "../../components/Header";
 
-import { deleteUsuario, getUsuarios, updateUsuario, filtroUsuario } from "../../services/usuario-service";
+import { deleteMilitar, getMilitares, updateMilitar, filtroMilitar } from "../../services/militar-service";
 import PaginationComponent from "../../components/PaginationComponent";
 import AlertaFeedback from "../../components/layout/Alert";
 
-export function Usuarios() {
-    const [usuarios, setUsuarios] = useState([]);
+export function Militares() {
+    const [militares, setMilitares] = useState([]);
     const [alerta, setAlerta] = useState({});
     const [show, setShow] = useState(false);
     const [showRemove, setShowRemove] = useState(false);
+    const [batalhoes, setBatalhoes] = useState([]);
 
     const { handleSubmit, register, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
     useEffect(() => {
-        findUsuarios();
+        findMilitares();
+        findBatalhoes();
         // eslint-disable-next-line
     }, []);
+
+    async function findBatalhoes() {
+        try {
+            const result = await getBatalhoes();
+            setBatalhoes(result.data);
+        } catch (error) {
+            console.error(error);
+            navigate('/');
+        }
+    }
 
 
      // Função para abrir o modal de remoção
@@ -43,13 +55,13 @@ export function Usuarios() {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5); // Número de itens por página
 
-    const totalPages = Math.ceil(usuarios.length / itemsPerPage);
+    const totalPages = Math.ceil(militares.length / itemsPerPage);
 
     // getCurrentPageData carrega os dados da pagina atual, que são mostrados na tabela
     const getCurrentPageData = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
-        return usuarios.slice(startIndex, endIndex);
+        return militares.slice(startIndex, endIndex);
     };
     // Função para ir para uma página específica
     const goToPage = (pageNumber) => {
@@ -61,22 +73,22 @@ export function Usuarios() {
 
 
 
-    async function findUsuarios() {
+    async function findMilitares() {
         try {
-            const result = await getUsuarios();
-            setUsuarios(result.data);
+            const result = await getMilitares();
+            setMilitares(result.data);
         } catch (error) {
             console.error(error);
             navigate('/');
         }
     }
 
-    async function removeUsuario(id) {
+    async function removeMilitar(id) {
         try {
-            const result = await deleteUsuario(id);
+            const result = await deleteMilitar(id);
             setAlerta(result.data);
             setShow(true);
-            await findUsuarios();
+            await findMilitares();
         } catch (error) {
             console.error(error);
             setAlerta(error.response.data);
@@ -85,11 +97,11 @@ export function Usuarios() {
         handleClose();
     }
 
-   
-    async function filtrarUsuario(query) {
+
+    async function filtrarMilitar(query) {
         try {
-            const result = await filtroUsuario(query);
-            setUsuarios(result.data);
+            const result = await filtroMilitar(query);
+            setMilitares(result.data);
         } catch (error) {
             console.error(error);
         }
@@ -98,28 +110,24 @@ export function Usuarios() {
 
 
     const [isUpdated, setIsUpdated] = useState(false);
-    const [usuarioEdit, setUsuarioEdit] = useState({});
-    async function editUsuario(data) {
+    const [militarEdit, setMilitarEdit] = useState({});
+    async function editMilitar(data) {
         try {
             setIsUpdated(false);
-            const result = await updateUsuario({
-                // id: usuarioEdit.id,
-                // nome: usuarioEdit.nome,
-                // cpf: usuarioEdit.cpf,
-                // email: usuarioEdit.email,
-                // telefone: usuarioEdit.telefone,
-                // matricula: usuarioEdit.matricula
-                id: usuarioEdit.id,
-                nome: data.nome ? data.nome : usuarioEdit.nome,
-                cpf: data.cpf ? data.cpf : usuarioEdit.cpf,
-                email: data.email ? data.email : usuarioEdit.email,
-                telefone: data.telefone ? data.telefone : usuarioEdit.telefone,
-                matricula: data.matricula ? data.matricula : usuarioEdit.matricula,
-                perfil: usuarioEdit.perfil,
+            const result = await updateMilitar({
+                id: militarEdit.id,
+                nome: data.nome ? data.nome : militarEdit.nome,
+                email: data.email ? data.email : militarEdit.email,
+                cpf: data.cpf ? data.cpf : militarEdit.cpf,
+                nascimento: data.nascimento ? data.nascimento : militarEdit.nascimento,
+                posto: data.posto ? data.posto : militarEdit.posto,
+                matricula: data.matricula ? data.matricula : militarEdit.matricula,
+                salarioAtual: data.salarioAtual ? data.salarioAtual : militarEdit.salario_atual,
+                idBatalhao: militarEdit.id_batalhao,
             });
             setAlerta(result.data);
             setShow(true);
-            await findUsuarios();
+            await findMilitares();
         } catch (error) {
             console.error(error);
             setAlerta(error.response.data);
@@ -128,20 +136,20 @@ export function Usuarios() {
     }
 
 
-    const abrirModal = (trueFalse, usuario ) => {
+    const abrirModal = (trueFalse, militar ) => {
         setIsUpdated(true);
-        setUsuarioEdit(usuario)
+        setMilitarEdit(militar)
     }
 
     const fecharModal = ()=> {
         setIsUpdated(false);
-        setUsuarioEdit({})
+        setMilitarEdit({})
     }
 
-    const abrirEditarUsuario = (usuario) => {
-        //var jsonUsuario = JSON.stringify(usuario)
-        window.localStorage.setItem('usuarioEditar', JSON.stringify(usuario))
-        navigate(`/usuario-editar/${usuario.id}`);
+    const abrirEditarMilitar = (militar) => {
+        //var jsonMilitar = JSON.stringify(militar)
+        window.localStorage.setItem('militarEditar', JSON.stringify(militar))
+        navigate(`/militar-editar/${militar.id}`);
     }
 
 
@@ -152,9 +160,9 @@ export function Usuarios() {
     const handleSearch = async (e) => {
       e.preventDefault();
         if(query == '') {
-            await findUsuarios()
+            await findMilitares()
         } else {
-            await filtrarUsuario(query)
+            await filtrarMilitar(query)
         }
     };
 
@@ -170,11 +178,11 @@ export function Usuarios() {
 
             <Row className="justify-content-between p-4 align-items-center">
                 <Col md='6' xs='7' className="">
-                    <Header title="Listagem de Usuários"  />
+                    <Header title="Listagem de Militares"  />
                 </Col>
                 <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => navigate("/usuario-adicionar")}>
-                        <Link to="/usuario-adicionar">Adicionar <b ><FaPlus/></b> </Link>
+                    <Button className="align-items-center" onClick={() => navigate("/militar-adicionar")}>
+                        <Link to="/militar-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
                     {/* <Button variant="outline-secondary" onClick={() => {
                         sessionStorage.removeItem('token');
@@ -193,7 +201,7 @@ export function Usuarios() {
                     </Col> */}
                     <Col>
                         <Form.Group controlId="searchQuery">
-                            <Form.Label  className="b-0">Buscar por nome, email ou cpf:</Form.Label>
+                            <Form.Label  className="b-0">Buscar por nome, email ou posto:</Form.Label>
                             <Form.Control
                                 size="lg"
                                 type="text"
@@ -206,7 +214,7 @@ export function Usuarios() {
                 </Row>
 
                 <Col className="d-flex justify-content-end pt-3 pb-2">
-                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarUsuario('')}} className="align-items-center mx-4" size="lg">
+                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarMilitar('')}} className="align-items-center mx-4" size="lg">
                         Limpar <FaTimes/>
                     </Button>
                     <Button variant="outline-primary" type="submit" className="align-items-center" size="lg">
@@ -224,29 +232,29 @@ export function Usuarios() {
                             <th>id</th>
                             <th>Nome Usuário</th>
                             <th>E-mail</th>
-                            <th>CPF</th>
-                            <th>Telefone</th>
-                            <th>Matrícula</th>
+                            <th>Posto</th>
+                            <th>Nascimento</th>
+                            <th>Salário Atual</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {usuarios && usuarios.length > 0
-                        ? getCurrentPageData().map((usuario, index) => (
+                        {militares && militares.length > 0
+                        ? getCurrentPageData().map((militar, index) => (
                             <tr key={index}>
-                                <td>{usuario.id}</td>
-                                <td>{usuario.nome}</td>
-                                <td>{usuario.email}</td>
-                                <td>{usuario.cpf}</td>
-                                <td>{usuario.telefone}</td>
-                                <td>{usuario.matricula}</td>
+                                <td>{militar.id}</td>
+                                <td>{militar.nome}</td>
+                                <td>{militar.email}</td>
+                                <td>{militar.posto}</td>
+                                <td>{militar.nascimento}</td>
+                                <td>{militar.salario_atual}</td>
                                 <td className="d-flex justify-content-center">
-                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, usuario)}><FaEdit size="20px"/></Link>
+                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, militar)}><FaEdit size="20px"/></Link>
 
-                                    {/* <Link className="mx-1 px-1" to={`/usuario-editar/${usuario.id}`}><FaPen size="20px"/></Link>  */}
+                                    {/* <Link className="mx-1 px-1" to={`/militar-editar/${militar.id}`}><FaPen size="20px"/></Link>  */}
 
-                                    {/* <button className="mx-1 px-1" onClick={() => abrirEditarUsuario(usuario)}><FaEdit size="20px"/></button>  */}
-                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(usuario.id)}><FaTrash size="20px"/></Link>
+                                    {/* <button className="mx-1 px-1" onClick={() => abrirEditarMilitar(militar)}><FaEdit size="20px"/></button>  */}
+                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(militar.id)}><FaTrash size="20px"/></Link>
                                 </td>
                             </tr>
                         ))
@@ -270,7 +278,7 @@ export function Usuarios() {
                     <Button variant="secondary" onClick={handleClose}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={async () => removeUsuario(idToRemove)}>
+                    <Button variant="primary" onClick={async () => removeMilitar(idToRemove)}>
                         Continuar
                     </Button>
                     </Modal.Footer>
@@ -289,11 +297,10 @@ export function Usuarios() {
 
             <Modal show={isUpdated} onHide={() => fecharModal()} size="xl">
                 <Modal.Header>
-                    <Modal.Title>Editar usuário: {usuarioEdit.nome}</Modal.Title>
+                    <Modal.Title>Editar usuário: {militarEdit.nome}</Modal.Title>
                 </Modal.Header>
 
-
-                <Form className="mx-2 pb-3" validate onSubmit={handleSubmit(editUsuario)} validated={!!errors}>
+                <Form className="mx-2 pb-3" validate onSubmit={handleSubmit(editMilitar)} validated={!!errors}>
                     <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light">
 
                         <Row>
@@ -301,9 +308,10 @@ export function Usuarios() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Nome do Usuário</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         className="mb-3"
                                         type='text'
-                                        placeholder={usuarioEdit.nome}
+                                        placeholder={militarEdit.nome}
                                         {...register('nome', {
                                             // required: 'Este campo é obrigatório.',
                                         })}
@@ -314,8 +322,9 @@ export function Usuarios() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">CPF (999.999.999-99)</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         type="text"
-                                        placeholder={usuarioEdit.cpf}
+                                        placeholder={militarEdit.cpf}
                                         {...register('cpf', {
                                             // required: 'CPF é obrigatório.',
                                             pattern: {
@@ -335,8 +344,9 @@ export function Usuarios() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">E-mail (exemplo@email.com)</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         type="email"
-                                        placeholder={usuarioEdit.email}
+                                        placeholder={militarEdit.email}
                                         {...register('email', {
                                             // required: 'E-mail é obrigatório.',
                                             pattern: {
@@ -351,27 +361,28 @@ export function Usuarios() {
 
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
-                                    <Form.Label className="mb-0">Telefone ((XX) XXXX-XXXX)</Form.Label>
+                                    <Form.Label className="mb-0">Data de Nascimento</Form.Label>
                                     <Form.Control
-                                        type="tel"
-                                        placeholder={usuarioEdit.telefone}
-                                        {...register('telefone', {
-                                            // required: 'Telefone é obrigatório.',
-                                            pattern: {
-                                            value: /^(?:\(\d{2}\)\s?|\d{2}\s?)?\d{4,5}-\d{4}$/,
-                                            message: 'Telefone inválido',
+                                        size="lg"
+                                        type="date"
+                                        defaultValue={militarEdit.nascimento}
+                                        {...register('nascimento', {
+                                            required: {
+                                                value: true,
+                                                message: 'Data de Nascimento é obrigatório.'
                                             },
                                         })}
                                     />
-                                    {errors.telefone && <span>{errors.telefone.message}</span>}
+                                    {errors.nascimento && <span>{errors.nascimento.message}</span>}
                                 </Form.Group>
                             </Col>
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Matrícula:</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         type="text"
-                                        placeholder={usuarioEdit.matricula}
+                                        placeholder={militarEdit.matricula}
                                         {...register('matricula', {
                                             // required: 'Este campo é obrigatório.',
                                             maxLength: {
@@ -386,23 +397,61 @@ export function Usuarios() {
 
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
-                                    <Form.Label className="mb-0">Perfil</Form.Label>
+                                    <Form.Label className="mb-0">Posto:</Form.Label>
+                                    <Form.Control
+                                        size="lg"
+                                        type="text"
+                                        placeholder={militarEdit.posto}
+                                        {...register('posto', {
+                                            // required: 'Este campo é obrigatório.',
+                                           
+                                        })}
+                                    />
+                                    {errors.posto && <span>{errors.posto.message}</span>}
+                                </Form.Group>
+                            </Col>
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Salário Atual:</Form.Label>
+                                    <Form.Control
+                                        size="lg"
+                                        type="text"
+                                        placeholder={militarEdit.salario_atual}
+                                        {...register('salarioAtual', {
+                                            // required: 'Este campo é obrigatório.',
+                                            maxLength: {
+                                            value: 8, // Defina o número máximo de caracteres permitidos aqui
+                                            message: 'A matrícula deve ter no máximo 8 caracteres.',
+                                            },
+                                        })}
+                                    />
+                                    {errors.salarioAtual && <span>{errors.salarioAtual.message}</span>}
+                                </Form.Group>
+                            </Col>
+
+                            <Col md='3'>
+                                <Form.Group controlId="searchQuery">
+                                    <Form.Label className="mb-0">Batalhão</Form.Label>
                                     {/* Use o Form.Select para selecionar a região */}
                                     <Form.Select
-                                    aria-label="Selecione um perfil"
-                                    defaultValue={usuarioEdit.perfil}
-                                    type='text'
-                                    name='perfilC'
-                                    error={errors.perfil}
+                                        size="lg"
+                                        aria-label="Selecione um batalhão"
+                                        defaultValue={militarEdit.id_batalhao}
+                                        name='idBatalhao'
+                                        error={errors.idBatalhao}
                                         onChange={(e) =>
-                                            setUsuarioEdit({
-                                            ...usuarioEdit,
-                                            perfil: e.target.value,
+                                            setMilitarEdit({
+                                            ...militarEdit,
+                                            id_batalhao: e.target.value,
                                             })
                                         }
                                     >
-                                        <option value="admin">admin</option>
-                                        <option value="gestor">gestor</option>
+                                        <option value="">Selecione um batalhão</option>
+                                        {batalhoes.map((batalhao, index) => (
+                                            <option key={index} value={batalhao.id_batalhao}>
+                                            {batalhao.nome_batalhao}
+                                            </option>
+                                        ))}
                                     </Form.Select>
                                 </Form.Group>
                             </Col>

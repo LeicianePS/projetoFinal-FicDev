@@ -9,7 +9,6 @@
 //     const result = await api.post('/login', data);
 //     sessionStorage.setItem('token', JSON.stringify(result.data.accessToken));
 //     //sessionStorage.setItem('user', JSON.stringify(result.data));
-//     debugger
 //     window.localStorage.setItem('user', data.email)
 // }
 

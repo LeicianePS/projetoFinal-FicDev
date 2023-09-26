@@ -1,10 +1,11 @@
 const { HttpHelper } = require('../utils/http-helper');
 const { BatalhaoModel } = require('../models/batalhao-model');
+const { RegiaoModel } = require('../models/regiao-model');
 const { Validates } = require('../utils/validates');
 
 const { Sequelize } = require('sequelize');
-const configDatabase = require('../database/config');
 
+const configDatabase = require('../database/config');
 const sequelize = new Sequelize(configDatabase);
 
 class BatalhaoController {
@@ -56,12 +57,33 @@ class BatalhaoController {
         const httpHelper = new HttpHelper(response);
         try {
             const batalhoes = await BatalhaoModel.findAll();
-            debugger
             return httpHelper.ok(batalhoes);
         } catch (error) {
             return httpHelper.internalError(error);
         }
     }
+
+
+    async getAllJoin(request, response) {
+        const httpHelper = new HttpHelper(response);
+        try {
+            const batalhoes = await BatalhaoModel.findAll({
+                include: {
+                  model: RegiaoModel,
+                  attributes: ['nome_regiao']
+                //   where: {
+                //     size: {
+                //       [Op.ne]: 'small'
+                //     }
+                //   }
+                }
+              });
+            return httpHelper.ok(batalhoes);
+        } catch (error) {
+            return httpHelper.internalError(error);
+        }
+    }
+
 
     async delete(request, response) {
         const httpHelper = new HttpHelper(response);

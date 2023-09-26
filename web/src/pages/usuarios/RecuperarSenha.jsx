@@ -17,10 +17,10 @@ const RecuperarSenha = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
+    setShowPassword(!showPassword);
   };
 
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Adicione a lógica para enviar o e-mail de recuperação e processar a nova senha aqui
@@ -36,6 +36,7 @@ const RecuperarSenha = () => {
             });
             setAlerta(result.data);
             setShow(true);
+
             setTimeout(() => {
                 navigate('/');
             }, 1500);
@@ -46,13 +47,12 @@ const RecuperarSenha = () => {
         }
     }
     recuperarSenha()
-    
-    //console.log(`Link de recuperação de recuperação solicitado para: ${result.data}`);
-    
+
+
   };
 
   return (
-    
+
       <Row className="d-flex justify-content-center mt-5 align-items-center">
         { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
@@ -79,10 +79,10 @@ const RecuperarSenha = () => {
                     required
                 />
                 <button
-                    
+
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={togglePasswordVisibility} 
+                    onClick={togglePasswordVisibility}
                 >
                     {showPassword ? <FaEye/> : <FaEyeSlash/>}
                 </button>
@@ -109,10 +109,10 @@ const RecuperarSenha = () => {
                     required
                 />
                 <button
-                    
+
                     type="button"
                     className="btn btn-outline-secondary"
-                    onClick={togglePasswordVisibility} 
+                    onClick={togglePasswordVisibility}
                 >
                     {showPassword ? <FaEye/> : <FaEyeSlash/>}
                 </button>
@@ -133,7 +133,7 @@ const RecuperarSenha = () => {
                 <Button type="submit" > Recuperar Senha </Button>
                 <Link to="/" >Cancelar</Link>
             </div>
-            
+
           </Form>
         </Col>
       </Row>

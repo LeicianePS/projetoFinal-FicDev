@@ -3,15 +3,20 @@ import BatalhoesCRChart from "../components/dashboard/BatalhoesCRChart";
 import EfetivoCRChart from "../components/dashboard/EfetivoCRChat";
 import { useEffect, useState } from "react";
 import { getBatalhoesTotal, getEfetivoTotal } from "../services/batalhao-service";
+import { getSalariosTotal, getSalariosMedia} from "../services/militar-service";
 
 
-export function HomeDashboard(){
-    const [batalhoesTotal, setBatalhoesTotal] = useState([]);
-    const [efetivoTotal, setEfetivoTotal] = useState([]);
+export function HomeDashboard() {
+    const [batalhoesTotal, setBatalhoesTotal] = useState({});
+    const [efetivoTotal, setEfetivoTotal] = useState({});
+    const [salariosTotal, setSalariosTotal] = useState({});
+    const [salariosMedia, setSalariosMedia] = useState({});
 
     useEffect(() => {
         findBatalhoesTotal();
         findEfetivoTotal();
+        findSalariosTotal();
+        findSalariosMedia()
     }, []);
 
     async function findBatalhoesTotal() {
@@ -27,6 +32,24 @@ export function HomeDashboard(){
         try {
             const result = await getEfetivoTotal();
             setEfetivoTotal(result.data[0]);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function findSalariosTotal() {
+        try {
+            const result = await getSalariosTotal();
+            setSalariosTotal(result.data[0]);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function findSalariosMedia() {
+        try {
+            const result = await getSalariosMedia();
+            setSalariosMedia(result.data[0]);
         } catch (error) {
             console.error(error);
         }
@@ -87,11 +110,11 @@ export function HomeDashboard(){
                         bg="dark"
                         text="light"
                         >
-                        <Card.Header className="d-flex justify-content-center"><Card.Title> Informação 3</Card.Title></Card.Header>
+                        <Card.Header className="d-flex justify-content-center"><Card.Title>Total Salários</Card.Title></Card.Header>
                         <Card.Body>
                             
                             <Card.Text className="d-flex justify-content-center" >
-                                <h2>0</h2>
+                                <h2>R$ {salariosTotal.somaSalario}</h2>
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -104,11 +127,11 @@ export function HomeDashboard(){
                         bg="dark"
                         text="light"
                         >
-                        <Card.Header className="d-flex justify-content-center"><Card.Title> Informação 4</Card.Title></Card.Header>
+                        <Card.Header className="d-flex justify-content-center"><Card.Title> Média Salários</Card.Title></Card.Header>
                         <Card.Body>
                             
                             <Card.Text className="d-flex justify-content-center" >
-                                <h2>0</h2>
+                                <h2>R$ {salariosMedia.mediaSalario}</h2>
                             </Card.Text>
                         </Card.Body>
                     </Card>

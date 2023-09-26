@@ -9,7 +9,7 @@ import { loginUser } from '../services/user-services';
 
 import login from '../assets/images/login_img.png';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import brasao from '../assets/images/brasao_mt.png';
 
 export function Login() {
     const { handleSubmit, register, formState: { errors } } = useForm();
@@ -43,12 +43,15 @@ export function Login() {
                 </Col>
 
                 <Col className="justify-content-center m-0 p-0  bordered">
-                    <h3 className="rounded d-flex justify-content-center py-4 " > Entre na sua conta </h3>
+                    <div className="d-flex justify-content-center">
+                        <img src={brasao} alt="" width={"120px"} className='mx-2 '/>
+                    </div>
+                    <h4 className="rounded d-flex justify-content-center py-4 " > Acessar Conta </h4>
                     <Form
                         noValidate
                         validated={!!errors}
                         onSubmit={handleSubmit(onSubmit)}
-                        className=" rounded p-5 d-flex align-items-center"
+                        className=" rounded p-4 d-flex align-items-center"
                     >
                         <Col>
                             <Input
@@ -64,28 +67,12 @@ export function Login() {
                                         value: true,
                                         message: 'CPF é obrigatório'
                                     },
-                                    // pattern: {
-                                    //     value: /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i,
-                                    //     message: 'CPF inválido!'
-                                    // }
+                                    pattern: {
+                                        value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/, // Formato de CPF: 999.999.999-99
+                                        message: 'CPF inválido',
+                                    },
                                 })}
                             />
-
-                               {/* <Input
-                                    className="mb-4"
-                                    label="Senha"
-                                    type={showPassword ? 'text' : 'password'}
-                                    placeholder="Insira sua senha"
-                                    error={errors.senha}
-                                    required={true}
-                                    name="senha"
-                                    validations={register('senha', {
-                                        required: {
-                                            value: true,
-                                            message: 'Senha é obrigatório'
-                                        }
-                                    })}
-                                />  */}
 
                             <InputGroup className="mb-3">
                                 <Input
@@ -113,7 +100,7 @@ export function Login() {
                                 </button>
                             </InputGroup>
 
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex justify-content-between align-items-center">
                                 <Button type="submit" size="lg">Entrar</Button>
                                 <Link to="/solicitar-recuperar-senha">Recuperar Senha</Link>
                             </div>

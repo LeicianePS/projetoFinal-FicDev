@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Nav, Col } from 'react-bootstrap';
-import { FaSignOutAlt, FaBars, FaMapMarkedAlt, FaUserFriends } from 'react-icons/fa';
+import { FaSignOutAlt, FaBars, FaMapMarkedAlt, FaUserFriends, FaUserShield } from 'react-icons/fa';
 import { FaBuildingShield} from 'react-icons/fa6';
 import { Link, useLocation } from 'react-router-dom';
 import {getUsuarioByCPF} from '../../services/usuario-service';
@@ -44,12 +44,10 @@ const DrawerMenu = () => {
             <li className={isActive('/regioes') ? 'active  align-items-center' : ' align-items-center'}>
               <Link to="/regioes"><FaMapMarkedAlt size="24px" className='me-3'/>Regiões</Link>
             </li>
-            {/* <li className={isActive('/darkmode') ? 'active' : ''}>
-              <Link to="/darkmode">Dark Mode</Link>
+            <li className={isActive('/militares') ? 'active  align-items-center' : ' align-items-center'}>
+              <Link to="/militares"><FaUserShield size="24px" className='me-3'/>Militares</Link>
             </li>
-            <li className={isActive('/nutricionistas') ? 'active' : ''}>
-              <Link to="/nutricionistas">Nutricionista</Link>
-            </li> */}
+            
           </ul>
           {usuario.perfil == "admin" ? <ul>
             <b>ACESSO</b>

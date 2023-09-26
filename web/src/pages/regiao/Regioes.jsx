@@ -75,7 +75,6 @@ export function Regioes() {
             const result = await deleteRegiao(id);
             setAlerta(result.data);
             setShow(true);
-            debugger
             await findRegioes();
         } catch (error) {
             console.error(error);

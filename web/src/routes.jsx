@@ -5,8 +5,6 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-route
 
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-import { Foods } from "./pages/Foods";
-import { Nutricionistas } from './pages/Nutricionistas'
 import DarkModeExemple from './pages/DarkModeExemple'
 import MainLayout from './components/MainLayout'; // Importe seu layout principal aqui
 import { Batalhoes } from './pages/batalhao/Batalhoes'
@@ -17,14 +15,16 @@ import { Regioes } from './pages/regiao/Regioes'
 import { AdicionarRegiao } from './pages/regiao/AdicionarRegiao'
 import { EditarRegiao } from './pages/regiao/EditarRegiao'
 
-
-import { isAuthenticated } from './utils/is-authenticated';
+import { isAuthenticated, isTokenSenha } from './utils/is-authenticated';
 import { Usuarios } from './pages/usuarios/Usuarios';
 import { AdicionarUsuario } from './pages/usuarios/AdicionarUsuario';
 import { EditarUsuario } from './pages/usuarios/EditarUsuario';
 import { PerfilUsuario } from './pages/usuarios/PerfilUsuario';
 import  SolicitarRecuperarSenha  from './pages/usuarios/SolicitarRecuperarSenha';
 import  RecuperarSenha  from './pages/usuarios/RecuperarSenha';
+
+import { Militares } from './pages/militar/Militares';
+import { AdicionarMilitar } from './pages/militar/AdicionarMilitar';
 
 import { HomeDashboard } from './pages/HomeDashboard';
 
@@ -40,15 +40,21 @@ export function PrivateRoute({ children }) {
     return children;
 }
 
+export function TokenSenha({ children }) {
+    if (!isTokenSenha()) {
+        return <Navigate to="/" replace />
+    }
+    return children
+}
 
 
 function AppNavigation() {
     const location = useLocation();
-  
-    console.log('Rota atual:', location.pathname);
-  
+
+    //console.log('Rota atual:', location.pathname);
+
     return null; // Este componente não renderiza nada, apenas captura a rota atual
-  }
+}
 
 
 export function Navigations() {
@@ -60,12 +66,20 @@ export function Navigations() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/solicitar-recuperar-senha" element={<SolicitarRecuperarSenha />} />
 
+                {/* <Route
+                    path="/recuperar-senha"
+                    element={(
+
+                        <RecuperarSenha/>
+
+                    )}
+                /> */}
                 <Route
                     path="/recuperar-senha"
                     element={(
-                        
-                        <RecuperarSenha/>
-                        
+                        <TokenSenha>
+                            <RecuperarSenha/>
+                        </TokenSenha>
                     )}
                 />
 
@@ -195,39 +209,29 @@ export function Navigations() {
 
 
 
+
+
                 <Route
-                    path="/foods"
+                    path="/militares"
                     element={(
                         <PrivateRoute>
                             <MainLayout>
-                                <Foods />
+                                <Militares />
+                            </MainLayout>
+                        </PrivateRoute>
+                    )}
+                />
+                <Route
+                    path="/militar-adicionar"
+                    element={(
+                        <PrivateRoute>
+                            <MainLayout>
+                                <AdicionarMilitar />
                             </MainLayout>
                         </PrivateRoute>
                     )}
                 />
 
-                <Route
-                    path="/nutricionistas"
-                    element={(
-                        <PrivateRoute>
-                            <MainLayout>
-                                <Nutricionistas />
-                            </MainLayout>
-                        </PrivateRoute>
-                    )}
-                />
-
-
-                <Route
-                    path="/darkmode"
-                    element={(
-                        <PrivateRoute>
-                            <MainLayout>
-                                <DarkModeExemple />   
-                            </MainLayout>
-                        </PrivateRoute>
-                    )}
-                />
             </Routes>
         </BrowserRouter>
     )

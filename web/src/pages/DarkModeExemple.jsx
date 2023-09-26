@@ -11,19 +11,14 @@ import CardList from "../components/CardList";
 const DarkModeExemple = () => {
 
 
-  const [videos, setVideos] = useState([]);
+  
   const [theme, themeToggler, mountedComponent] = useDarkMode();
 
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setVideos(dummyData);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+
 
   if(!mountedComponent) return <div/>
 
@@ -34,16 +29,7 @@ const DarkModeExemple = () => {
         <GlobalStyles/>
             <div className="App">
             <Toggle theme={theme} toggleTheme={themeToggler} />
-            {
-                videos.map((list, index) => {
-                return (
-                    <section key={index}>
-                    <h2 className="section-title">{list.section}</h2>
-                    <CardList list={list} />
-                    <hr />
-                    </section>
-                );
-                })}
+            Teste
             </div>
         </>
         </ThemeProvider>

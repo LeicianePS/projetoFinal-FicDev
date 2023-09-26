@@ -1,3 +1,12 @@
+:root {
+    --tamanho-fonte: 16px;
+}
+
+body{
+    font-size: var(--tamanho-fonte, 16px) !important;
+}
+
+
 .App {
     max-width: 960px;
     margin: 0 auto;
@@ -29,7 +38,7 @@
   a{
     color: #3e4e54 !important;
     text-decoration: none;
-    font-size: 20px;
+    font-size: var(--tamanho-fonte, 16px) !important;
   }
 
   .active {

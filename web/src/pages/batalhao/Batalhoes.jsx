@@ -99,6 +99,7 @@ export function Batalhoes() {
 
 
     async function filtrarBatalhao(query) {
+    //setCurrentPage(1);
         try {
             const result = await filtroBatalhao(query);
             setBatalhoes(result.data);
@@ -244,6 +245,7 @@ export function Batalhoes() {
                             <th>Efetivo</th>
                             <th>CR</th>
                             <th>Comandante</th>
+                            <th>Região</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -257,6 +259,7 @@ export function Batalhoes() {
                                 <td>{batalhao.efetivo}</td>
                                 <td>{batalhao.comando_regional}</td>
                                 <td>{batalhao.comandante}</td>
+                                <td>{batalhao.RegiaoModel.nome_regiao}</td>
                                 <td className="d-flex justify-content-center">
                                     <Link className="mx-1 px-1" onClick={() => abrirModal(true, batalhao)}><FaEdit size="20px"/></Link>
 
@@ -455,7 +458,7 @@ export function Batalhoes() {
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Comando Regional:</Form.Label>
-                                    <Form.Control
+                                    {/* <Form.Control
                                         size="lg"
                                         className="mb-3"
                                         type='text'
@@ -477,7 +480,40 @@ export function Batalhoes() {
                                                 message: ' é obrigatório.'
                                             }
                                         })}
-                                    />
+                                    /> */}
+
+                                    <Form.Select
+                                        size="lg"
+                                        aria-label="Selecione um Comando Regional"
+                                        defaultValue={batalhaoEdit.comando_regional}
+                                        type='text'
+                                        name='comandoRegional'
+                                        error={errors.comandoRegional}
+                                        onChange={(e) =>
+                                            setBatalhaoEdit({
+                                            ...batalhaoEdit,
+                                            comando_regional: e.target.value,
+                                            })
+                                        }
+                                    >
+                                        <option value="Comando Regional 01"> Comando Regional 01 </option>
+                                        <option value="Comando Regional 02"> Comando Regional 02 </option>
+                                        <option value="Comando Regional 03"> Comando Regional 03 </option>
+                                        <option value="Comando Regional 04"> Comando Regional 04 </option>
+                                        <option value="Comando Regional 05"> Comando Regional 05 </option>
+                                        <option value="Comando Regional 06"> Comando Regional 06 </option>
+                                        <option value="Comando Regional 07"> Comando Regional 07 </option>
+                                        <option value="Comando Regional 08"> Comando Regional 01 </option>
+                                        <option value="Comando Regional 09"> Comando Regional 09 </option>
+                                        <option value="Comando Regional 10"> Comando Regional 10 </option>
+                                        <option value="Comando Regional 11"> Comando Regional 11 </option>
+                                        <option value="Comando Regional 12"> Comando Regional 12 </option>
+                                        <option value="Comando Regional 13"> Comando Regional 13 </option>
+                                        <option value="Comando Regional 14"> Comando Regional 14 </option>
+                                        <option value="Comando Regional 15"> Comando Regional 15 </option>
+                                    
+                                    </Form.Select>
+
                                 </Form.Group>
                             </Col>
                         </Row>

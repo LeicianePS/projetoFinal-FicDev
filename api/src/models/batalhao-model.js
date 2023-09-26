@@ -15,7 +15,7 @@ class BatalhaoModel extends Model {
             status: DataTypes.STRING,
             id_regiao: {
                 type: DataTypes.INTEGER,
-                
+
             }
         }, {
             sequelize,
@@ -28,6 +28,7 @@ class BatalhaoModel extends Model {
 
     static associate(models) {
         this.belongsTo(models.RegiaoModel, { foreignKey: 'id_regiao'})
+        this.hasMany(models.MilitarModel, { foreignKey: 'id_batalhao' })
     }
 }
 

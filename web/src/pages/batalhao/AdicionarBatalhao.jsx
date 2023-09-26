@@ -196,7 +196,7 @@ export function AdicionarBatalhao(props) {
                         <Col md='3'>
                             <Form.Group controlId="searchQuery">
                                 <Form.Label className="mb-0">Comando Regional:</Form.Label>
-                                <Input
+                                {/* <Input
                                     className="mb-3"
                                     type='text'
                                     label=''
@@ -210,7 +210,43 @@ export function AdicionarBatalhao(props) {
                                             message: 'Comando Regional é obrigatório.'
                                         }
                                     })}
-                                />
+                                /> */}
+                                    <Form.Select
+                                    size="lg"
+                                    className="mb-3"
+                                    aria-label="Selecione um Comando Regional"
+                                    type='text'
+                                    label=''
+                                    placeholder='Comando Regional do Batalhão'
+                                    required={true}
+                                    name='comandoRegional'
+                                    error={errors.tipo}
+                                    {...register('comandoRegional', {
+                                        required: {
+                                        value: true,
+                                        message: 'Comando Regional é obrigatóriao'
+                                        }
+                                    })}
+                                >
+                                    <option value="">Selecione um Comando Regional</option>
+                                    <option value="Comando Regional 01"> Comando Regional 01 </option>
+                                    <option value="Comando Regional 02"> Comando Regional 02 </option>
+                                    <option value="Comando Regional 03"> Comando Regional 03 </option>
+                                    <option value="Comando Regional 04"> Comando Regional 04 </option>
+                                    <option value="Comando Regional 05"> Comando Regional 05 </option>
+                                    <option value="Comando Regional 06"> Comando Regional 06 </option>
+                                    <option value="Comando Regional 07"> Comando Regional 07 </option>
+                                    <option value="Comando Regional 08"> Comando Regional 01 </option>
+                                    <option value="Comando Regional 09"> Comando Regional 09 </option>
+                                    <option value="Comando Regional 10"> Comando Regional 10 </option>
+                                    <option value="Comando Regional 11"> Comando Regional 11 </option>
+                                    <option value="Comando Regional 12"> Comando Regional 12 </option>
+                                    <option value="Comando Regional 13"> Comando Regional 13 </option>
+                                    <option value="Comando Regional 14"> Comando Regional 14 </option>
+                                    <option value="Comando Regional 15"> Comando Regional 15 </option>
+
+                                </Form.Select>
+
                             </Form.Group>
                         </Col>
                     </Row>
@@ -366,21 +402,6 @@ export function AdicionarBatalhao(props) {
                         </Col>
 
                     </Row>
-                    {/* <Input
-                        className="mb-3"
-                        type='text'
-                        label='CRN do batalhão'
-                        placeholder='Insira o crn do batalhão'
-                        required={true}
-                        name='crnNutricionista'
-                        error={errors.crnNutricionista}
-                        validations={register('crnNutricionista', {
-                            required: {
-                                value: true,
-                                message: 'CRN do batalhão é obrigatório.'
-                            }
-                        })}
-                    /> */}
                 </Modal.Body>
                 <Modal.Footer>
                    <Button variant="outline-secondary" onClick={() => cancel()} className="mx-4" size="lg">

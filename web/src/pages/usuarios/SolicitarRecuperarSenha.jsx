@@ -9,31 +9,36 @@ const RecuperarSenha = () => {
   const [alerta, setAlerta] = useState({});
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
-  
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 
+    //
 
-    // async function solicitarRecuperarSenha(email) {
-    //   try {
-    //       const result = await solicitarRecuperarSenhaUsuario({
-    //         email
-    //       });
-    //       setAlerta(result.data);
-    //       setShow(true);
-    //       setTimeout(() => {
-    //           navigate('/');
-    //       }, 1500);
-    //   } catch (error) {
-    //       console.error(error);
-    //       setAlerta(error.response.data);
-    //       setShow(true);
-    //   }
-    // }
-    solicitarRecuperarSenhaUsuario(email)
+    async function solicitarRecuperarSenha(email) {
+      try {
+          const result = await solicitarRecuperarSenhaUsuario(email);
+          setAlerta(result.data);
+          setShow(true);
+          console.log(result)
 
-    console.log(`E-mail de recuperação solicitado para: ${email}`);
+          console.log(`Link de recuperação: ${result.data.messageToken}`);
+          setTimeout(() => {
+              navigate('/');
+          }, 2500);
+      } catch (error) {
+          console.error(error);
+          setAlerta(error.response.data);
+          setShow(true);
+      }
+    }
+
+    solicitarRecuperarSenha(email)
+    // const result = await solicitarRecuperarSenhaUsuario(email)
+    // console.error(result);
+    // setAlerta(result.response.data);
+    // setShow(true);
+    // console.log(`E-mail de recuperação solicitado para: ${email}`);
   };
 
   return (

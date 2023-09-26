@@ -11,7 +11,7 @@ import {  getRegioes } from "../../services/regiao-service";
 
 export function EditarBatalhao(props) {
     const { handleSubmit, register, formState: { errors } } = useForm();
-    
+
     const [batalhaoEdit, setBatalhaoEdit] = useState([]);
     const [regioes, setRegioes] = useState([]);
     const { id } = useParams();
@@ -20,7 +20,7 @@ export function EditarBatalhao(props) {
         // var jsonBatalhaoEdit = window.localStorage.getItem('batalhaoEditar')
         // var batalhaoEditar = JSON.parse(jsonBatalhaoEdit);
         // setBatalhaoEdit(batalhaoEditar);
-        
+
         async function fetchBatalhao() {
             try {
                 const response = await getBatalhaoById(id);
@@ -30,25 +30,24 @@ export function EditarBatalhao(props) {
                 console.error(error);
             }
         }
-        
+
         fetchBatalhao(); // Chame a função assíncrona imediatamenteta)
     }, [id]);
-    
+
     async function findRegioes() {
         try {
             const result = await getRegioes();
             setRegioes(result.data);
-            debugger
         } catch (error) {
             console.error(error);
             navigate('/');
         }
     }
-    
-    
+
+
     const navigate = useNavigate();
 
-    
+
     async function editBatalhao(data) {
         try {
             await updateBatalhao({
@@ -88,7 +87,7 @@ export function EditarBatalhao(props) {
 
 
             <Card.Title className="mx-4 pb-3"><strong>Nome: </strong>{batalhaoEdit.nome_batalhao}</Card.Title>
-            
+
             <Form className="mx-4 pb-3" validate onSubmit={handleSubmit(editBatalhao)} validated={!!errors}>
                 <Modal.Body className="py-3 mb-3 caixa-pesquisa bg-light">
 
@@ -355,7 +354,7 @@ export function EditarBatalhao(props) {
                     <Button variant="primary" type="submit">
                         Salvar
                     </Button>
-                    
+
                 </Modal.Footer>
             </Form>
 

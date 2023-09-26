@@ -1,8 +1,8 @@
 import { api } from "./api";
 
-export async function getUsuarios() {
+export async function getMilitares() {
     const accessToken = sessionStorage.getItem('token');
-    const result = await api.get('/usuarios', {
+    const result = await api.get('/militares', {
         headers: {
             'Authorization': `Bearer ${JSON.parse(accessToken)}`
         }
@@ -10,9 +10,9 @@ export async function getUsuarios() {
     return result;
 }
 
-export async function deleteUsuario(id) {
+export async function deleteMilitar(id) {
     const accessToken = sessionStorage.getItem('token');
-    const result = await api.delete(`/usuario/${id}`, {
+    const result = await api.delete(`/militar/${id}`, {
         headers: {
             'Authorization': `Bearer ${JSON.parse(accessToken)}`
         }
@@ -20,15 +20,17 @@ export async function deleteUsuario(id) {
     return result;
 }
 
-export async function updateUsuario(data) {
+export async function updateMilitar(data) {
     const accessToken = sessionStorage.getItem('token');
-    const result = await api.put(`/usuario/${data.id}`, {
+    const result = await api.put(`/militar/${data.id}`, {
         nome: data.nome,
         cpf: data.cpf,
         email: data.email,
-        telefone: data.telefone,
+        nascimento: data.nascimento,
+        posto: data.posto,
+        salario_atual: data.salarioAtual,
         matricula: data.matricula,
-        perfil: data.perfil
+        id_batalhao: data.idBatalhao
 
     }, {
         headers: {
@@ -38,16 +40,17 @@ export async function updateUsuario(data) {
     return result;
 }
 
-export async function createUsuario(data) {
+export async function createMilitar(data) {
     const accessToken = sessionStorage.getItem('token');
-    const result = await api.post('/usuario', {
+    const result = await api.post('/militar', {
         nome: data.nome,
         cpf: data.cpf,
         email: data.email,
-        //senha: data.senha,
-        telefone: data.telefone,
+        nascimento: data.nascimento,
+        posto: data.posto,
+        salario_atual: data.salarioAtual,
         matricula: data.matricula,
-        perfil: data.perfil
+        id_batalhao: data.idBatalhao
     }, {
         headers: {
             'Authorization': `Bearer ${JSON.parse(accessToken)}`
@@ -58,19 +61,9 @@ export async function createUsuario(data) {
 
 
 
-export async function getUsuarioById(id) {
+export async function getMilitarById(id) {
     const accessToken = sessionStorage.getItem('token');
-    const result = await api.get(`/usuario/${id}`, {
-        headers: {
-            'Authorization': `Bearer ${JSON.parse(accessToken)}`
-        }
-    });
-    return result;
-}
-
-export async function getUsuarioByCPF(cpf) {
-    const accessToken = sessionStorage.getItem('token');
-    const result = await api.get(`/usuario-perfil/${cpf}`, {
+    const result = await api.get(`/militar/${id}`, {
         headers: {
             'Authorization': `Bearer ${JSON.parse(accessToken)}`
         }
@@ -79,24 +72,10 @@ export async function getUsuarioByCPF(cpf) {
 }
 
 
-export async function updateSenhaUsuario(data) {
-    const accessToken = sessionStorage.getItem('token');
-    const result = await api.put(`/usuario-senha/${data.id}`, {
-        senha: data.senha,
-        novaSenha: data.novaSenha,
-        novaSenha2: data.novaSenha2
-    },{
-        headers: {
-            'Authorization': `Bearer ${JSON.parse(accessToken)}`
-        }
-    });
-    return result;
-}
 
-
-export async function filtroUsuario(search) {
+export async function filtroMilitar(search) {
     const accessToken = sessionStorage.getItem('token');
-    const result = await api.post('/usuario-filtro', {
+    const result = await api.post('/militar-filtro', {
         paramPesquisa: search
     }, {
         headers: {
@@ -107,21 +86,22 @@ export async function filtroUsuario(search) {
 }
 
 
-
-
-export async function solicitarRecuperarSenhaUsuario(email) {
-
-    const result = await api.post('/solicitar-recuperar-senha', {
-        email: email
+export async function getSalariosTotal() {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get('/salarios-total', {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
     });
     return result;
 }
 
-export async function recuperarSenhaUsuario(data) {
-    const result = await api.post('/recuperar-senha', {
-        novaSenha: data.novaSenha,
-        confirmacao: data.confirmarSenha,
-        tokenSenhaRecebido: data.token
+export async function getSalariosMedia() {
+    const accessToken = sessionStorage.getItem('token');
+    const result = await api.get('/salarios-media', {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(accessToken)}`
+        }
     });
     return result;
 }
