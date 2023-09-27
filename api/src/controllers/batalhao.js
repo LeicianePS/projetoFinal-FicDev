@@ -71,11 +71,6 @@ class BatalhaoController {
                 include: {
                   model: RegiaoModel,
                   attributes: ['nome_regiao']
-                //   where: {
-                //     size: {
-                //       [Op.ne]: 'small'
-                //     }
-                //   }
                 }
               });
             return httpHelper.ok(batalhoes);
@@ -166,6 +161,28 @@ class BatalhaoController {
     }
 
 
+    // async batalhoesFiltro(request, response) {
+    //     const httpHelper = new HttpHelper(response);
+
+    //     const paramPesquisa = request.body.paramPesquisa;
+
+    //     try {
+    //         const results = await sequelize.query(
+    //                 `SELECT * FROM batalhao WHERE nome_batalhao LIKE :paramPesquisa OR tipo LIKE :paramPesquisa OR comandante LIKE :paramPesquisa`,
+    //             {
+    //                 include: {
+    //                     model: RegiaoModel,
+    //                     attributes: ['nome_regiao']
+    //                 },
+    //                 replacements: { paramPesquisa: `%${paramPesquisa}%` }, // % é usado para corresponder a qualquer parte da string
+    //                 type: sequelize.QueryTypes.SELECT,
+    //             }
+    //         );
+    //         return httpHelper.ok(results);
+    //     } catch (error) {
+    //         return httpHelper.internalError(error);
+    //     }
+    // }
     async batalhoesFiltro(request, response) {
         const httpHelper = new HttpHelper(response);
 
@@ -173,7 +190,13 @@ class BatalhaoController {
 
         try {
             const results = await sequelize.query(
-                    `SELECT * FROM batalhao WHERE nome_batalhao LIKE :paramPesquisa OR tipo LIKE :paramPesquisa OR comandante LIKE :paramPesquisa`,
+
+                 `SELECT batalhao.*, regiao.nome_regiao
+                 FROM batalhao
+                 INNER JOIN regiao ON batalhao.id_regiao = regiao.id_regiao
+                 WHERE batalhao.nome_batalhao LIKE :paramPesquisa
+                 OR regiao.nome_regiao LIKE :paramPesquisa
+                 OR batalhao.comandante LIKE :paramPesquisa`,
                 {
                     replacements: { paramPesquisa: `%${paramPesquisa}%` }, // % é usado para corresponder a qualquer parte da string
                     type: sequelize.QueryTypes.SELECT,
