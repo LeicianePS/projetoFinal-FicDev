@@ -259,7 +259,7 @@ export function Batalhoes() {
                                 <td>{batalhao.efetivo}</td>
                                 <td>{batalhao.comando_regional}</td>
                                 <td>{batalhao.comandante}</td>
-                                <td>{batalhao.RegiaoModel.nome_regiao}</td>
+                                <td>{batalhao.RegiaoModel?.nome_regiao}</td>
                                 <td className="d-flex justify-content-center">
                                     <Link className="mx-1 px-1" onClick={() => abrirModal(true, batalhao)}><FaEdit size="20px"/></Link>
 
@@ -511,7 +511,7 @@ export function Batalhoes() {
                                         <option value="Comando Regional 13"> Comando Regional 13 </option>
                                         <option value="Comando Regional 14"> Comando Regional 14 </option>
                                         <option value="Comando Regional 15"> Comando Regional 15 </option>
-                                    
+
                                     </Form.Select>
 
                                 </Form.Group>
