@@ -10,22 +10,39 @@ import { loginUser } from '../services/user-services';
 import login from '../assets/images/login_img.png';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import brasao from '../assets/images/brasao_mt.png';
+import AlertaFeedback from "../components/layout/Alert";
 
 export function Login() {
     const { handleSubmit, register, formState: { errors } } = useForm();
     const [result, setResult] = useState(null);
     const navigate = useNavigate();
 
+    const [show, setShow] = useState(false);
+    const [alerta, setAlerta] = useState({});
+
     const onSubmit = async (data) => {
         try {
             const user = await loginUser(data);
-            setResult(user);
-            navigate('/home-dash');
-        } catch (error) {
-            setResult({
-                title: 'Houve um erro no login!',
-                message: error.response.data.error,
+            //setResult(user);
+            setAlerta({
+                message: "Entrando na conta",
+                variant: 'success'
             });
+            setShow(true);
+            setTimeout(() => {
+                navigate('/home-dash');
+            }, 100);
+        } catch (error) {
+            // setResult({
+            //     title: 'Houve um erro no login!',
+            //     message: "Login não pode ser concluído",
+            //     variant: 'danger'
+            // });
+            setAlerta({
+                message: "Não foi possível concluir o login, verifique seus dados",
+                variant: 'danger'
+            })
+            setShow(true);
         }
     }
 
@@ -43,10 +60,15 @@ export function Login() {
                 </Col>
 
                 <Col className="justify-content-center m-0 p-0  bordered">
+                    
+                    { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
+
+                    
                     <div className="d-flex justify-content-center">
                         <img src={brasao} alt="" width={"120px"} className='mx-2 '/>
                     </div>
-                    <h4 className="rounded d-flex justify-content-center py-4 " > Acessar Conta </h4>
+                        <h1 className="rounded d-flex justify-content-center py-2 " > Gestão de Batalhões </h1>
+                    <h5 className="rounded d-flex justify-content-center py-4 " > Acessar Conta </h5>
                     <Form
                         noValidate
                         validated={!!errors}
@@ -58,7 +80,7 @@ export function Login() {
                                 className="mb-4"
                                 label="CPF"
                                 type="text"
-                                placeholder="Insira seu cpf"
+                                placeholder="Insira seu cpf (ex: 987.654.321-10)"
                                 error={errors.cpf}
                                 required={true}
                                 name="cpf"

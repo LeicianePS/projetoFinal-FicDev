@@ -54,7 +54,7 @@ class RegiaoController {
             if (!regiaoExists) return httpHelper.notFound('Região não encontrada!');
             await RegiaoModel.destroy({ where: { id_regiao } });
             return httpHelper.ok({
-                message: 'Região deletado com sucesso!',
+                message: 'Região deletada com sucesso!',
                 variant: 'success'
             })
         } catch (error) {

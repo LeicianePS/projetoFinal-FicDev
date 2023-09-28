@@ -131,7 +131,7 @@ export function HomeDashboard() {
                         <Card.Body>
                             
                             <Card.Text className="d-flex justify-content-center" >
-                                <h2>R$ {salariosMedia.mediaSalario}</h2>
+                                <h2>R$ {Math.round(salariosMedia.mediaSalario) }</h2>
                             </Card.Text>
                         </Card.Body>
                     </Card>

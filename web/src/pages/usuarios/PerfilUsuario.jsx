@@ -94,7 +94,7 @@ export function PerfilUsuario() {
 
 
     return (
-        <Container fluid className="cor-page min-height d-flex justify-content-center align-items-center">
+        <Container fluid className="cor-page min-height d-flex justify-content-center align-items-center ">
 
             
             <div className="d-flex flex-column align-items-center justify-content-center col-md-8 col-sm-10 m-3 p-0 perfil" variant="outline-danger">
@@ -102,7 +102,7 @@ export function PerfilUsuario() {
                 <FaUser size="50px" className="mb-3" />
                 <h4 className="mb-4"> {usuario.nome} </h4>
                 <div className="col-12">
-                    {/* <p><strong>Perfil:</strong> {usuario.perfil}</p> */}
+                    <p><strong>Perfil:</strong> {usuario.perfil}</p>
                     <p><strong>CPF:</strong> {usuario.cpf}</p>
                     <p><strong>Email:</strong> {usuario.email}</p>
                     <p><strong>Telefone:</strong> {usuario.telefone}</p>
@@ -302,7 +302,7 @@ export function PerfilUsuario() {
                                     <Form.Label className="mb-0">Senha Atual</Form.Label>
                                     <Form.Control
                                         className="mb-3"
-                                        type='text'
+                                        type='password'
                                         label=''
                                         placeholder='Senha'
                                         required={true}
@@ -331,7 +331,7 @@ export function PerfilUsuario() {
                                     <Form.Label className="mb-0">Nova Senha </Form.Label>
                                     <Form.Control
                                         className="mb-3"
-                                        type='text'
+                                        type='password'
                                         label=''
                                         placeholder='Senha'
                                         required={true}
@@ -361,7 +361,7 @@ export function PerfilUsuario() {
                                     <Form.Label className="mb-0">Confirmar Nova Senha:</Form.Label>
                                     <Form.Control
                                         className="mb-3"
-                                        type='text'
+                                        type='password'
                                         label=''
                                         placeholder='Senha'
                                         required={true}

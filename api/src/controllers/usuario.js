@@ -122,7 +122,7 @@ class UsuarioController {
                 { expiresIn: process.env.TOKEN_EXPIRES_IN }
             );
             return httpHelper.created({
-                accessToken,
+                
                 message: "Usuário criado com sucesso!",
                 variant: "success"
             });
@@ -157,7 +157,8 @@ class UsuarioController {
                 process.env.TOKEN_SECRET,
                 { expiresIn: process.env.TOKEN_EXPIRES_IN }
             );
-            return httpHelper.ok({ accessToken });
+            return httpHelper.ok({ accessToken,  message: "Login efetuado com sucesso!",
+            variant: "success" });
         } catch (error) {
             return httpHelper.internalError(error);
         }
@@ -231,7 +232,7 @@ class UsuarioController {
                 where: { id }
             });
             return httpHelper.ok({
-                message: 'Região atualizada com sucesso!',
+                message: 'Usuário atualizada com sucesso!',
                 variant: "success"
             });
         } catch (error) {
