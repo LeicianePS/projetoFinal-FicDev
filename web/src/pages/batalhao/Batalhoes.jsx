@@ -211,7 +211,7 @@ export function Batalhoes() {
                     </Col> */}
                     <Col>
                         <Form.Group controlId="searchQuery">
-                            <Form.Label  className="b-0">Buscar por Nome, Tipo ou Comandante:</Form.Label>
+                            <Form.Label  className="b-0">Buscar por Nome, Comandante, ou Região:</Form.Label>
                             <Form.Control
                                 size="lg"
                                 type="text"
@@ -259,7 +259,7 @@ export function Batalhoes() {
                                 <td>{batalhao.efetivo}</td>
                                 <td>{batalhao.comando_regional}</td>
                                 <td>{batalhao.comandante}</td>
-                                <td>{batalhao.RegiaoModel?.nome_regiao}</td>
+                                <td>{batalhao.RegiaoModel?.nome_regiao ? batalhao.RegiaoModel?.nome_regiao : batalhao?.nome_regiao} </td>
                                 <td className="d-flex justify-content-center">
                                     <Link className="mx-1 px-1" onClick={() => abrirModal(true, batalhao)}><FaEdit size="20px"/></Link>
 

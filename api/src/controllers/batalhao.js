@@ -74,6 +74,19 @@ class BatalhaoController {
                 }
               });
             return httpHelper.ok(batalhoes);
+
+
+        //     const results = await sequelize.query(
+
+        //         `SELECT batalhao.*, regiao.nome_regiao
+        //         FROM batalhao
+        //         INNER JOIN regiao ON batalhao.id_regiao = regiao.id_regiao`,
+        //        {
+        //            type: sequelize.QueryTypes.SELECT,
+        //        }
+        //    );
+           return httpHelper.ok(results);
+
         } catch (error) {
             return httpHelper.internalError(error);
         }
