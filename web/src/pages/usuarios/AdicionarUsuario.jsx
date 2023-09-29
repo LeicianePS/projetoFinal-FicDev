@@ -3,7 +3,7 @@ import { Container, Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 import { Input } from "../../components/Input";
-
+import InputMask from 'react-input-mask';
 import { useNavigate } from "react-router-dom";
 import { createUsuario} from "../../services/usuario-service";
 import { Header } from "../../components/Header";
@@ -143,6 +143,7 @@ export function AdicionarUsuario(props) {
                                         placeholder='Cpf'
                                         required={true}
                                         name='cpf'
+                                        mask="999.999.999-99"
                                         error={errors.cpf}
                                         validations={register('cpf', {
                                             required: {
@@ -156,6 +157,26 @@ export function AdicionarUsuario(props) {
 
                                         })}
                                     />
+
+                                    {/* <InputMask
+                                    className="form-control form-control-lg"
+                                    required={true}
+                                    aria-invalid={true}
+                                        mask="999.999.999-99"
+                                        maskChar="_"
+                                        {...register('cpf', {
+                                            required: 'CPF é obrigatório',
+                                            pattern: {
+                                            value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
+                                            message: 'CPF inválido',
+                                            },
+                                        })}
+                                    />
+                                    {errors.cpf && (
+                                        <div role="alert" style={{ color: 'red' }}>
+                                            {errors.cpf.message}
+                                        </div>
+                                    )} */}
                                 </Form.Group>
                             </Col>
                             <Col md='3'>
@@ -214,6 +235,7 @@ export function AdicionarUsuario(props) {
                                     size="lg"
                                     aria-label="Perfil do Usuário"
                                     name='perfil'
+                                    required={true}
                                     error={errors.perfil}
                                     {...register('perfil', {
                                         required: {
