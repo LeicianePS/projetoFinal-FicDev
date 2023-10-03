@@ -3,7 +3,7 @@ import { Container, Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
 import { Input } from "../../components/Input";
-import InputMask from 'react-input-mask';
+//import InputMask from 'react-input-mask';
 import { useNavigate } from "react-router-dom";
 import { createUsuario} from "../../services/usuario-service";
 import { Header } from "../../components/Header";
@@ -67,7 +67,7 @@ export function AdicionarUsuario(props) {
                                     <Form.Label className="mb-0">Nome do Usuário</Form.Label>
                                     <Input
                                         className="mb-3"
-                                        
+
                                         type='text'
                                         label=''
                                         placeholder='Insira o nome do Usuário'

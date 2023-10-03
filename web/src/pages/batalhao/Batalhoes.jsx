@@ -234,9 +234,9 @@ export function Batalhoes() {
             </Form>
 
 
-            <Row className="justify-content-start my-4 mx-2 align-items-center ">   {/* d-none d-md-block */}
+            <Row className="justify-content-start my-4 mx-2 align-items-center" fluid>   {/* d-none d-md-block */}
                 <h5>Batalhões</h5>
-                <Table responsive striped bordered hover className="col-12 my-1     d-none d-sm-block ">
+                <Table striped bordered hover className="my-1       d-none d-sm-table " >
                     <thead>
                         <tr>
                             <th>id</th>
@@ -282,7 +282,7 @@ export function Batalhoes() {
                 </Table>
 
                 <div className='px-2 d-sm-none' >
-          	   {batalhoes && batalhoes.length > 0
+          	        {batalhoes && batalhoes.length > 0
                         ? getCurrentPageData().map((batalhao, index) => (
                             <Card key={index} striped bordered className="py-2 px-3">
                                 <div> <b>Id:</b> {batalhao.id}</div>
@@ -306,12 +306,12 @@ export function Batalhoes() {
                         ))
                         : (
                             <div>
-                            <p colSpan="12" className="text-center">
-                                Não existe nenhum batalhão cadastrado!
-                            </p>
+                                <p colSpan="12" className="text-center">
+                                    Não existe nenhum batalhão cadastrado!
+                                </p>
                             </div>
                         )}
-        	</div>
+        	    </div>
 
 
                 <Modal show={showRemove} onHide={handleClose}>
