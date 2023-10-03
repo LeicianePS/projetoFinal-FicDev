@@ -10,12 +10,21 @@ const Footer = () => {
       <footer className="footer d-flex justify-content-between" >
         {/* Conteúdo do rodapé */}
 
-        <div>
+        <div className='d-none d-sm-block'>
           <img src={brasao} alt="" width={"30px"} className='mx-2'/>
           Governo de Mato Grosso
         </div>
-        <div className='mx-2'>
+ 	      <div className='d-sm-none'>
+          <img src={brasao} alt="" width={"30px"} className='mx-2'/>
+          GOV MT
+        </div>
+
+
+        <div className='mx-2 d-none d-sm-block'>
           Secretaria Estadual de Segurança Pública (SESP-MT)
+        </div>
+	      <div className='mx-2 d-sm-none'>
+          SESP-MT
         </div>
         
       </footer>

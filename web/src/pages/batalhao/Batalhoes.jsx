@@ -1,4 +1,4 @@
-import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap";
+import { Container, Col, Modal, Row, Table, Form, Button, Card } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
@@ -186,13 +186,13 @@ export function Batalhoes() {
             { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
 
-            <Row className="justify-content-between p-4 align-items-center">
-                <Col md='6' xs='7' className="">
+            <Row className="justify-content-between p-3 align-items-center" xs={12}>
+                <Col md='6' xs={6} className="">
                     <Header title="Listagem de Batalhões"  />
                 </Col>
                 <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => navigate("/batalhao-adicionar")} size="lg">
-                        <Link to="/batalhao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
+                    <Button className="align-items-center" onClick={() => navigate("/batalhao-adicionar")} size="lg" xs={6}>
+                        <Link to="/batalhao-adicionar">Adicionar <b><FaPlus/></b> </Link>
                     </Button>
                     {/* <Button variant="outline-secondary" onClick={() => {
                         sessionStorage.removeItem('token');
@@ -201,7 +201,7 @@ export function Batalhoes() {
                 </Col>
             </Row>
 
-            <Form className="mx-4 my-3 caixa-pesquisa " onSubmit={handleSearch}>
+            <Form className="mx-3 my-3 caixa-pesquisa" onSubmit={handleSearch} xs={12}>
                 <Row className="justify-content-between align-items-center">
                     {/* <Col >
                         <Form.Group controlId="formBasicEmail">
@@ -223,20 +223,20 @@ export function Batalhoes() {
                     </Col>
                 </Row>
 
-                <Col className="d-flex justify-content-end pt-3 pb-2">
-                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarBatalhao('')}} className="align-items-center mx-4" size="lg">
-                        Limpar <FaTimes/>
+                <Col className="d-flex justify-content-end pt-3 pb-2 " xs={12}>
+                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarBatalhao('')}} className="align-items-start me-2 p-2" size="lg" xs={5}>
+                        Limpar <FaTimes />
                     </Button>
-                    <Button variant="outline-primary" type="submit" className="align-items-center" size="lg">
+                    <Button variant="outline-primary" type="submit" className="ms-2 px-2"  size="lg" xs={7}>
                         Pesquisar <FaSearch/>
                     </Button>
                 </Col>
             </Form>
 
 
-            <Row className="justify-content-between m-4 align-items-center bg-light ">   {/* d-none d-md-block */}
+            <Row className="justify-content-start my-4 mx-2 align-items-center ">   {/* d-none d-md-block */}
                 <h5>Batalhões</h5>
-                <Table responsive striped bordered hover className="col-md-10 my-1 ">
+                <Table responsive striped bordered hover className="col-12 my-1     d-none d-sm-block ">
                     <thead>
                         <tr>
                             <th>id</th>
@@ -280,6 +280,38 @@ export function Batalhoes() {
                         )}
                     </tbody>
                 </Table>
+
+                <div className='px-2 d-sm-none' >
+          	   {batalhoes && batalhoes.length > 0
+                        ? getCurrentPageData().map((batalhao, index) => (
+                            <Card key={index} striped bordered className="py-2 px-3">
+                                <div> <b>Id:</b> {batalhao.id}</div>
+                                <div> <b>Nome:</b> {batalhao.nome_batalhao}</div>
+                                <div> <b>Tipo:</b> { batalhao.tipo == "PM" ? "Polícia Militar" : "Corpo de Bombeiros"}</div>
+                                <div> <b>Efetivo:</b> {batalhao.efetivo}</div>
+                                <div> <b>CR:</b> {batalhao.comando_regional}</div>
+                                <div> <b>Comandante:</b> {batalhao.comandante}</div>
+                                <div> <b>Região:</b> {batalhao.RegiaoModel?.nome_regiao ? batalhao.RegiaoModel?.nome_regiao : batalhao?.nome_regiao} </div>
+                                <div className="d-flex justify-content-center">
+                                    <Col className="d-flex justify-content-between pt-3 pb-2 " xs={12}>
+                                        <Button variant="warning" onClick={() => abrirModal(true, batalhao)} className="align-items-start me-2 " xs={5}>
+                                            Editar <FaEdit size="20px"/>
+                                        </Button>
+                                        <Button variant="danger" type="submit" onClick={() => abrirModalDeRemocao(batalhao.id)} className="ms-2 " xs={7}>
+                                            Deletar <FaTrash size="20px"/>
+                                        </Button>
+                                    </Col>
+                                </div>
+                            </Card>
+                        ))
+                        : (
+                            <div>
+                            <p colSpan="12" className="text-center">
+                                Não existe nenhum batalhão cadastrado!
+                            </p>
+                            </div>
+                        )}
+        	</div>
 
 
                 <Modal show={showRemove} onHide={handleClose}>

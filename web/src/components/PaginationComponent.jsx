@@ -38,7 +38,7 @@ function PaginationComponent({ currentPage, totalPages, onPageChange }) {
   };
 
   return (
-    <Pagination size='sm' className="d-flex justify-content-end mt-3">
+    <Pagination size='md' className="d-flex justify-content-end mt-2">
       {/* Botão para a primeira página */}
       <Pagination.First onClick={() => onPageChange(1)} />
 

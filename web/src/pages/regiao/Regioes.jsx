@@ -162,10 +162,6 @@ export function Regioes() {
                     <Button className="align-items-center" onClick={() => navigate("/regiao-adicionar")} size="lg">
                         <Link to="/regiao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
-                    {/* <Button variant="outline-secondary" onClick={() => {
-                        sessionStorage.removeItem('token');
-                        navigate('/');
-                    }}>Sair</Button> */}
                 </Col>
             </Row>
 
