@@ -1,4 +1,4 @@
-import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap";
+import { Container, Col, Modal, Row, Table, Form, Button, Card } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
@@ -166,14 +166,12 @@ export function Usuarios() {
 
         { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
-
-
-            <Row className="justify-content-between p-4 align-items-center">
-                <Col md='6' xs='7' className="">
+            <Row className="justify-content-between p-3 align-items-center" xs={12}>
+                <Col md='6' xs={6} className="">
                     <Header title="Listagem de Usuários"  />
                 </Col>
                 <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => navigate("/usuario-adicionar")}>
+                    <Button className="align-items-center" onClick={() => navigate("/usuario-adicionar")} size="lg" xs={6}> 
                         <Link to="/usuario-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
                     {/* <Button variant="outline-secondary" onClick={() => {
@@ -183,7 +181,7 @@ export function Usuarios() {
                 </Col>
             </Row>
 
-            <Form className="mx-4 my-3 caixa-pesquisa " onSubmit={handleSearch}>
+            <Form className="mx-3 my-3 caixa-pesquisa " onSubmit={handleSearch} xs={12}>
                 <Row className="justify-content-between align-items-center">
                     {/* <Col >
                         <Form.Group controlId="formBasicEmail">
@@ -205,20 +203,20 @@ export function Usuarios() {
                     </Col>
                 </Row>
 
-                <Col className="d-flex justify-content-end pt-3 pb-2">
-                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarUsuario('')}} className="align-items-center mx-4" size="lg">
+                <Col className="d-flex justify-content-end pt-3 pb-2" xs={12}>
+                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarUsuario('')}} className="align-items-start me-2 p-2" size="lg" xs={5}>
                         Limpar <FaTimes/>
                     </Button>
-                    <Button variant="outline-primary" type="submit" className="align-items-center" size="lg">
+                    <Button variant="outline-primary" type="submit" className="ms-2 px-2"  size="lg" xs={7}>
                         Pesquisar <FaSearch/>
                     </Button>
                 </Col>
             </Form>
 
 
-            <Row className="justify-content-between m-4 align-items-center bg-light ">   {/* d-none d-md-block */}
+            <Row className="justify-content-start my-4 mx-2 align-items-center" >   {/* d-none d-md-block */}
                 <h5>Usuários</h5>
-                <Table responsive striped bordered hover className="col-md-10 my-1 ">
+                <Table responsive striped bordered hover className="my-1       d-none d-sm-table ">
                     <thead>
                         <tr>
                             <th>id</th>
@@ -259,6 +257,38 @@ export function Usuarios() {
                         )}
                     </tbody>
                 </Table>
+
+                <div className='px-2 d-sm-none' >
+          	        {usuarios && usuarios.length > 0
+                        ? getCurrentPageData().map((usuario, index) => (
+                            <Card key={index} striped bordered className="py-2 px-3">
+                                <div> <b>Id:</b> {usuario.id}</div>
+                                <div> <b>Nome:</b> {usuario.nome}</div>
+                                <div> <b>Email:</b> {usuario.email}</div>
+                                <div> <b>CPF:</b> {usuario.cpf}</div>
+                                <div> <b>Telefone:</b> {usuario.telefone}</div>
+                                <div> <b>Matrícula:</b> {usuario.matricula}</div>
+                                <div className="d-flex justify-content-center">
+                                    <Col className="d-flex justify-content-between pt-3 pb-2 " xs={12}>
+                                        <Button variant="warning" onClick={() => abrirModal(true, usuario)} className="align-items-start me-2 " xs={5}>
+                                            Editar <FaEdit size="20px"/>
+                                        </Button>
+                                        <Button variant="danger" type="submit" onClick={() => abrirModalDeRemocao(usuario.id)} className="ms-2 " xs={7}>
+                                            Deletar <FaTrash size="20px"/>
+                                        </Button>
+                                    </Col>
+                                </div>
+                            </Card>
+                        ))
+                        : (
+                            <div>
+                                <p colSpan="12" className="text-center">
+                                    Não existe nenhum batalhão cadastrado!
+                                </p>
+                            </div>
+                        )}
+        	    </div>
+
 
 
                 <Modal show={showRemove} onHide={handleClose}>

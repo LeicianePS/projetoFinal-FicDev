@@ -1,4 +1,4 @@
-import { Container, Col, Modal, Row, Table, Form, Button } from "react-bootstrap";
+import { Container, Col, Modal, Row, Table, Form, Button, Card } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
@@ -153,19 +153,18 @@ export function Regioes() {
             { show ?  <AlertaFeedback setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
 
-
-            <Row className="justify-content-between p-4 align-items-center">
-                <Col md='6' xs='7' className="">
+            <Row className="justify-content-between p-3 align-items-center" xs={12}>
+                <Col md='6' xs={6} className="">
                     <Header title="Listagem de Regiões"  />
                 </Col>
                 <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => navigate("/regiao-adicionar")} size="lg">
+                    <Button className="align-items-center" onClick={() => navigate("/regiao-adicionar")} size="lg" xs={6}>
                         <Link to="/regiao-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
                 </Col>
             </Row>
 
-            <Form className="mx-4 my-3 caixa-pesquisa " onSubmit={handleSearch}>
+            <Form className="mx-3 my-3 caixa-pesquisa " onSubmit={handleSearch} xs={12}>
                 <Row className="justify-content-between align-items-center">
                     {/* <Col >
                         <Form.Group controlId="formBasicEmail">
@@ -187,20 +186,20 @@ export function Regioes() {
                     </Col>
                 </Row>
 
-                <Col className="d-flex justify-content-end pt-3 pb-2">
-                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarRegiao('')}} className="align-items-center mx-4" size="lg">
+                <Col className="d-flex justify-content-end pt-3 pb-2" xs={12}>
+                    <Button variant="outline-secondary" onClick={() => {setQuery(''); filtrarRegiao('')}} className="align-items-start me-2 p-2" size="lg" xs={5}>
                         Limpar <FaTimes/>
                     </Button>
-                    <Button variant="outline-primary" type="submit" className="align-items-center" size="lg">
+                    <Button variant="outline-primary" type="submit" className="ms-2 px-2"  size="lg" xs={7}>
                         Pesquisar <FaSearch/>
                     </Button>
                 </Col>
             </Form>
 
 
-            <Row className="justify-content-between m-4 align-items-center bg-light ">   {/* d-none d-md-block */}
+            <Row className="justify-content-start my-4 mx-2 align-items-center" >
                 <h5>Regiões</h5>
-                <Table responsive striped bordered hover className="col-md-10 my-1 ">
+                <Table responsive striped bordered hover className="my-1       d-none d-sm-table ">
                     <thead>
                         <tr>
                             <th>id</th>
@@ -217,7 +216,7 @@ export function Regioes() {
                                 <td>{regiao.id_regiao}</td>
                                 <td>{regiao.nome_regiao}</td>
                                 <td>{regiao.populacao}</td>
-                                <td>{regiao. cidadesbairros_atuacao}</td>
+                                <td>{regiao.cidadesbairros_atuacao}</td>
                                 <td className="d-flex justify-content-center">
                                     <Link className="mx-1 px-1" onClick={() => abrirModal(true, regiao)}><FaEdit size="20px"/></Link>
 
@@ -238,6 +237,36 @@ export function Regioes() {
                         )}
                     </tbody>
                 </Table>
+
+                <div className='px-2 d-sm-none' >
+          	        {regioes && regioes.length > 0
+                        ? getCurrentPageData().map((regiao, index) => (
+                            <Card key={index} striped bordered className="py-2 px-3">
+                                <div> <b>Id:</b> {regiao.id_regiao}</div>
+                                <div> <b>Nome:</b> {regiao.nome_regiao}</div>
+                                <div> <b>Efetivo:</b> {regiao.populacao}</div>
+                                <div> <b>CR:</b> {regiao.cidadesbairros_atuacao}</div>
+                                <div className="d-flex justify-content-center">
+                                    <Col className="d-flex justify-content-between pt-3 pb-2 " xs={12}>
+                                        <Button variant="warning" onClick={() => abrirModal(true, regiao)} className="align-items-start me-2 " xs={5}>
+                                            Editar <FaEdit size="20px"/>
+                                        </Button>
+                                        <Button variant="danger" type="submit" onClick={() => abrirModalDeRemocao(regiao.id_regiao)} className="ms-2 " xs={7}>
+                                            Deletar <FaTrash size="20px"/>
+                                        </Button>
+                                    </Col>
+                                </div>
+                            </Card>
+                        ))
+                        : (
+                            <div>
+                                <p colSpan="12" className="text-center">
+                                    Não existe nenhum batalhão cadastrado!
+                                </p>
+                            </div>
+                        )}
+        	    </div>
+
 
 
 
