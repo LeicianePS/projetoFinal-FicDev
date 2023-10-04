@@ -55,15 +55,15 @@ export function Login() {
     return (
 
             <Row className="align-items-center">
-                <Col className="d-flex justify-content-center login-left">
+                <Col className=" justify-content-center login-left d-none d-md-flex">
                     <img src={login} alt="" className="image-login align-items-center"/>
                 </Col>
 
                 <Col className="justify-content-center m-0 p-0  bordered">
-                    
+
                     { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
-                    
+
                     <div className="d-flex justify-content-center">
                         <img src={brasao} alt="" width={"120px"} className='mx-2 '/>
                     </div>
@@ -113,10 +113,10 @@ export function Login() {
                                     })}
                                 />
                                 <button
-                                    
+
                                     type="button"
                                     className="btn btn-outline-secondary"
-                                    onClick={togglePasswordVisibility} 
+                                    onClick={togglePasswordVisibility}
                                 >
                                     {showPassword ? <FaEye/> : <FaEyeSlash/>}
                                 </button>
