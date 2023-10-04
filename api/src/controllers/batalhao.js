@@ -239,6 +239,9 @@ class BatalhaoController {
         const httpHelper = new HttpHelper(response);
         try {
             const batalhao_CR = await BatalhaoModel.findAll({
+                order: [
+                    ['comando_regional', 'ASC'],
+                ],
                 attributes: [
                 'comando_regional', // Substitua pelo nome correto do campo que identifica o Comando Regional
                 [sequelize.fn('COUNT', sequelize.col('*')), 'quantidadeBatalhoes'],
@@ -255,6 +258,9 @@ class BatalhaoController {
         const httpHelper = new HttpHelper(response);
         try {
             const efetivoCR = await BatalhaoModel.findAll({
+                order: [
+                    ['comando_regional', 'ASC'],
+                ],
                 attributes: [
                   'comando_regional',
                   [sequelize.fn('SUM', sequelize.col('efetivo')), 'somaEfetivo'],

@@ -124,7 +124,9 @@ const Header = () => {
               alignRight={false} // Impede que o menu ajuste o tamanho da tela
               style={{ position: 'absolute', top: '50px', left: 'auto', right: '0' }}
             >
-              <Dropdown.Item onClick={()=> {navigate(`/usuario-perfil/${window.localStorage.getItem('user')}`)}} ><b>Usuário:</b> {usuario.nome}</Dropdown.Item>
+              <Dropdown.Item className={isActive('/usuario-perfil') ? 'active  align-items-center' : ' align-items-center'} onClick={()=> {navigate(`/usuario-perfil/${window.localStorage.getItem('user')}`)}} >
+                  <FaUser size="24px" className='me-3'/> <b>Usuário:</b> {usuario.nome}
+              </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout}>
                 <FaSignOutAlt /> Sair

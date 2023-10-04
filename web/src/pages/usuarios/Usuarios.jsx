@@ -331,6 +331,7 @@ export function Usuarios() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Nome do Usuário</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         className="mb-3"
                                         type='text'
                                         placeholder={usuarioEdit.nome}
@@ -344,6 +345,7 @@ export function Usuarios() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">CPF (999.999.999-99)</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         type="text"
                                         placeholder={usuarioEdit.cpf}
                                         {...register('cpf', {
@@ -365,6 +367,7 @@ export function Usuarios() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">E-mail (exemplo@email.com)</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         type="email"
                                         placeholder={usuarioEdit.email}
                                         {...register('email', {
@@ -383,6 +386,7 @@ export function Usuarios() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Telefone ((XX) XXXX-XXXX)</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         type="tel"
                                         placeholder={usuarioEdit.telefone}
                                         {...register('telefone', {
@@ -400,6 +404,7 @@ export function Usuarios() {
                                 <Form.Group controlId="searchQuery">
                                     <Form.Label className="mb-0">Matrícula:</Form.Label>
                                     <Form.Control
+                                        size="lg"
                                         type="text"
                                         placeholder={usuarioEdit.matricula}
                                         {...register('matricula', {
@@ -419,6 +424,7 @@ export function Usuarios() {
                                     <Form.Label className="mb-0">Perfil</Form.Label>
                                     {/* Use o Form.Select para selecionar a região */}
                                     <Form.Select
+                                    size="lg"
                                     aria-label="Selecione um perfil"
                                     defaultValue={usuarioEdit.perfil}
                                     type='text'
@@ -440,10 +446,10 @@ export function Usuarios() {
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
-                            <Button variant="secondary" onClick={() => fecharModal()} className="mx-4">
+                            <Button variant="secondary" onClick={() => fecharModal()} className="mx-4" size="lg">
                                 Fechar
                             </Button>
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="submit" size="lg">
                                 Editar
                             </Button>
                     </Modal.Footer>

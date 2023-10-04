@@ -65,7 +65,7 @@
 //   return (
 //     <div className='px-5 py-2'>
 //       <Card.Header className="d-flex justify-content-start"><Card.Title> Efetivo por Comando Regional</Card.Title></Card.Header>
-//       <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={350} className="col-12" />
+//       <ApexCharts options={chartData.options} series={chartData.series} type="bar" height={320} className="col-12" />
 //     </div>
 //   );
 // };
@@ -101,18 +101,52 @@ const EfetivoCRChart = () => {
       try {
         const response = await getEfetivoCR();
         const data = response.data;
-
         // Extraia os dados da resposta da API
         const labels = data.map(item => item.comando_regional);
-        const efetivoCR = data.map(item => item.somaEfetivo);
+        console.log(labels);
+        const efetivoCR = data.map(item => Number(item.somaEfetivo));
+        console.log(efetivoCR);
+        debugger
 
         // Atualize o estado do gráfico com os dados
-        setChartData({
-          options: {
-            labels,
-          },
-          series: efetivoCR,
-        });
+        // setChartData({
+        //   options: {
+        //     labels,
+        //   },
+        //   series: [{
+        //       data: efetivoCR,
+        //     }
+        //   ]
+        // });
+
+        setChartData(prevState => ({
+            ...prevState,
+            options: {
+                chart: {
+                    width: 380,
+                    type: "pie",
+                },
+                labels: labels,
+                responsive: [
+                    {
+                        breakpoint: 480,
+                        options: {
+                        chart: {
+                            width: 200,
+                        },
+                        legend: {
+                            position: "bottom",
+                        },
+                        },
+                    },
+                ],
+
+            },
+            series: efetivoCR,
+          }));
+
+
+
       } catch (error) {
         console.error(error);
       }
@@ -126,7 +160,7 @@ const EfetivoCRChart = () => {
       <Card.Header className="d-flex justify-content-start">
         <Card.Title> Efetivo por Comando Regional</Card.Title>
       </Card.Header>
-      <ApexCharts options={chartData.options} series={chartData.series} type="pie" height={350} className="col-12" />
+      <ApexCharts  options={chartData.options} series={chartData.series} type="pie" height={350} width={380} className="col-12" />
     </div>
   );
 };

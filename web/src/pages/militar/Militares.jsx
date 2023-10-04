@@ -429,7 +429,7 @@ export function Militares() {
 
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
-                                    <Form.Label className="mb-0">Posto:</Form.Label>
+                                    <Form.Label className="mb-0 mt-3">Posto:</Form.Label>
                                     <Form.Control
                                         size="lg"
                                         type="text"
@@ -444,7 +444,7 @@ export function Militares() {
                             </Col>
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
-                                    <Form.Label className="mb-0">Salário Atual:</Form.Label>
+                                    <Form.Label className="mb-0 mt-3">Salário Atual:</Form.Label>
                                     <Form.Control
                                         size="lg"
                                         type="text"
@@ -463,7 +463,7 @@ export function Militares() {
 
                             <Col md='3'>
                                 <Form.Group controlId="searchQuery">
-                                    <Form.Label className="mb-0">Batalhão</Form.Label>
+                                    <Form.Label className="mb-0 mt-3">Batalhão</Form.Label>
                                     {/* Use o Form.Select para selecionar a região */}
                                     <Form.Select
                                         size="lg"
@@ -491,20 +491,16 @@ export function Militares() {
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
-                            <Button variant="secondary" onClick={() => fecharModal()} className="mx-4">
+                            <Button variant="secondary" onClick={() => fecharModal()} className="mx-4" size="lg">
                                 Fechar
                             </Button>
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="submit" size="lg">
                                 Editar
                             </Button>
                     </Modal.Footer>
                 </Form>
 
-
-
             </Modal>
-
-
 
 
         </Container>

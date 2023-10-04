@@ -58,7 +58,7 @@ export function HomeDashboard() {
     return(
         <Container fluid className="cor-page min-height ">
     
-            {/* <Card style={{ width: '15rem' }}>
+            {/* <Card style={{ width: '17rem' }}>
                 <Card.Body>
                     <Card.Title>Card Title</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
@@ -68,12 +68,13 @@ export function HomeDashboard() {
                     </Card.Text>
                 </Card.Body>
             </Card> */}
-            <Row className="d-flex justify-content-center p-3">
-                <Col>
+
+            <Row className="d-flex justify-content-between py-1 px-5" >
+                <Col col-3>
                     <Card
                         key='dark'
-                        style={{ width: '14rem' }}
-                        className="mb-2"
+                        style={{ width: '17rem' }}
+                        className="mb-2 mx-2"
                         bg="dark"
                         text="light"
                     >
@@ -85,11 +86,11 @@ export function HomeDashboard() {
                         </Card.Body>
                     </Card> 
                 </Col>
-                <Col>
+                <Col col-3>
                     <Card
                         key='dark'
-                        style={{ width: '14rem' }}
-                        className="mb-2"
+                        style={{ width: '17rem' }}
+                        className="mb-2 mx-2"
                         bg="dark"
                         text="light"
                         >
@@ -102,11 +103,11 @@ export function HomeDashboard() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col>
+                <Col col-3>
                     <Card
                         key='dark'
-                        style={{ width: '14rem' }}
-                        className="mb-2"
+                        style={{ width: '17rem' }}
+                        className="mb-2 mx-2"
                         bg="dark"
                         text="light"
                         >
@@ -119,11 +120,11 @@ export function HomeDashboard() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col>
+                <Col col-3>
                     <Card
                         key='dark'
-                        style={{ width: '14rem' }}
-                        className="mb-2"
+                        style={{ width: '17rem' }}
+                        className="mb-2 mx-2"
                         bg="dark"
                         text="light"
                         >
@@ -139,11 +140,11 @@ export function HomeDashboard() {
             </Row>
 
             <Col className="col-12">
-                <BatalhoesCRChart className="p-4 bg-danger col-12"></BatalhoesCRChart>
+                <BatalhoesCRChart className="p-4 col-12"></BatalhoesCRChart>
             </Col>
             
             <Col className="col-12">
-                <EfetivoCRChart className="p-4 bg-danger"></EfetivoCRChart>
+                <EfetivoCRChart className="p-4"></EfetivoCRChart>
             </Col>
         </Container>
     )
