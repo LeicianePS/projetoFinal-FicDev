@@ -57,7 +57,7 @@ export function HomeDashboard() {
 
     return(
         <Container fluid className="cor-page min-height ">
-    
+
             {/* <Card style={{ width: '17rem' }}>
                 <Card.Body>
                     <Card.Title>Card Title</Card.Title>
@@ -69,83 +69,89 @@ export function HomeDashboard() {
                 </Card.Body>
             </Card> */}
 
-            <Row className="d-flex justify-content-between py-1 px-5" >
-                <Col col-3>
-                    <Card
-                        key='dark'
-                        style={{ width: '17rem' }}
-                        className="mb-2 mx-2"
-                        bg="dark"
-                        text="light"
-                    >
-                        <Card.Header className="d-flex justify-content-center"><Card.Title>Batalhões</Card.Title></Card.Header>
-                        <Card.Body> 
-                            <Card.Text className="d-flex justify-content-center" >
-                                <h2>{batalhoesTotal.somaBatalhao}</h2>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card> 
+            <Row className="d-flex justify-content-between py-1 px-md-5 " >
+
+                <Col className="col-12 col-md-6">
+                    <Row>
+                        <Col className="col-12 col-md-6 ">
+                            <Card
+                                key='dark'
+                                className="w-100 px-5"
+                                bg="dark"
+                                text="light"
+                            >
+                                <Card.Header className="d-flex justify-content-center"><Card.Title>Batalhões</Card.Title></Card.Header>
+                                <Card.Body>
+                                    <Card.Text className="d-flex justify-content-center" >
+                                        <h2>{batalhoesTotal.somaBatalhao}</h2>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col className="col-12 col-md-6 ">
+                            <Card
+                                key='dark'
+                                className="w-100 shadow px-5"
+                                bg="dark"
+                                text="light"
+                                >
+                                <Card.Header className="d-flex justify-content-center"><Card.Title> Efetivo total </Card.Title></Card.Header>
+                                <Card.Body>
+
+                                    <Card.Text className="d-flex justify-content-center" >
+                                        <h2>{efetivoTotal.somaEfetivo}</h2>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+
+                            <Col className="col-12 col-md-6 ">
+                            <Card
+                                key='dark'
+                                className="w-100"
+                                bg="dark"
+                                text="light"
+                                >
+                                <Card.Header className="d-flex justify-content-center"><Card.Title>Total Salários</Card.Title></Card.Header>
+                                <Card.Body>
+
+                                    <Card.Text className="d-flex justify-content-center" >
+                                        <h2>R$ {salariosTotal.somaSalario}</h2>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+
+                        <Col className="col-12 col-md-6 ">
+                            <Card
+                                key='dark'
+                                className="w-100"
+                                bg="dark"
+                                text="light"
+                                >
+                                <Card.Header className="d-flex justify-content-center"><Card.Title> Média Salários</Card.Title></Card.Header>
+                                <Card.Body>
+
+                                    <Card.Text className="d-flex justify-content-center" >
+                                        <h2>R$ {Math.round(salariosMedia.mediaSalario) }</h2>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
                 </Col>
-                <Col col-3>
-                    <Card
-                        key='dark'
-                        style={{ width: '17rem' }}
-                        className="mb-2 mx-2"
-                        bg="dark"
-                        text="light"
-                        >
-                        <Card.Header className="d-flex justify-content-center"><Card.Title> Efetivo total </Card.Title></Card.Header>
-                        <Card.Body>
-                            
-                            <Card.Text className="d-flex justify-content-center" >
-                                <h2>{efetivoTotal.somaEfetivo}</h2>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
+
+                <Col className="col-md-6 col-12 d-flex justify-content-center">
+                    <EfetivoCRChart className="p-4"></EfetivoCRChart>
                 </Col>
-                <Col col-3>
-                    <Card
-                        key='dark'
-                        style={{ width: '17rem' }}
-                        className="mb-2 mx-2"
-                        bg="dark"
-                        text="light"
-                        >
-                        <Card.Header className="d-flex justify-content-center"><Card.Title>Total Salários</Card.Title></Card.Header>
-                        <Card.Body>
-                            
-                            <Card.Text className="d-flex justify-content-center" >
-                                <h2>R$ {salariosTotal.somaSalario}</h2>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
-                <Col col-3>
-                    <Card
-                        key='dark'
-                        style={{ width: '17rem' }}
-                        className="mb-2 mx-2"
-                        bg="dark"
-                        text="light"
-                        >
-                        <Card.Header className="d-flex justify-content-center"><Card.Title> Média Salários</Card.Title></Card.Header>
-                        <Card.Body>
-                            
-                            <Card.Text className="d-flex justify-content-center" >
-                                <h2>R$ {Math.round(salariosMedia.mediaSalario) }</h2>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </Col>
+
             </Row>
 
             <Col className="col-12">
                 <BatalhoesCRChart className="p-4 col-12"></BatalhoesCRChart>
             </Col>
-            
-            <Col className="col-12">
-                <EfetivoCRChart className="p-4"></EfetivoCRChart>
-            </Col>
+
+
         </Container>
     )
 }

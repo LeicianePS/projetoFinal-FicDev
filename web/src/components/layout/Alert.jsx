@@ -12,7 +12,7 @@ function AlertaFeedback(props) {
 
   return (
     <div className='d-flex justify-content-end'>
-        <Alert key={props.alerta.variant} variant={props.alerta.variant} className='col-md-6 py-2' >
+        <Alert key={props.alerta.variant} variant={props.alerta.variant} className='col-md-6' >
             {props.alerta.message}
         </Alert>
 

@@ -6,7 +6,6 @@ class RegiaoModel extends Model {
             id_regiao: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
-                allowNull: false,
                 autoIncrement: true,
             },
             nome_regiao: DataTypes.STRING,

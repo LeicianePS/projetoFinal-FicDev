@@ -8,13 +8,14 @@ const usuarios = [
   telefone: "(65)99988-7766",
   perfil: "admin",
   cpf: "123.456.789-10",
+  senha: "123.456.789-10"
  },
 ];
 async function criarUsuarios() {
  for (let usuario of usuarios) {
   await UsuarioModel.create({
    nome: usuario.nome,
-   senha: await bcrypt.hash("123.456.789-10", Number(process.env.SALT)),
+   senha: await bcrypt.hash(usuario.senha, Number(process.env.SALT)),
    matricula: usuario.matricula,
    email: usuario.email,
    telefone: usuario.telefone,

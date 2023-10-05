@@ -3,6 +3,11 @@ const { Model, DataTypes } = require("sequelize");
 class UsuarioModel extends Model {
     static init(database) {
         super.init({
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true,
+            },
             nome: DataTypes.STRING,
             cpf: DataTypes.STRING,
             email: DataTypes.STRING,

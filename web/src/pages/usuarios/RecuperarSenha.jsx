@@ -53,88 +53,59 @@ const RecuperarSenha = () => {
 
   return (
 
-      <Row className="d-flex justify-content-center mt-5 align-items-center">
+    <Row className='position-fixed d-flex align-items-center justify-content-center m-0 p-0 h-100' style={{
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '70%',
+        zIndex: 1, // Defina um valor adequado para o z-index
+    }}>
         { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
         <Col md={6} className=" mt-5 ">
-          <h2>Recuperação de Senha</h2>
-          <Form onSubmit={handleSubmit} className='mt-4'>
-            {/* <Form.Group controlId="email">
-              <Form.Label>Endereço de E-mail</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Digite seu e-mail"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </Form.Group> */}
-              <InputGroup className="mb-3">
-                <Form.Control
-                    size='lg'
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Digite a nova senha"
-                    value={novaSenha}
-                    onChange={(e) => setNovaSenha(e.target.value)}
-                    required
-                />
-                <button
+            <h3 className='mb-3'>Recuperação de Senha</h3>
+            <Form onSubmit={handleSubmit} >
+                <InputGroup className="mb-3">
+                    <Form.Control
+                        size='lg'
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Digite a nova senha"
+                        value={novaSenha}
+                        onChange={(e) => setNovaSenha(e.target.value)}
+                        required
+                    />
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={togglePasswordVisibility}
+                    >
+                        {showPassword ? <FaEye/> : <FaEyeSlash/>}
+                    </button>
+                </InputGroup>
 
-                    type="button"
-                    className="btn btn-outline-secondary"
-                    onClick={togglePasswordVisibility}
-                >
-                    {showPassword ? <FaEye/> : <FaEyeSlash/>}
-                </button>
-              </InputGroup>
+                <InputGroup className="mb-3">
+                    <Form.Control
+                        size='lg'
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Confirme a nova senha"
+                        value={confirmarSenha}
+                        onChange={(e) => setConfirmarSenha(e.target.value)}
+                        required
+                    />
+                    <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={togglePasswordVisibility}
+                    >
+                        {showPassword ? <FaEye/> : <FaEyeSlash/>}
+                    </button>
+                </InputGroup>
 
-            {/* <Form.Group controlId="novaSenha">
-              <Form.Label>Nova Senha</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Digite a nova senha"
-                value={novaSenha}
-                onChange={(e) => setNovaSenha(e.target.value)}
-                required
-              />
-            </Form.Group> */}
-
-            <InputGroup className="mb-3">
-                <Form.Control
-                    size='lg'
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Digite a nova senha"
-                    value={confirmarSenha}
-                    onChange={(e) => setConfirmarSenha(e.target.value)}
-                    required
-                />
-                <button
-
-                    type="button"
-                    className="btn btn-outline-secondary"
-                    onClick={togglePasswordVisibility}
-                >
-                    {showPassword ? <FaEye/> : <FaEyeSlash/>}
-                </button>
-            </InputGroup>
-
-            {/* <Form.Group controlId="confirmarSenha">
-              <Form.Label>Confirmação de Senha</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirme a nova senha"
-                value={confirmarSenha}
-                onChange={(e) => setConfirmarSenha(e.target.value)}
-                required
-              />
-            </Form.Group> */}
-
-            <div className="d-flex justify-content-between pt-2">
-                <Button type="submit" > Recuperar Senha </Button>
-                <Link to="/" >Cancelar</Link>
-            </div>
-
-          </Form>
+                <div className="d-md-flex justify-content-between pt-2 d-block">
+                    <Button type="submit" className='col-12 col-md-4' size="lg"> Recuperar Senha </Button>
+                    <Link to="/" className='mt-3 col-12 col-md-4 d-flex justify-content-center d-md-block link-border' > Cancelar </Link>
+                </div>
+            </Form>
         </Col>
       </Row>
   );

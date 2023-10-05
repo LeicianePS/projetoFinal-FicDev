@@ -110,6 +110,15 @@ body{
     align-items: center !important;
  }
 
+ .link-border{
+    border: solid 1px #3e4e54;
+    padding: 8px 50px;
+    border-radius: 5px;
+ }
+ .link-border:hover{
+    background-color: #F5F5F5;
+ }
+
  /* .custom-table {
     width: 100% !important;
     display: inline-block;

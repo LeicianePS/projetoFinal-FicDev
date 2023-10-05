@@ -82,7 +82,7 @@ const Header = () => {
 
             <Dropdown.Menu className='px-3'
               alignRight={false} // Impede que o menu ajuste o tamanho da tela
-              style={{ position: 'absolute', top: '35px', left: 'auto', right: 'auto' }}
+              style={{ position: 'absolute', top: '35px', left: '0', right: 'auto' }}
             >
               <b>GESTÃO</b>
               <Dropdown.Item className={isActive('/batalhoes') ? 'active  align-items-center' : ' align-items-center'}>
@@ -107,12 +107,9 @@ const Header = () => {
           </Dropdown>
         </Nav>
 
-
-
         <Nav className="d-flex justify-content-start ">
           <Link to="/home-dash"><img src={logo} alt="" width={"100px"}/></Link>
         </Nav>
-
 
         <Nav className="ml-auto d-flex justify-content-end" color='white'>
             <button onClick={aumentarFonte} className='mx-2'><img src={fontMais} alt="" width={"30px"}/></button>
@@ -136,9 +133,6 @@ const Header = () => {
           </Dropdown>
         </Nav>
     </Navbar>
-
-
-
 
   );
 }

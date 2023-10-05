@@ -65,15 +65,15 @@ export function Login() {
 
 
                     <div className="d-flex justify-content-center">
-                        <img src={brasao} alt="" width={"120px"} className='mx-2 '/>
+                        <img src={brasao} alt="" width={"120px"} className='m-3 mt-4'/>
                     </div>
-                        <h1 className="rounded d-flex justify-content-center py-2 " > Gestão de Batalhões </h1>
-                    <h5 className="rounded d-flex justify-content-center py-4 " > Acessar Conta </h5>
+                        <h1 className="rounded d-flex justify-content-center" > Gestão de Batalhões </h1>
+                    <h5 className="rounded d-flex justify-content-center py-2 " > Acessar Conta </h5>
                     <Form
                         noValidate
                         validated={!!errors}
                         onSubmit={handleSubmit(onSubmit)}
-                        className=" rounded p-4 d-flex align-items-center"
+                        className=" rounded py-3 px-4 d-flex align-items-center"
                     >
                         <Col>
                             <Input
@@ -122,9 +122,9 @@ export function Login() {
                                 </button>
                             </InputGroup>
 
-                            <div className="d-flex justify-content-between align-items-center">
-                                <Button type="submit" size="lg">Entrar</Button>
-                                <Link to="/solicitar-recuperar-senha">Recuperar Senha</Link>
+                            <div className="d-md-flex justify-content-between align-items-center mt-4 d-block">
+                                <Button type="submit" size="lg" className='col-12 col-md-4'>Entrar</Button>
+                                <Link to="/solicitar-recuperar-senha" className='mt-2 col-12 col-md-4 d-flex justify-content-center d-md-block link-border'>Recuperar Senha</Link>
                             </div>
                         </Col>
                     </Form>
