@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation} from "react-router-dom";
 import { Navbar, Nav, Dropdown } from 'react-bootstrap';
-import { FaUser, FaSignOutAlt, FaBars, FaUserShield, FaMapMarkedAlt, FaUserFriends } from 'react-icons/fa'; // Importe o ícone de usuário
+import { FaUser, FaSignOutAlt, FaBars, FaUserShield, FaMapMarkedAlt, FaUserFriends, FaLightbulb } from 'react-icons/fa'; // Importe o ícone de usuário
 import logo from '../../assets/images/logo_govmt.png'; // Importe a imagem
 import fontMais from '../../assets/images/font+.png';
 import fontMenos from '../../assets/images/font-.png';
@@ -16,8 +16,13 @@ const Header = () => {
 
   const handleToggleMenu = () => setShowMenu(!showMenu);
   const handleToggleMenuBars = () => setShowMenuBars(!showMenu);
+  const [temaDark, setTemaDark] = useState(false);
+  const [tema, setTema] = useState('');
 
   useEffect( () => {
+    if (!localStorage.getItem('temaLocal')){
+      localStorage.setItem('temaLocal', 'white');
+    }
 
     async function findUsuarioPerfil() {
         try {
@@ -32,7 +37,19 @@ const Header = () => {
 
 }, []);
 
-
+ const darkMode = () => {
+    if (!temaDark) {
+      setTemaDark(true);
+    }else {
+      setTemaDark(false)
+    }
+    localStorage.setItem('temaLocal', temaDark ? 'black' : 'white');
+    if (temaDark){
+      setTema('black')
+    }else{
+      setTema('white')
+    }
+  };
 
 
   const navigate = useNavigate();
@@ -49,6 +66,8 @@ const Header = () => {
     navigate('/');
   };
 
+
+ 
 
 
   const [tamanhoFonte, setTamanhoFonte] = useState(16); // Valor inicial de 16px
@@ -71,7 +90,7 @@ const Header = () => {
 
   // Define o tamanho da fonte diretamente no elemento <body>
   document.body.style.setProperty('--tamanho-fonte', `${tamanhoFonte}px`);
-
+  document.body.style.setProperty('--tema', `${tema}`);
 
 
   return (
@@ -112,6 +131,9 @@ const Header = () => {
         </Nav>
 
         <Nav className="ml-auto d-flex justify-content-end" color='white'>
+            <button onClick={darkMode} className='mx-2 me-5'><FaLightbulb/></button>
+
+
             <button onClick={aumentarFonte} className='mx-2'><img src={fontMais} alt="" width={"30px"}/></button>
             <button onClick={diminuirFonte} className='mx-2 me-5'><img src={fontMenos} alt="" width={"30px"}/></button>
 

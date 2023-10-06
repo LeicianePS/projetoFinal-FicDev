@@ -1,5 +1,6 @@
 :root {
     --tamanho-fonte: 16px;
+    --tema: #fff;
 }
 
 body{
@@ -62,7 +63,7 @@ body{
     border: 1px solid #bfc4c7;
     padding: 10px 15px;
     border-radius: 5px;
-    background-color: white;
+    background-color: var(--tema) !important;
   }
   .caixa-pesquisa input {
     border: solid 1px #3e4e54;
@@ -73,13 +74,14 @@ body{
 
   .cor-layout{
 
-    background-color:   #fff  !important;
+    background-color:  var(--tema) !important;;
     border: 1px solid #F5F5F5;
   }
 
   .cor-page{
     border-radius: 8px;
     background-color:  #f8f9fa !important; /* #ebeef3 */
+    background-color: var(--tema) !important;
     border-radius: 0px;
     min-height: 90vh;
   }
