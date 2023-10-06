@@ -244,13 +244,13 @@ export function Regioes() {
                                         <td>{regiao.populacao}</td>
                                         <td>{regiao.cidadesbairros_atuacao}</td>
                                         <td className="d-flex justify-content-center">
-                                            <Link className="mx-1 px-1" onClick={() => abrirModal(true, regiao)}><FaEdit size="20px"/></Link>
+                                            <Link className="mx-1 px-1 text-dark" onClick={() => abrirModal(true, regiao)}><FaEdit /></Link>
 
                                             {/* <Link className="mx-1 px-1" to={`/regiao-editar/${regiao.id_regiao}`}><FaPen size="20px"/></Link>  */}
 
                                             {/* <button className="mx-1 px-1" onClick={() => abrirEditarRegiao(regiao)}><FaEdit size="20px"/></button>  */}
                                             {/* <Link className="mx-1 px-1" onClick={async () => await removeRegiao(regiao.id_regiao)}><FaTrash size="20px"/></Link> */}
-                                            <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(regiao.id_regiao)}><FaTrash size="20px"/></Link>
+                                            <Link className="mx-1 px-1 text-dark" onClick={() => abrirModalDeRemocao(regiao.id_regiao)}><FaTrash /></Link>
                                         </td>
                                     </tr>
                                 ))
@@ -267,7 +267,7 @@ export function Regioes() {
                         <div className='px-2 d-sm-none' >
                             {regioes && regioes.length > 0
                                 ? getCurrentPageData().map((regiao, index) => (
-                                    <Card key={index} striped bordered className="py-2 px-3">
+                                    <Card key={index} striped bordered className="py-2 px-3 cor-layout">
                                         <div> <b>Id:</b> {regiao.id_regiao}</div>
                                         <div> <b>Nome:</b> {regiao.nome_regiao}</div>
                                         <div> <b>Efetivo:</b> {regiao.populacao}</div>

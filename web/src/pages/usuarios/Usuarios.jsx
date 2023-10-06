@@ -85,7 +85,7 @@ export function Usuarios() {
         handleClose();
     }
 
-   
+
     async function filtrarUsuario(query) {
         try {
             const result = await filtroUsuario(query);
@@ -171,7 +171,7 @@ export function Usuarios() {
                     <Header title="Listagem de Usuários"  />
                 </Col>
                 <Col className="d-flex justify-content-end">
-                    <Button className="align-items-center" onClick={() => navigate("/usuario-adicionar")} size="lg" xs={6}> 
+                    <Button className="align-items-center" onClick={() => navigate("/usuario-adicionar")} size="lg" xs={6}>
                         <Link to="/usuario-adicionar">Adicionar <b ><FaPlus/></b> </Link>
                     </Button>
                     {/* <Button variant="outline-secondary" onClick={() => {
@@ -239,12 +239,12 @@ export function Usuarios() {
                                 <td>{usuario.telefone}</td>
                                 <td>{usuario.matricula}</td>
                                 <td className="d-flex justify-content-center">
-                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, usuario)}><FaEdit size="20px"/></Link>
+                                    <Link className="mx-1 px-1 text-dark" onClick={() => abrirModal(true, usuario)}><FaEdit /></Link>
 
                                     {/* <Link className="mx-1 px-1" to={`/usuario-editar/${usuario.id}`}><FaPen size="20px"/></Link>  */}
 
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarUsuario(usuario)}><FaEdit size="20px"/></button>  */}
-                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(usuario.id)}><FaTrash size="20px"/></Link>
+                                    <Link className="mx-1 px-1 text-dark" onClick={() => abrirModalDeRemocao(usuario.id)}><FaTrash /></Link>
                                 </td>
                             </tr>
                         ))
@@ -261,7 +261,7 @@ export function Usuarios() {
                 <div className='px-2 d-sm-none' >
           	        {usuarios && usuarios.length > 0
                         ? getCurrentPageData().map((usuario, index) => (
-                            <Card key={index} striped bordered className="py-2 px-3">
+                            <Card key={index} striped bordered className="py-2 px-3 cor-layout">
                                 <div> <b>Id:</b> {usuario.id}</div>
                                 <div> <b>Nome:</b> {usuario.nome}</div>
                                 <div> <b>Email:</b> {usuario.email}</div>

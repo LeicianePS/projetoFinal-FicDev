@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { FaEdit, FaPen, FaUser } from 'react-icons/fa';
 
 
-import { updateUsuario, updateSenhaUsuario, getUsuarioByCPF } from "../../services/usuario-service";
+import { updateUsuario, updateSenhaUsuario, getUsuarioByUserToken } from "../../services/usuario-service";
 import AlertaFeedback from "../../components/layout/Alert";
 
 export function PerfilUsuario() {
@@ -13,20 +13,20 @@ export function PerfilUsuario() {
     const [alerta, setAlerta] = useState({});
     const [show, setShow] = useState(false);
     const { handleSubmit, register, formState: { errors } } = useForm();
- 
+
     const param = useParams();
 
     useEffect( () => {
         async function findUsuarioPerfil() {
             try {
-              const response = await getUsuarioByCPF(param.cpf);
+              const response = await getUsuarioByUserToken();
               setUsuario(response.data);
             } catch (error) {
               console.error(error);
             }
         }
         findUsuarioPerfil();
-    }, [param]);
+    }, []);
 
 
     const [isUpdated, setIsUpdated] = useState(false);
@@ -96,7 +96,7 @@ export function PerfilUsuario() {
     return (
         <Container fluid className="cor-page min-height d-flex justify-content-center align-items-center ">
 
-            
+
             <div className="d-flex flex-column align-items-center justify-content-center col-md-8 col-sm-10 m-3 p-0 perfil" variant="outline-danger">
                 { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
                 <FaUser size="50px" className="mb-3" />

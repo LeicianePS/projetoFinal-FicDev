@@ -196,7 +196,7 @@ export function Navigations() {
                     )}
                 />
                 <Route
-                    path="/usuario-perfil/:cpf"
+                    path="/usuario-perfil"
                     element={(
                         <PrivateRoute>
                             <MainLayout>

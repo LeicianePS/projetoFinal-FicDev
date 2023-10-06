@@ -6,7 +6,7 @@ import { FaUser, FaSignOutAlt, FaBars, FaUserShield, FaMapMarkedAlt, FaUserFrien
 import logo from '../../assets/images/logo_govmt.png'; // Importe a imagem
 import fontMais from '../../assets/images/font+.png';
 import fontMenos from '../../assets/images/font-.png';
-import {getUsuarioByCPF} from '../../services/usuario-service';
+import {getUsuarioByUserToken} from '../../services/usuario-service';
 import { FaBuildingShield } from 'react-icons/fa6';
 
 const Header = () => {
@@ -16,17 +16,24 @@ const Header = () => {
 
   const handleToggleMenu = () => setShowMenu(!showMenu);
   const handleToggleMenuBars = () => setShowMenuBars(!showMenu);
-  const [temaDark, setTemaDark] = useState(false);
-  const [tema, setTema] = useState('');
+
+  const [tema, setTema] = useState("white");
+  const [temaLayout, setTemaLayout] = useState("#f2f2f2");
+  const [texto, setTexto] = useState("#3e4e54");
 
   useEffect( () => {
     if (!localStorage.getItem('temaLocal')){
-      localStorage.setItem('temaLocal', 'white');
+      localStorage.setItem('temaLocal', tema);
+
     }
+    setTema(localStorage.getItem('temaLocal'));
+
+    setTemaLayout(tema === "white" ? "#f2f2f2" : "#212529");
+    setTexto(tema === "white" ? "#3e4e54" : "#0dcaf0");
 
     async function findUsuarioPerfil() {
         try {
-          const response = await getUsuarioByCPF(window.localStorage.getItem('user'));
+          const response = await getUsuarioByUserToken();
           setUsuario(response.data);
         } catch (error) {
           console.error(error);
@@ -37,19 +44,14 @@ const Header = () => {
 
 }, []);
 
- const darkMode = () => {
-    if (!temaDark) {
-      setTemaDark(true);
-    }else {
-      setTemaDark(false)
-    }
-    localStorage.setItem('temaLocal', temaDark ? 'black' : 'white');
-    if (temaDark){
-      setTema('black')
-    }else{
-      setTema('white')
-    }
-  };
+ const darkMode = async () => {
+   const temaDark = tema === "white" ? "black" : "white";
+   await setTema(temaDark);
+   await setTemaLayout(tema === "black" ?  "#f2f2f2" : "#212529" );
+   await setTexto(tema === "black" ? "#3e4e54" : "#0dcaf0");
+
+   await localStorage.setItem('temaLocal', temaDark === "white" ? "white" : "black" );
+ };
 
 
   const navigate = useNavigate();
@@ -65,9 +67,6 @@ const Header = () => {
     localStorage.removeItem('user');
     navigate('/');
   };
-
-
- 
 
 
   const [tamanhoFonte, setTamanhoFonte] = useState(16); // Valor inicial de 16px
@@ -91,15 +90,16 @@ const Header = () => {
   // Define o tamanho da fonte diretamente no elemento <body>
   document.body.style.setProperty('--tamanho-fonte', `${tamanhoFonte}px`);
   document.body.style.setProperty('--tema', `${tema}`);
-
+  document.body.style.setProperty('--temaLayout', `${temaLayout}`);
+  document.body.style.setProperty('--texto', `${texto}`);
 
   return (
-    <Navbar variant="light" className='justify-content-between px-4 cor-layout'>
+    <Navbar variant="light" className='justify-content-between px-4 cor-layout' >
         <Nav className="d-flex justify-content-start d-md-none ">
           <Dropdown className="" style={{ padding: '0px 20px 0px 0px'}}>
             <Dropdown.Toggle as={FaBars} id="dropdown-basic" size="24px" style={{ cursor: 'pointer'}} />
 
-            <Dropdown.Menu className='px-3'
+            <Dropdown.Menu className='px-3 cor-layout'
               alignRight={false} // Impede que o menu ajuste o tamanho da tela
               style={{ position: 'absolute', top: '35px', left: '0', right: 'auto' }}
             >
@@ -131,7 +131,7 @@ const Header = () => {
         </Nav>
 
         <Nav className="ml-auto d-flex justify-content-end" color='white'>
-            <button onClick={darkMode} className='mx-2 me-5'><FaLightbulb/></button>
+            {/* <button variant='outline-danger' onClick={darkMode} className='mx-2 me-5'><FaLightbulb/></button> */}
 
 
             <button onClick={aumentarFonte} className='mx-2'><img src={fontMais} alt="" width={"30px"}/></button>
@@ -139,12 +139,16 @@ const Header = () => {
 
           <Dropdown show={showMenu} onToggle={handleToggleMenu} drop="left">
             <Dropdown.Toggle as={FaUser} id="user-dropdown" size="30px" style={{ cursor: 'pointer' }} />
-            <Dropdown.Menu
+            <Dropdown.Menu className='cor-layout'
               alignRight={false} // Impede que o menu ajuste o tamanho da tela
               style={{ position: 'absolute', top: '50px', left: 'auto', right: '0' }}
             >
-              <Dropdown.Item className={isActive('/usuario-perfil') ? 'active  align-items-center' : ' align-items-center'} onClick={()=> {navigate(`/usuario-perfil/${window.localStorage.getItem('user')}`)}} >
+              <Dropdown.Item className={isActive('/usuario-perfil') ? 'active  align-items-center' : ' align-items-center'} onClick={()=> {navigate(`/usuario-perfil`)}} >
                   <FaUser size="24px" className='me-3'/> <b>Usuário:</b> {usuario.nome}
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={darkMode}>
+                <FaLightbulb/> Dark Mode
               </Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogout}>

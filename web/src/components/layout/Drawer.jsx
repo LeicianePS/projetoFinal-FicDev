@@ -1,21 +1,22 @@
 // Drawer.jsx
 
 import React, { useState, useEffect } from 'react';
-import { Nav, Col } from 'react-bootstrap';
+import { Navbar, Col } from 'react-bootstrap';
 import { FaSignOutAlt, FaBars, FaMapMarkedAlt, FaUserFriends, FaUserShield } from 'react-icons/fa';
 import { FaBuildingShield} from 'react-icons/fa6';
 import { Link, useLocation } from 'react-router-dom';
-import {getUsuarioByCPF} from '../../services/usuario-service';
+import {getUsuarioByUserToken} from '../../services/usuario-service';
 
 const DrawerMenu = () => {
   const location = useLocation();
   const [usuario, setUsuario] = useState({})
+  const [tema, setTema] = useState(localStorage.getItem('temaLocal'));
 
   useEffect( () => {
-
+    console.log(tema)
     async function findUsuarioPerfil() {
         try {
-          const response = await getUsuarioByCPF(window.localStorage.getItem('user'));
+          const response = await getUsuarioByUserToken();
           setUsuario(response.data);
         } catch (error) {
           console.error(error);
@@ -32,7 +33,7 @@ const DrawerMenu = () => {
   };
 
   return (
-    <Nav className="col-md-3 col-lg-2 d-md-block cor-layout text-dark ">
+    <Navbar variant="light" className="col-md-3 col-lg-2 d-md-block cor-layout" >
       {/* Adicione links de navegação ou itens de menu aqui */}
         <Col md={6} className="d-none d-md-block col-md-12 col-lg-12">
           {/* Conteúdo visível apenas em telas médias e maiores */}
@@ -47,7 +48,7 @@ const DrawerMenu = () => {
             <li className={isActive('/militares') ? 'active  align-items-center' : ' align-items-center'}>
               <Link to="/militares"><FaUserShield size="24px" className='me-3'/>Militares</Link>
             </li>
-            
+
           </ul>
           {usuario.perfil == "admin" ? <ul>
             <b>ACESSO</b>
@@ -57,7 +58,7 @@ const DrawerMenu = () => {
           </ul> : <></>}
         </Col>
 
-    </Nav>
+    </Navbar>
   );
 }
 

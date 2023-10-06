@@ -249,12 +249,12 @@ export function Militares() {
                                 <td>{militar.nascimento}</td>
                                 <td>{militar.salario_atual}</td>
                                 <td className="d-flex justify-content-center">
-                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, militar)}><FaEdit size="20px"/></Link>
+                                    <Link className="mx-1 px-1 text-dark" onClick={() => abrirModal(true, militar)}><FaEdit /></Link>
 
                                     {/* <Link className="mx-1 px-1" to={`/militar-editar/${militar.id}`}><FaPen size="20px"/></Link>  */}
 
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarMilitar(militar)}><FaEdit size="20px"/></button>  */}
-                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(militar.id)}><FaTrash size="20px"/></Link>
+                                    <Link className="mx-1 px-1 text-dark" onClick={() => abrirModalDeRemocao(militar.id)}><FaTrash /></Link>
                                 </td>
                             </tr>
                         ))
@@ -271,7 +271,7 @@ export function Militares() {
                 <div className='px-2 d-sm-none' >
           	        {militares && militares.length > 0
                         ? getCurrentPageData().map((militar, index) => (
-                            <Card key={index} striped bordered className="py-2 px-3">
+                            <Card key={index} striped bordered className="py-2 px-3 cor-layout">
                                 <div> <b>Id:</b> {militar.id}</div>
                                 <div> <b>Nome:</b> {militar.nome}</div>
                                 <div> <b>E-mail:</b> {militar.email}</div>
@@ -436,7 +436,7 @@ export function Militares() {
                                         placeholder={militarEdit.posto}
                                         {...register('posto', {
                                             // required: 'Este campo é obrigatório.',
-                                           
+
                                         })}
                                     />
                                     {errors.posto && <span>{errors.posto.message}</span>}

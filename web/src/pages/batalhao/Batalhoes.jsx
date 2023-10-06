@@ -181,7 +181,7 @@ export function Batalhoes() {
 
 
     return (
-        <Container fluid className="cor-page min-height">
+        <Container fluid className="cor-page min-height m-0 p-0 h-100">
 
             { show ?  <AlertaFeedback  setShow={setShow} alerta={alerta}></AlertaFeedback> : <></>  }
 
@@ -236,7 +236,7 @@ export function Batalhoes() {
 
             <Row className="justify-content-start my-4 mx-2 align-items-center" fluid>   {/* d-none d-md-block */}
                 <h5>Batalhões</h5>
-                <Table striped bordered hover className="my-1       d-none d-sm-table " >
+                <Table striped bordered hover className="my-1      d-none d-sm-table " >
                     <thead>
                         <tr>
                             <th>id</th>
@@ -261,13 +261,13 @@ export function Batalhoes() {
                                 <td>{batalhao.comandante}</td>
                                 <td>{batalhao.RegiaoModel?.nome_regiao ? batalhao.RegiaoModel?.nome_regiao : batalhao?.nome_regiao} </td>
                                 <td className="d-flex justify-content-center">
-                                    <Link className="mx-1 px-1" onClick={() => abrirModal(true, batalhao)}><FaEdit size="20px"/></Link>
+                                    <Link className="mx-1 px-1 text-dark" onClick={() => abrirModal(true, batalhao)}><FaEdit /></Link>
 
                                     {/* <Link className="mx-1 px-1" to={`/batalhao-editar/${batalhao.id}`}><FaPen size="20px"/></Link>  */}
 
                                     {/* <button className="mx-1 px-1" onClick={() => abrirEditarBatalhao(batalhao)}><FaEdit size="20px"/></button>  */}
                                     {/* <Link className="mx-1 px-1" onClick={async () => await removeBatalhao(batalhao.id)}><FaTrash size="20px"/></Link> */}
-                                    <Link className="mx-1 px-1" onClick={() => abrirModalDeRemocao(batalhao.id)}><FaTrash size="20px"/></Link>
+                                    <Link className="mx-1 px-1 text-dark" onClick={() => abrirModalDeRemocao(batalhao.id)}><FaTrash /></Link>
                                 </td>
                             </tr>
                         ))
@@ -281,10 +281,10 @@ export function Batalhoes() {
                     </tbody>
                 </Table>
 
-                <div className='px-2 d-sm-none' >
+                <div className='px-2 d-sm-none ' >
           	        {batalhoes && batalhoes.length > 0
                         ? getCurrentPageData().map((batalhao, index) => (
-                            <Card key={index} striped bordered className="py-2 px-3">
+                            <Card key={index} striped bordered className="py-2 px-3 cor-layout" >
                                 <div> <b>Id:</b> {batalhao.id}</div>
                                 <div> <b>Nome:</b> {batalhao.nome_batalhao}</div>
                                 <div> <b>Tipo:</b> { batalhao.tipo == "PM" ? "Polícia Militar" : "Corpo de Bombeiros"}</div>
@@ -334,14 +334,15 @@ export function Batalhoes() {
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={goToPage}
+
                 />
 
             </Row>
 
 
             <Modal show={isUpdated} onHide={() => setIsUpdated(false)} size="xl">
-                <Modal.Header>
-                    <Modal.Title>Editar batalhao: {batalhaoEdit.nome_batalhao}</Modal.Title>
+                <Modal.Header >
+                    <Modal.Title className="text-dark">Editar batalhao: {batalhaoEdit.nome_batalhao}</Modal.Title>
                 </Modal.Header>
 
 

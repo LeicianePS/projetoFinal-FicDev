@@ -122,7 +122,7 @@ class UsuarioController {
                 { expiresIn: process.env.TOKEN_EXPIRES_IN }
             );
             return httpHelper.created({
-                
+
                 message: "Usuário criado com sucesso!",
                 variant: "success"
             });
@@ -260,12 +260,15 @@ class UsuarioController {
         }
     }
 
-    async getByCPF(request, response) {
+    async getByUserPerfil(request, response) {
         const httpHelper = new HttpHelper(response);
         try {
-            const { cpf } = request.params;
+            const { token } = request.params;
+            console.log(token);
+            const decoded = await jwt.verify(token.replace(/"/g, ""), process.env.TOKEN_SECRET);
+
             const usuario = await UsuarioModel.findOne( {
-                where: {cpf},
+                where: decoded.id,
                 attributes: ['id', 'nome', 'cpf', 'email', 'telefone', 'matricula', 'perfil']
             },);
             return httpHelper.ok(usuario);

@@ -106,7 +106,6 @@ const EfetivoCRChart = () => {
         console.log(labels);
         const efetivoCR = data.map(item => Number(item.somaEfetivo));
         console.log(efetivoCR);
-        debugger
 
         // Atualize o estado do gráfico com os dados
         // setChartData({

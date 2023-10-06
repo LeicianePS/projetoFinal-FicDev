@@ -1,10 +1,13 @@
 :root {
     --tamanho-fonte: 16px;
     --tema: #fff;
+    --temaLayout: #F5F5F5;
+    --texto: #0dcaf0;
 }
 
 body{
     font-size: var(--tamanho-fonte, 16px) !important;
+    color: var(--texto);
 }
 
 
@@ -28,27 +31,30 @@ body{
   }
 
   ul li a{
-    color: #3e4e54 !important;
+    color:  var(--texto) !important;
     text-decoration: none;
 
   }
 
   button a {
     color: #F5F5F5 !important;
+    /* color: var(--texto) !important; */
   }
   a{
-    color: #3e4e54 !important;
+    color:  var(--texto) !important;
     text-decoration: none;
     font-size: var(--tamanho-fonte, 16px) !important;
   }
 
   .active {
-    border: 1px solid #3e4e54;
-    border-radius: 5px;
-    color: #fff;
-    background-color: #fff !important;
-  }
+    border: 1px solid var(--texto);
 
+    border-radius: 5px;
+  }
+  .pagination{
+
+    --bs-pagination-color: black !important;
+  }
   .pagination .page-item {
     margin:1px !important;
     padding: 0px ;
@@ -67,15 +73,20 @@ body{
   }
   .caixa-pesquisa input {
     border: solid 1px #3e4e54;
-
   }
 
 
 
   .cor-layout{
+    background-color:  var(--temaLayout) !important;
+    color: var(--texto) !important;
+    border: 1px solid #fff;
+  }
 
-    background-color:  var(--tema) !important;;
-    border: 1px solid #F5F5F5;
+  .cor-card{
+    background-color:  var(--tema) !important;
+    color: var(--texto) !important;
+
   }
 
   .cor-page{

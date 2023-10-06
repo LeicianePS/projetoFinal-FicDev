@@ -68,9 +68,9 @@ export async function getUsuarioById(id) {
     return result;
 }
 
-export async function getUsuarioByCPF(cpf) {
+export async function getUsuarioByUserToken() {
     const accessToken = sessionStorage.getItem('token');
-    const result = await api.get(`/usuario-perfil/${cpf}`, {
+    const result = await api.get(`/usuario-perfil/${accessToken}`, {
         headers: {
             'Authorization': `Bearer ${JSON.parse(accessToken)}`
         }
