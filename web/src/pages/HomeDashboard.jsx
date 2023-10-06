@@ -76,7 +76,7 @@ export function HomeDashboard() {
                         <Col className="col-12 col-md-6 ">
                             <Card
                                 key='dark'
-                                className="w-100 px-5"
+                                className="w-100"
                                 bg="dark"
                                 text="light"
                             >
@@ -91,11 +91,11 @@ export function HomeDashboard() {
                         <Col className="col-12 col-md-6 ">
                             <Card
                                 key='dark'
-                                className="w-100 shadow px-5"
+                                className="w-100 shadow"
                                 bg="dark"
                                 text="light"
                                 >
-                                <Card.Header className="d-flex justify-content-center"><Card.Title> Efetivo total </Card.Title></Card.Header>
+                                <Card.Header className="d-flex justify-content-center"><Card.Title>Efetivo Total</Card.Title></Card.Header>
                                 <Card.Body>
 
                                     <Card.Text className="d-flex justify-content-center" >
@@ -105,7 +105,7 @@ export function HomeDashboard() {
                             </Card>
                         </Col>
 
-                            <Col className="col-12 col-md-6 ">
+                        <Col className="col-12 col-md-6 ">
                             <Card
                                 key='dark'
                                 className="w-100"
@@ -142,13 +142,13 @@ export function HomeDashboard() {
                 </Col>
 
                 <Col className="col-md-6 col-12 d-flex justify-content-center">
-                    <EfetivoCRChart className="p-4"></EfetivoCRChart>
+                    <EfetivoCRChart className="p-3"></EfetivoCRChart>
                 </Col>
 
             </Row>
 
             <Col className="col-12">
-                <BatalhoesCRChart className="p-4 col-12"></BatalhoesCRChart>
+                <BatalhoesCRChart className="p-3 col-12"></BatalhoesCRChart>
             </Col>
 
 

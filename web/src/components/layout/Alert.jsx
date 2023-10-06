@@ -11,7 +11,7 @@ function AlertaFeedback(props) {
   }, []);
 
   return (
-    <div className='d-flex justify-content-end'>
+    <div className='d-flex justify-content-center'>
         <Alert key={props.alerta.variant} variant={props.alerta.variant} className='col-md-6' >
             {props.alerta.message}
         </Alert>

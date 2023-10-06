@@ -31,7 +31,7 @@ export function Login() {
             setShow(true);
             setTimeout(() => {
                 navigate('/home-dash');
-            }, 100);
+            }, 1500);
         } catch (error) {
             // setResult({
             //     title: 'Houve um erro no login!',
@@ -122,9 +122,9 @@ export function Login() {
                                 </button>
                             </InputGroup>
 
-                            <div className="d-md-flex justify-content-between align-items-center mt-4 d-block">
-                                <Button type="submit" size="lg" className='col-12 col-md-4'>Entrar</Button>
-                                <Link to="/solicitar-recuperar-senha" className='mt-2 col-12 col-md-4 d-flex justify-content-center d-md-block link-border'>Recuperar Senha</Link>
+                            <div className=" justify-content-between align-items-center mt-5 ">
+                                <Button type="submit" size="lg" className='col-12 '>Entrar</Button>
+                                <Link to="/solicitar-recuperar-senha" className='mt-3 col-12 d-flex justify-content-center link-border'>Recuperar Senha</Link>
                             </div>
                         </Col>
                     </Form>

@@ -88,13 +88,14 @@ const RecuperarSenha = () => {
                                 required
                             />
                             </Form.Group>
-                            <div className="d-md-flex justify-content-between pt-2 d-block">
+                            <div className="justify-content-between pt-2 d-block">
                                 {/* <Button type="submit" className='col-12 col-md-4' size="lg"> Recuperar Senha </Button> */}
                                 <Button variant="primary" type="submit" className='col-12 mt-2' size='lg'>
                                     Enviar E-mail de Recuperação
                                 </Button>
-                                <Link to="/" className='mt-2 col-12 col-md-4 d-flex justify-content-center d-md-block link-border' > Voltar </Link>
+                                <Link to="/" className='mt-3 col-12 d-flex justify-content-center link-border'>Voltar</Link>
                             </div>
+                            
                         </Form>
                     </Col>
                 </Row>

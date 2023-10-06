@@ -160,7 +160,7 @@ const EfetivoCRChart = () => {
       <Card.Header className="d-flex justify-content-start">
         <Card.Title> Efetivo por Comando Regional</Card.Title>
       </Card.Header>
-      <ApexCharts  options={chartData.options} series={chartData.series} type="pie" height={350} width={380} className="col-12" />
+      <ApexCharts  options={chartData.options} series={chartData.series} type="pie" height={320} width={380} className="col-12" />
     </div>
   );
 };
